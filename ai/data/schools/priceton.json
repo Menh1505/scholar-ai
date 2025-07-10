@@ -1,0 +1,30 @@
+{
+  "university": "Princeton University",
+  "general": "Tên đầy đủ: Princeton University\nThành lập: 1746\nLoại hình: Tư thục, Ivy League\nVị trí: Princeton, New Jersey, USA\nCampus: khoảng 600 acre, ~5,321 undergrad + ~3,157 postgrad\nXếp hạng: QS #25, U.S. News #1 National, THE top 20",
+  "programs": "Các bậc đào tạo: Cử nhân (A.B., B.S.E.), Thạc sĩ, Tiến sĩ qua nhiều trường như Arts & Sciences, Engineering, Public Affairs, Education...\nNgành nổi bật: STEM, Khoa học xã hội, Kỹ thuật, Chính sách công, Y tế cộng đồng\nUndergraduate ~4 năm; graduate từ 1–6 năm tùy chương trình; nhập học Fall, một số chương trình có Spring",
+  "requirements": "Undergraduate:\n- GPA rất cao (~3.9–4.0), SAT 1470–1560, ACT 33–35\n- TOEFL ≥90–100, IELTS ≥8.0\n- Hồ sơ gồm Common/Coalition App, essays, SOP, LORs\nGraduate:\n- GPA ≥3.5, GRE/GMAT tùy ngành, SOP, LOR, CV, bảng điểm, chứng chỉ tiếng Anh",
+  "cost": {
+    "tuition_undergrad": 62400,
+    "tuition_grad": "19,954–21,454 tùy ngành",
+    "estimated_undergrad_total": 92718,
+    "details": {
+      "housing": 12450,
+      "meals": 8720,
+      "university_fees": 288,
+      "misc": 4050,
+      "transport": 2000
+    }
+  },
+  "scholarships": "Need-blind admission và need-based aid 100% cho cả SV quốc tế; ~71.5% nhận aid, trung bình ~$73k/năm; không có merit scholarships hiệu suất cao; chính sách không vay (loan-free aid) :contentReference[oaicite:1]{index=1}",
+  "application": "Undergraduate:\n- Nộp qua Common/Coalition/QuestBridge\n- Deadline: Early Action 1 Nov, Regular 1 Jan\nGraduate: nộp qua portal chương trình, deadline thường từ Dec–Jan, lệ phí: UG $75, PG $75 :contentReference[oaicite:2]{index=2}",
+  "visa": "Cấp Form I‑20 cho visa F‑1; Sinh viên quốc tế treated giống domestic về need aid; cần chứng minh tài chính approximate chi phí năm đầu (~$92k) :contentReference[oaicite:3]{index=3}",
+  "housing": "Residence college system với 7 undergraduate colleges; bảo đảm housing cho SV 4 năm; on & off-campus options; chi phí phòng ở ~$12k/năm :contentReference[oaicite:4]{index=4}",
+  "careers": "Career Services hỗ trợ CPT, OPT, internships; STEM OPT được 36 tháng; median starting salary cao, mid-career ~$177k :contentReference[oaicite:5]{index=5}",
+  "contacts": {
+    "international_office": "Davis International Center, Princeton University",
+    "admissions_email": null,
+    "phone": null,
+    "website": "https://admission.princeton.edu",
+    "notes": "Thông tin chi tiết có trên website chương trình undergraduate và graduate"
+  }
+}

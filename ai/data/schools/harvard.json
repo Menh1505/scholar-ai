@@ -1,0 +1,31 @@
+{
+  "university": "Harvard University",
+  "general": "Tên đầy đủ: Harvard University\nThành lập: 1636\nLoại hình: Tư thục, Ivy League\nVị trí: Cambridge, Massachusetts, USA\nXếp hạng: QS #4, THE #1, U.S. News National #3\nCampus: 209 acre, ~7000 undergrad, ~14000 postgrad\nWebsite: https://www.harvard.edu",
+  "programs": "Các bậc đào tạo: Cử nhân, Thạc sĩ, Tiến sĩ qua nhiều trường như Arts & Sciences, Business, Engineering, Law, Medicine, Public Health, Education...\nNgành nổi bật: STEM, Kinh doanh, Luật, Y khoa, Khoa học xã hội...\nUndergraduate ~4 năm, Graduate từ 1–6 năm tùy chương trình; nhập học chính vào Fall, một số có Spring",
+  "requirements": "Undergraduate: Hoàn thành Common App hoặc Coalition App + Harvard supplement; GPA rất cao (~4.0), SAT/ACT optional nhưng mức trung bình SAT ~1550, TOEFL ≥92 hoặc IELTS ≥7.0\nGraduate: GPA ≥3.5, GRE/GMAT tùy ngành, SOP, LOR, CV, tiếng Anh theo từng khoa",
+  "cost": {
+    "undergraduate_tuition": 56550,
+    "graduate_tuition_range": "29728–73440",
+    "living_and_other_per_year": "≈82000", 
+    "details": {
+      "room_board_books": 82866,
+      "health_insurance": 4280,
+      "student_services_fee": 3109
+    }
+  },
+  "scholarships": "Need‑based aid cho cả domestic & international; 100% nhu cầu được đáp ứng; hơn 50% SV nhận aid, 24% SV gia đình trả 0 học phí; gia đình <$200k bắt đầu từ 2025–26 được miễn tuition, <$100k thêm hỗ trợ phí ăn ở",
+  "application": "Undergraduate: Common App/Coalition App + supplement; deadline Early Action 1 Nov, Regular 1 Jan; financial aid deadline 1 Feb\nGraduate: Nộp qua portal từng trường (MBA, Law, Med...), deadline tùy chương trình (thường 1 Dec–15 Jan)",
+  "visa": "Cấp Form I‑20 cho F‑1 sau khi admit và chứng minh tài chính (~$80k–$90k cho năm đầu)\nVisa F‑1 + F‑2 cho gia đình, không cấp lao động cho F‑2",
+  "housing": "Residence halls cho SV năm 1; nhiều apartment & off‑campus options; on‑campus chi phí room & board ~$11–12k/năm; hỗ trợ tìm nhà qua OIS",
+  "careers": "Career Services hỗ trợ internship, co‑op, job search; OPT 12 tháng, STEM OPT 24 thêm; alumni network cực mạnh; median starting salary $70k+, mid‑career ~$177k :contentReference[oaicite:1]{index=1}",
+  "contacts": {
+    "Harvard International Office": "1350 Massachusetts Ave, Smith Campus Center, Cambridge, MA. Phone: 617‑495‑2789",
+    "admissions_email": "college@fas.harvard.edu",
+    "hotline": "+1‑617‑495‑1000",
+    "social_media": {
+      "facebook": null,
+      "instagram": null,
+      "youtube": null
+    }
+  }
+}

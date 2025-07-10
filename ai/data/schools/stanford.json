@@ -1,0 +1,29 @@
+{
+  "university": "Stanford University",
+  "general": "Thành lập: 1885; Loại hình: Tư thục, Ivy‑tier research (AAU, R1); Vị trí: Stanford, California, USA, campus ~8180 acre; Sinh viên: ~17,500 (7,841 undergrad + 9,688 grad) :contentReference[oaicite:1]{index=1}",
+  "programs": "Bậc đào tạo: Undergrad, và Graduate (MS, PhD, professional); các trường: Engineering, CS, Business (GSB), Law, Medicine, Education, Public Policy; Hệ quarter; Undergrad ~4 năm, graduate 1–6 năm; Kỳ nhập mùa Thu, có spring/summer :contentReference[oaicite:2]{index=2}",
+  "requirements": "Undergraduate: GPA ~3.9–4.0, SAT ~1440–1570, ACT ~32–35; TOEFL ≥100 hoặc IELTS ≥7; ứng viên phải qua Common App + Stanford supplement :contentReference[oaicite:3]{index=3}\nGraduate: GPA ≥3.5, GRE/GMAT tùy ngành, TOEFL 89–100; yêu cầu SOP, LOR, CV, viết bài luận/phỏng vấn (Master’s: GRE Quant ~161+, Verbal ~162+) :contentReference[oaicite:4]{index=4}",
+  "cost": {
+    "undergraduate_tuition": 65910,
+    "graduate_tuition_average": 55000,
+    "undergraduate_total_estimated": 82000,
+    "details": {
+      "MBA": 77000,
+      "Law_JD": 69000,
+      "CS_Undergrad": 58000,
+      "CS_Graduate": 55000
+    }
+  },
+  "scholarships": "Undergraduate quốc tế: không cấp need‑blind; cần chứng minh tài chính. Graduate: Knight‑Hennessy Scholars hỗ trợ toàn phần cho mọi nghành học :contentReference[oaicite:5]{index=5}",
+  "application": "Undergraduate qua Common App + Stanford supplement; Deadline: Early Action/Ahead (ước 4%) hoặc hình thức Regular? Graduate qua portal của từng chương trình; Phí UG $90, PG ~$125 :contentReference[oaicite:6]{index=6}",
+  "visa": "Sau admit và đặt deposit, Stanford cấp Form I‑20 để xin visa F‑1; Cần chứng minh đủ tài chính = tuition + chi phí sống (~82k USD/năm) :contentReference[oaicite:7]{index=7}",
+  "housing": "Đảm bảo housing cho 4 năm đầu; có residence halls, apartments và Greek/Co‑op housing; housing costs cao (khoảng vào mức trung bình NHẪN gấp 5.18 lần quốc gia) :contentReference[oaicite:8]{index=8}",
+  "careers": "Career Services hỗ trợ CPT, OPT (STEM OPT 36 tháng); alumni và internship rất mạnh; median starting salary cao; tuyển dụng mạnh vào tech & finance :contentReference[oaicite:9]{index=9}",
+  "contacts": {
+    "international_office": "Office of International Affairs, Stanford University",
+    "admissions_email": null,
+    "phone": null,
+    "website": "https://admission.stanford.edu",
+    "notes": "Thông tin chi tiết các program và hỗ trợ quốc tế xem trang international applicants và Stanford GSB/graduate portals"
+  }
+}
