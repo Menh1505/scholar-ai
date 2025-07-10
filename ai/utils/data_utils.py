@@ -129,3 +129,41 @@ def validate_chunk(chunk: Dict[str, Any]) -> bool:
             return False
     
     return True
+
+
+def analyze_chunks(chunks: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Phân tích thống kê chunks"""
+    stats = {
+        "total_chunks": len(chunks),
+        "universities": set(),
+        "sections": set(),
+        "fields": set(),
+        "avg_content_length": 0
+    }
+    
+    total_length = 0
+    
+    for chunk in chunks:
+        if "university_name" in chunk:
+            stats["universities"].add(chunk["university_name"])
+        if "section_type" in chunk:
+            stats["sections"].add(chunk["section_type"])
+        if "field_name" in chunk:
+            stats["fields"].add(chunk["field_name"])
+        if "content" in chunk:
+            total_length += len(str(chunk["content"]))
+    
+    if len(chunks) > 0:
+        stats["avg_content_length"] = total_length // len(chunks)
+    
+    # Convert sets to counts
+    stats["unique_universities"] = len(stats["universities"])
+    stats["unique_sections"] = len(stats["sections"])
+    stats["unique_fields"] = len(stats["fields"])
+    
+    # Remove sets from final output
+    del stats["universities"]
+    del stats["sections"] 
+    del stats["fields"]
+    
+    return stats

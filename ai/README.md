@@ -71,14 +71,58 @@ mkdir -p data/schools
 ### 5. Chạy hệ thống
 
 ```bash
-# Chạy toàn bộ pipeline (setup + xử lý dữ liệu + test)
-python main.py
+# Kiểm tra dependencies
+python main.py check-deps
+
+# Chạy toàn bộ pipeline (setup + xử lý dữ liệu)
+python main.py setup
 
 # Hoặc chạy từng bước:
-python main.py setup          # Chỉ validate hệ thống
 python main.py process        # Xử lý và upload dữ liệu
 python main.py test          # Test với câu hỏi mẫu
 
 # Khởi động API server
 python app.py
+```
+
+## 🔧 Troubleshooting
+
+### Lỗi dependencies với Python 3.13
+
+Nếu gặp lỗi về torch hoặc các package khác không tương thích với Python 3.13:
+
+```bash
+# Kiểm tra Python version
+python --version
+
+# Cài đặt dependencies
+pip install -r requirements.txt
+
+# Nếu vẫn lỗi, thử cài từng package riêng lẻ:
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+pip install sentence-transformers
+pip install qdrant-client
+```
+
+### Lỗi kết nối Qdrant
+
+```bash
+# Đảm bảo Qdrant đang chạy
+docker ps | grep qdrant
+
+# Nếu chưa chạy, khởi động lại:
+docker run -d -p 6333:6333 -p 6334:6334 --name qdrant qdrant/qdrant
+
+# Kiểm tra kết nối:
+curl http://localhost:6333/health
+```
+
+### Lỗi môi trường
+
+```bash
+# Tạo file .env từ template
+cp .env.example .env
+
+# Thêm OpenAI API key vào .env:
+echo "OPENAI_API_KEY=your_key_here" >> .env
 ```

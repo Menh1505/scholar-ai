@@ -1,156 +1,205 @@
 """
-Main pipeline script cho Scholar AI
-Xử lý dữ liệu và thiết lập hệ thống RAG
+Main pipeline script cho Scholar AI - Version with dependency checking
 """
 import sys
 import os
+import argparse
 
-from data_process.chunking import split_data_into_chunks, analyze_chunks
-from data_process.qdrant_manager import QdrantManager
-from utils.validation import validate_environment, print_validation_report, get_missing_requirements
-from config.settings import settings
-
-
-def setup_system():
-    """Setup và validate toàn bộ hệ thống"""
-    print("🔧 Đang setup hệ thống Scholar AI...")
-    
-    # Validate environment
-    validation_results = validate_environment()
-    print_validation_report(validation_results)
-    
-    if not validation_results["overall_status"]:
-        missing = get_missing_requirements(validation_results)
-        print("\n💡 Để khắc phục:")
-        for req in missing:
-            print(f"  - {req}")
-        return False
-    
-    print("\n✅ Hệ thống đã sẵn sàng!")
-    return True
-
-
-def process_data(schools_directory: str = None, clear_existing: bool = True):
-    """
-    Xử lý dữ liệu và lưu vào Qdrant
-    """
-    print("\n📊 Bắt đầu xử lý dữ liệu...")
-    
-    if schools_directory is None:
-        schools_directory = settings.SCHOOLS_DIRECTORY
-    
-    # Kiểm tra thư mục dữ liệu
-    if not os.path.exists(schools_directory):
-        print(f"❌ Thư mục dữ liệu không tồn tại: {schools_directory}")
-        print("💡 Vui lòng tạo thư mục và đặt các file JSON của trường đại học vào đó")
-        return False
-    
-    # Chia dữ liệu thành chunks
-    chunks = split_data_into_chunks(schools_directory)
-    
-    if not chunks:
-        print("❌ Không có chunks được tạo ra")
-        return False
-    
-    # Phân tích chunks
-    stats = analyze_chunks(chunks)
-    print(f"\n📈 Thống kê chunks:")
-    print(f"  📄 Tổng chunks: {stats['total_chunks']}")
-    print(f"  🏫 Số trường: {stats['universities_count']}")
-    print(f"  📑 Số section: {stats['sections_count']}")
-    print(f"  📏 Độ dài trung bình: {stats['avg_content_length']} ký tự")
-    
-    # Lưu vào Qdrant
-    print(f"\n💾 Đang lưu vào Qdrant...")
-    manager = QdrantManager()
-    manager.save_chunks_to_qdrant(chunks, clear_existing=clear_existing)
-    
-    # Verify kết quả
-    info = manager.get_collection_info()
-    if info["status"] == "success":
-        print(f"✅ Hoàn thành! Collection có {info['vectors_count']} vectors")
-    else:
-        print(f"❌ Lỗi: {info['error']}")
-        return False
-    
-    return True
-
-
-def test_query(query: str = "Học phí của Harvard là bao nhiêu?"):
-    """Test thử một câu hỏi"""
-    print(f"\n🧪 Test câu hỏi: '{query}'")
+def check_dependencies():
+    """Kiểm tra dependencies trước khi import"""
+    missing_deps = []
     
     try:
-        from core.rag_service import ScholarAIService
+        import flask
+        print("✅ Flask OK")
+    except ImportError:
+        missing_deps.append("flask")
+    
+    try:
+        import flask_cors
+        print("✅ Flask-CORS OK")
+    except ImportError:
+        missing_deps.append("flask-cors")
+    
+    try:
+        import sentence_transformers
+        print("✅ Sentence-transformers OK")
+    except ImportError:
+        missing_deps.append("sentence-transformers")
+    
+    try:
+        import qdrant_client
+        print("✅ Qdrant-client OK")
+    except ImportError:
+        missing_deps.append("qdrant-client")
+    
+    try:
+        import openai
+        print("✅ OpenAI OK")
+    except ImportError:
+        missing_deps.append("openai")
+    
+    try:
+        import dotenv
+        print("✅ Python-dotenv OK")
+    except ImportError:
+        missing_deps.append("python-dotenv")
+    
+    if missing_deps:
+        print(f"\n❌ Missing dependencies: {', '.join(missing_deps)}")
+        print("\n💡 To fix this, run:")
+        print("pip install -r requirements.txt")
+        return False
+    
+    print("\n✅ All dependencies are installed!")
+    return True
+
+def main():
+    """Main entry point"""
+    parser = argparse.ArgumentParser(description='Scholar AI - Process and serve university data')
+    parser.add_argument('command', choices=['check-deps', 'setup', 'process', 'test'], 
+                       help='Command to run')
+    parser.add_argument('--clear', action='store_true', 
+                       help='Clear existing data when processing')
+    
+    args = parser.parse_args()
+    
+    if args.command == 'check-deps':
+        success = check_dependencies()
+        sys.exit(0 if success else 1)
+    
+    # For other commands, check dependencies first
+    if not check_dependencies():
+        sys.exit(1)
+    
+    # Import after dependency check
+    from config.settings import settings
+    from data_process.chunking import split_data_into_chunks
+    from data_process.qdrant_manager import QdrantManager
+    from utils.validation import validate_environment
+    from utils.data_utils import analyze_chunks
+    
+    if args.command == 'setup':
+        setup_complete_pipeline()
+    elif args.command == 'process':
+        process_data(clear_existing=args.clear)
+    elif args.command == 'test':
+        test_system()
+
+def setup_complete_pipeline():
+    """Setup complete pipeline từ đầu đến cuối"""
+    print("🚀 Bắt đầu setup Scholar AI...")
+    
+    try:
+        # Import sau khi check dependencies
+        from config.settings import settings
+        from data_process.chunking import split_data_into_chunks
+        from data_process.qdrant_manager import QdrantManager
         
-        service = ScholarAIService()
-        result = service.process_query(query)
+        print("\n📂 Processing university data...")
+        chunks = split_data_into_chunks(settings.SCHOOLS_DIRECTORY)
         
-        print(f"\n💬 Câu trả lời:")
-        print(result["answer"])
+        if not chunks:
+            print("❌ No data found to process")
+            return False
         
-        print(f"\n📚 Nguồn ({len(result['sources'])} kết quả):")
-        for i, source in enumerate(result["sources"][:3], 1):
-            print(f"  {i}. {source['university']} - {source['section']} (score: {source['score']:.3f})")
+        print(f"\n📝 Created {len(chunks)} chunks")
         
+        print("\n💾 Uploading to Qdrant...")
+        manager = QdrantManager()
+        manager.save_chunks_to_qdrant(chunks, clear_existing=True)
+        
+        print("\n🎉 Setup complete! Run 'python app.py' to start the API server.")
+        
+    except Exception as e:
+        print(f"\n❌ Error during setup: {e}")
+        print("\n💡 Make sure you have:")
+        print("1. Installed all dependencies: pip install -r requirements.txt")
+        print("2. Set up .env file with OPENAI_API_KEY")
+        print("3. Started Qdrant server: docker run -p 6333:6333 qdrant/qdrant")
+        sys.exit(1)
+
+def process_data(clear_existing: bool = True):
+    """Xử lý dữ liệu và lưu vào Qdrant"""
+    print("\n📊 Bắt đầu xử lý dữ liệu...")
+    
+    try:
+        from config.settings import settings
+        from data_process.chunking import split_data_into_chunks
+        from data_process.qdrant_manager import QdrantManager
+        from utils.data_utils import analyze_chunks
+        
+        # Kiểm tra thư mục dữ liệu
+        if not os.path.exists(settings.SCHOOLS_DIRECTORY):
+            print(f"❌ Thư mục dữ liệu không tồn tại: {settings.SCHOOLS_DIRECTORY}")
+            print("💡 Vui lòng tạo thư mục và đặt các file JSON của trường đại học vào đó")
+            return False
+        
+        # Chia dữ liệu thành chunks
+        chunks = split_data_into_chunks(settings.SCHOOLS_DIRECTORY)
+        
+        if not chunks:
+            print("❌ Không có chunks được tạo ra")
+            return False
+        
+        # Phân tích chunks
+        print(f"\n📈 Phân tích {len(chunks)} chunks...")
+        stats = analyze_chunks(chunks)
+        print(f"📊 Thống kê:")
+        for key, value in stats.items():
+            print(f"  {key}: {value}")
+        
+        # Lưu vào Qdrant
+        print("\n💾 Đang lưu vào Qdrant...")
+        manager = QdrantManager()
+        success = manager.save_chunks_to_qdrant(chunks, clear_existing=clear_existing)
+        
+        if success:
+            print("✅ Xử lý dữ liệu thành công!")
+            return True
+        else:
+            print("❌ Có lỗi khi lưu vào Qdrant")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Lỗi: {e}")
+        return False
+
+def test_system():
+    """Test hệ thống"""
+    print("\n🧪 Kiểm tra hệ thống...")
+    
+    try:
+        from config.settings import settings
+        from core.rag_service import RAGService
+        from utils.validation import validate_environment
+        
+        # Kiểm tra môi trường
+        validation_results = validate_environment()
+        
+        if not validation_results["overall_status"]:
+            print("❌ Môi trường chưa được cấu hình đúng")
+            return False
+        
+        # Test RAG service
+        rag = RAGService()
+        
+        # Test query
+        test_query = "What programs does MIT offer in computer science?"
+        print(f"\n🔍 Test query: {test_query}")
+        
+        result = rag.search_and_generate(test_query)
+        
+        print(f"\n📝 Kết quả:")
+        print(f"Answer: {result.get('answer', 'No answer')}")
+        print(f"Sources: {len(result.get('sources', []))} documents")
+        
+        print("\n✅ Hệ thống hoạt động bình thường!")
         return True
         
     except Exception as e:
-        print(f"❌ Lỗi khi test: {str(e)}")
+        print(f"❌ Lỗi: {e}")
         return False
-
-
-def main():
-    """Main function"""
-    print("🎓 Scholar AI - Hệ thống RAG tư vấn du học")
-    print("=" * 50)
-    
-    if len(sys.argv) > 1:
-        command = sys.argv[1].lower()
-    else:
-        command = "full"  # Default command
-    
-    if command == "setup":
-        success = setup_system()
-        if not success:
-            sys.exit(1)
-    
-    elif command == "process":
-        schools_dir = sys.argv[2] if len(sys.argv) > 2 else None
-        success = setup_system() and process_data(schools_dir)
-        if not success:
-            sys.exit(1)
-    
-    elif command == "test":
-        query = sys.argv[2] if len(sys.argv) > 2 else "Học phí của Harvard là bao nhiêu?"
-        success = test_query(query)
-        if not success:
-            sys.exit(1)
-    
-    elif command == "full":
-        # Chạy toàn bộ pipeline
-        print("🔄 Chạy toàn bộ pipeline...")
-        
-        success = (
-            setup_system() and 
-            process_data() and 
-            test_query()
-        )
-        
-        if success:
-            print("\n🎉 Hệ thống đã sẵn sàng!")
-            print("💡 Chạy 'python app.py' để khởi động API server")
-        else:
-            print("\n❌ Pipeline thất bại!")
-            sys.exit(1)
-    
-    else:
-        print("📖 Cách sử dụng:")
-        print("  python main.py setup          # Chỉ setup và validate")
-        print("  python main.py process [dir]  # Xử lý dữ liệu")
-        print("  python main.py test [query]   # Test câu hỏi")
-        print("  python main.py full           # Chạy toàn bộ (mặc định)")
-
 
 if __name__ == "__main__":
     main()
