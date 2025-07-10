@@ -1,16 +1,30 @@
+# Virtual environments
 venv/
 .env/
+.venv/
+env/
+ENV/
 
+# Environment files
+.env
+
+# Byte-compiled files
 __pycache__/
 *.py[cod]
 *.pyo
 
+# IDE and editor files
 *.swp
 *.bak
 .DS_Store
+.vscode/
+.idea/
 
+# Logs and databases
 *.log
 *.sqlite3
 
-data/
-db/
+# Project specific
+qdrant_storage/
+data/qdrant_storage/
+logs/

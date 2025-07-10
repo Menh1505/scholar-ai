@@ -1,0 +1,31 @@
+{
+  "university": "Massachusetts Institute of Technology",
+  "general": "Tên viết tắt: MIT\nQuốc gia, thành phố: Hoa Kỳ, Cambridge, Massachusetts\nXếp hạng: QS #1, THE top 5, Webometrics top 10\nLoại hình: Tư thục\nWebsite: https://web.mit.edu/\nNgành nổi bật: Kỹ thuật, Công nghệ, Khoa học máy tính, Kinh tế, Toán học",
+  "programs": "Các bậc đào tạo: Cử nhân, Thạc sĩ, Tiến sĩ\nNgành nổi bật: Engineering, Computer Science, Economics, Physics, Mathematics, Business\nChi tiết chương trình:\n- Thời gian học: Cử nhân 4 năm, Thạc sĩ 1-2 năm, Tiến sĩ 4-6 năm\n- Ngôn ngữ: Tiếng Anh\n- Tín chỉ: 120-130 tín chỉ (bậc cử nhân)\n- Kỳ nhập học: Tháng 9 (Fall), một số chương trình có kỳ Spring",
+  "requirements": "GPA: Không quy định cứng, thường ≥ 8.5/10\nTiếng Anh: TOEFL iBT ≥ 90, IELTS ≥ 7.0\nKhác:\n- SAT/ACT (cử nhân, có thể optional)\n- GRE/GMAT (sau đại học, tùy ngành)\n- Portfolio (nếu học Thiết kế/Nghệ thuật)\n- SOP, LOR, CV",
+  "cost": {
+    "tuition_per_year": "$59,750",
+    "application_fee": {
+      "undergraduate": "$75",
+      "graduate": "$75 - $250"
+    },
+    "living_cost_per_month": "$1,200 - $1,800",
+    "other_fees": "Bảo hiểm y tế, sách vở, phí hoạt động sinh viên"
+  },
+  "scholarships": "MIT cấp học bổng theo nhu cầu tài chính (need-based), không phân biệt quốc tịch\nGiá trị: Tối đa 100% học phí và sinh hoạt phí\nĐiều kiện: Dựa vào tài chính gia đình, không yêu cầu thành tích học tập xuất sắc\nNộp đơn: Điền thông tin tài chính khi nộp hồ sơ\nHạn nộp: Cùng deadline với hồ sơ nhập học",
+  "application": "Cử nhân: Nộp qua MIT Application Portal (không dùng CommonApp)\nSau đại học: Nộp qua hệ thống riêng từng khoa\nTài liệu cần nộp:\n- Bảng điểm, bằng cấp\n- Chứng chỉ tiếng Anh\n- Hộ chiếu\n- SOP, LOR\nDeadline:\n- Cử nhân: Early 1/11, Regular 1/1\n- Sau đại học: 1/12 – 15/1 (tùy ngành)",
+  "visa": "Có cấp I-20 sau khi trúng tuyển và xác nhận nhập học\nVisa F-1: Xin tại LSQ Mỹ, cần I-20, chứng minh tài chính (~$80,000), thư mời, hồ sơ cá nhân",
+  "housing": "Có ký túc xá ($11,980 - $13,450/năm)\nCó hỗ trợ tìm nhà trọ ngoài trường\nMôi trường học tập đa văn hóa, hỗ trợ SV quốc tế\nHơn 500 CLB: học thuật, thể thao, nghệ thuật",
+  "careers": "Career Center hỗ trợ việc làm thêm, thực tập, việc làm sau tốt nghiệp\nCó chương trình internship, liên kết với nhiều doanh nghiệp\nVisa sau tốt nghiệp: OPT 12 tháng (STEM: 36 tháng), có thể chuyển H-1B",
+  "contacts": {
+    "email_undergrad": "admissions@mit.edu",
+    "email_grad": "gradadmissions@mit.edu",
+    "hotline": "+1 617-253-3400",
+    "socials": {
+      "facebook": "@MITAdmissions",
+      "instagram": "@mitadmissions",
+      "youtube": "MIT Admissions"
+    },
+    "sv_vn_groups": "Tìm qua Facebook, LinkedIn, hoặc Hội SV Việt Nam tại MIT"
+  }
+}
