@@ -1,16 +1,41 @@
 import { OpenAI } from "openai";
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
+import { MongoClient } from "mongodb";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+const client = new MongoClient(process.env.MONGO_URI as string);
+
 export async function POST(req: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const { message, userProfile, documentStatus } = await req.json();
 
     if (!message) {
       return NextResponse.json({ error: "Message is required" }, { status: 400 });
+    }
+
+    // Lấy lịch sử chat từ database
+    let chatHistory: any[] = [];
+    try {
+      await client.connect();
+      const db = client.db("scholar");
+      const collection = db.collection("chatHistory");
+      const userChatHistory = await collection.findOne({ userId: (session.user as any).id });
+      chatHistory = userChatHistory?.messages || [];
+    } catch (error) {
+      console.error("Error fetching chat history:", error);
+    } finally {
+      await client.close();
     }
 
     // Build dynamic context based on user data
@@ -96,17 +121,58 @@ QUAN TRỌNG:
 
 Hãy trả lời bằng tiếng Việt, thân thiện và chi tiết. Đưa ra lời khuyên thực tế và cụ thể.`;
 
+    // Xây dựng messages cho OpenAI bao gồm lịch sử chat
+    const messages: any[] = [
+      { role: "system", content: systemPrompt },
+    ];
+
+    // Thêm lịch sử chat (tối đa 10 cặp tin nhắn gần nhất để tiết kiệm tokens)
+    const recentHistory = chatHistory.slice(-10);
+    messages.push(...recentHistory.map(msg => ({
+      role: msg.role,
+      content: msg.content
+    })));
+
+    // Thêm tin nhắn hiện tại
+    messages.push({ role: "user", content: message });
+
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: message },
-      ],
+      messages,
       max_tokens: 1000,
       temperature: 0.7,
     });
 
     const response = completion.choices[0]?.message?.content || "Xin lỗi, tôi không thể trả lời câu hỏi này lúc này.";
+
+    // Lưu tin nhắn user và response vào database
+    try {
+      await client.connect();
+      const db = client.db("scholar");
+      const collection = db.collection("chatHistory");
+
+      // Lưu tin nhắn của user
+      await collection.updateOne(
+        { userId: (session.user as any).id },
+        { 
+          $push: { 
+            messages: {
+              $each: [
+                { role: "user", content: message, timestamp: new Date() },
+                { role: "assistant", content: response, timestamp: new Date() }
+              ],
+              $slice: -20 // Giữ 20 tin nhắn cuối
+            }
+          } as any,
+          $set: { updatedAt: new Date() }
+        },
+        { upsert: true }
+      );
+    } catch (error) {
+      console.error("Error saving chat messages:", error);
+    } finally {
+      await client.close();
+    }
 
     return NextResponse.json({ response });
   } catch (error) {

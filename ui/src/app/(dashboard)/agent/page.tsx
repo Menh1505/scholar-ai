@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useUserData } from "@/hooks/useUserData";
 
 interface Message {
@@ -11,14 +11,22 @@ interface Message {
 
 function Agent() {
   const { userProfile, documentStatus } = useUserData();
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      text: `Xin chào ${userProfile?.fullname || "bạn"}! Tôi là Scholar AI - trợ lý tư vấn du học Mỹ thông minh. 
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputMessage, setInputMessage] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingHistory, setLoadingHistory] = useState(true);
 
-Tôi thấy bạn đã hoàn thành ${documentStatus?.filter((doc) => doc.completed).length || 0}/${
-        documentStatus?.filter((doc) => doc.required).length || 0
-      } tài liệu bắt buộc và có ${userProfile?.scholarPoints || 0} Scholar Points.
+  // Helper function to create welcome message
+  const createWelcomeMessage = useCallback((profile: any, docStatus: any): Message => {
+    const completed = docStatus?.filter((doc: any) => doc.completed).length || 0;
+    const total = docStatus?.filter((doc: any) => doc.required).length || 0;
+    
+    return {
+      id: 1,
+      text: `Xin chào ${profile?.fullname || "bạn"}! Tôi là Scholar AI - trợ lý tư vấn du học Mỹ thông minh. 
+
+Tôi thấy bạn đã hoàn thành ${completed}/${total} tài liệu bắt buộc và có ${profile?.scholarPoints || 0} Scholar Points.
 
 Tôi có thể giúp bạn:
 • Tìm hiểu thông tin các trường đại học Mỹ
@@ -29,13 +37,74 @@ Tôi có thể giúp bạn:
 
 Bạn cần hỗ trợ gì hôm nay?`,
       sender: "ai",
-      timestamp: "10:30 AM",
-    },
-  ]);
+      timestamp: new Date().toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit"
+      })
+    };
+  }, []);
 
-  const [inputMessage, setInputMessage] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  // Load chat history only once on component mount
+  useEffect(() => {
+    let isMounted = true; // Prevent race conditions
+    
+    const loadChatHistory = async () => {
+      if (!userProfile) {
+        console.log("⏳ Waiting for userProfile to load...");
+        return; // Wait for userProfile to be loaded
+      }
+      
+      console.log("🔄 Loading chat history...");
+      
+      try {
+        const response = await fetch("/api/chat-history");
+        if (response.ok && isMounted) {
+          const data = await response.json();
+          console.log("✅ Chat history loaded:", data.messages.length, "messages");
+          
+          const historyMessages = data.messages.map((msg: any, index: number) => ({
+            id: index + 1,
+            text: msg.content,
+            sender: msg.role === "user" ? "user" : "ai",
+            timestamp: new Date(msg.timestamp).toLocaleTimeString("vi-VN", {
+              hour: "2-digit",
+              minute: "2-digit"
+            })
+          }));
+
+          if (historyMessages.length === 0) {
+            // Nếu không có lịch sử, tạo tin nhắn chào mừng với thông tin user
+            const welcomeMessage = createWelcomeMessage(userProfile, documentStatus);
+            setMessages([welcomeMessage]);
+          } else {
+            setMessages(historyMessages);
+          }
+        }
+      } catch (error) {
+        console.error("❌ Error loading chat history:", error);
+        if (isMounted) {
+          // Fallback to welcome message
+          const welcomeMessage = createWelcomeMessage(userProfile, documentStatus);
+          setMessages([welcomeMessage]);
+        }
+      } finally {
+        if (isMounted) {
+          setLoadingHistory(false);
+          console.log("✅ Chat history loading completed");
+        }
+      }
+    };
+
+    if (userProfile) {
+      loadChatHistory();
+    }
+
+    // Cleanup function
+    return () => {
+      isMounted = false;
+      console.log("🧹 Agent component cleanup");
+    };
+  }, [userProfile, documentStatus, createWelcomeMessage]); // Phụ thuộc vào userProfile và documentStatus
 
   const getSuggestedQuestions = (): { id: number; text: string; active: boolean }[] => {
     const completed = documentStatus?.filter((doc) => doc.completed).length || 0;
@@ -67,66 +136,124 @@ Bạn cần hỗ trợ gì hôm nay?`,
 
   const suggestedQuestions = getSuggestedQuestions();
 
+  const [lastSentTime, setLastSentTime] = useState(0);
+  const SEND_COOLDOWN = 1000; // 1 second cooldown between messages
+
   const handleSendMessage = async () => {
-    if (inputMessage.trim() && !isLoading) {
-      const newUserMessage: Message = {
-        id: messages.length + 1,
-        text: inputMessage,
-        sender: "user",
-        timestamp: new Date().toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
+    const now = Date.now();
+    
+    // Protection against spam sending
+    if (now - lastSentTime < SEND_COOLDOWN) {
+      console.log("⏳ Cooldown active, ignoring send request");
+      return;
+    }
+
+    if (!inputMessage.trim() || isLoading) {
+      return;
+    }
+
+    setLastSentTime(now);
+    const newUserMessage: Message = {
+      id: Date.now(),
+      text: inputMessage,
+      sender: "user",
+      timestamp: new Date().toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    };
+
+    setMessages((prev) => [...prev, newUserMessage]);
+    const currentMessage = inputMessage;
+    setInputMessage("");
+    setIsLoading(true);
+
+    console.log("💬 Sending message:", currentMessage.slice(0, 50) + "...");
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: currentMessage,
+          userProfile,
+          documentStatus,
         }),
-      };
+      });
 
-      setMessages((prev) => [...prev, newUserMessage]);
-      setInputMessage("");
-      setIsLoading(true);
+      const data = await response.json();
 
-      try {
-        const response = await fetch("/api/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            message: inputMessage,
-            userProfile,
-            documentStatus,
-          }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          const aiResponse: Message = {
-            id: messages.length + 2,
-            text: data.response,
-            sender: "ai",
-            timestamp: new Date().toLocaleTimeString("en-US", {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-          };
-          setMessages((prev) => [...prev, aiResponse]);
-        } else {
-          throw new Error(data.error || "Có lỗi xảy ra");
-        }
-      } catch (err) {
-        console.error("Error sending message:", err);
-        const errorResponse: Message = {
-          id: messages.length + 2,
-          text: "Xin lỗi, có lỗi xảy ra khi kết nối với AI. Vui lòng thử lại sau.",
+      if (response.ok) {
+        const aiResponse: Message = {
+          id: Date.now() + 1,
+          text: data.response,
           sender: "ai",
-          timestamp: new Date().toLocaleTimeString("en-US", {
+          timestamp: new Date().toLocaleTimeString("vi-VN", {
             hour: "2-digit",
             minute: "2-digit",
           }),
         };
-        setMessages((prev) => [...prev, errorResponse]);
-      } finally {
-        setIsLoading(false);
+        setMessages((prev) => [...prev, aiResponse]);
+        console.log("✅ AI response received");
+      } else {
+        throw new Error(data.error || "Có lỗi xảy ra");
       }
+    } catch (err) {
+      console.error("❌ Error sending message:", err);
+      const errorResponse: Message = {
+        id: Date.now() + 1,
+        text: "Xin lỗi, có lỗi xảy ra khi kết nối với AI. Vui lòng thử lại sau.",
+        sender: "ai",
+        timestamp: new Date().toLocaleTimeString("vi-VN", {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      };
+      setMessages((prev) => [...prev, errorResponse]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const [isClearing, setIsClearing] = useState(false);
+
+  const clearChatHistory = async () => {
+    if (isClearing) {
+      console.log("⏳ Clear operation already in progress");
+      return;
+    }
+
+    const confirm = window.confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử chat không?");
+    if (!confirm) return;
+
+    setIsClearing(true);
+    console.log("🗑️ Clearing chat history...");
+
+    try {
+      const response = await fetch("/api/chat-history", {
+        method: "DELETE",
+      });
+      
+      if (response.ok) {
+        const welcomeMessage = createWelcomeMessage(userProfile, documentStatus);
+        setMessages([{
+          ...welcomeMessage,
+          id: Date.now(),
+          text: `Xin chào ${userProfile?.fullname || "bạn"}! Tôi là Scholar AI - trợ lý tư vấn du học Mỹ thông minh.
+
+Lịch sử chat đã được xóa. Tôi có thể giúp bạn gì hôm nay?`,
+        }]);
+        console.log("✅ Chat history cleared successfully");
+      } else {
+        throw new Error("Failed to clear chat history");
+      }
+    } catch (error) {
+      console.error("❌ Error clearing chat history:", error);
+      alert("Có lỗi xảy ra khi xóa lịch sử chat. Vui lòng thử lại.");
+    } finally {
+      setIsClearing(false);
     }
   };
 
@@ -151,34 +278,74 @@ Bạn cần hỗ trợ gì hôm nay?`,
               <h1 className="text-2xl font-semibold text-gray-800">Scholar AI Assistant</h1>
               <p className="text-sm text-gray-600">Trợ lý tư vấn du học thông minh</p>
             </div>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Tìm kiếm trong cuộc trò chuyện..."
-                className="w-64 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <svg className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm trong cuộc trò chuyện..."
+                  className="w-64 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <svg className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <button
+                onClick={clearChatHistory}
+                disabled={isClearing}
+                className={`px-4 py-2 text-sm rounded-lg transition-colors ${
+                  isClearing 
+                    ? "bg-gray-400 text-gray-200 cursor-not-allowed" 
+                    : "bg-red-500 text-white hover:bg-red-600"
+                }`}
+                title={isClearing ? "Đang xóa..." : "Xóa lịch sử chat"}
+              >
+                {isClearing ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                ) : (
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                )}
+              </button>
             </div>
           </div>
         </div>
 
         {/* Chat Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {messages.map((message) => (
-            <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}>
-              <div
-                className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                  message.sender === "user" ? "bg-blue-600 text-white" : "bg-white text-gray-800 border border-gray-200"
-                }`}>
-                <p className="text-sm">{message.text}</p>
-                <p className={`text-xs mt-1 ${message.sender === "user" ? "text-blue-200" : "text-gray-500"}`}>{message.timestamp}</p>
+          {loadingHistory ? (
+            <div className="flex justify-center items-center h-full">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+                <p className="mt-2 text-gray-500">Đang tải lịch sử chat...</p>
               </div>
             </div>
-          ))}
+          ) : (
+            messages.map((message) => (
+              <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}>
+                <div
+                  className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                    message.sender === "user" ? "bg-blue-600 text-white" : "bg-white text-gray-800 border border-gray-200"
+                  }`}>
+                  <p className="text-sm whitespace-pre-wrap">{message.text}</p>
+                  <p className={`text-xs mt-1 ${message.sender === "user" ? "text-blue-200" : "text-gray-500"}`}>{message.timestamp}</p>
+                </div>
+              </div>
+            ))
+          )}
+          
+          {isLoading && (
+            <div className="flex justify-start">
+              <div className="bg-white text-gray-800 border border-gray-200 max-w-xs lg:max-w-md px-4 py-2 rounded-lg">
+                <div className="flex items-center space-x-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                  <p className="text-sm">AI đang suy nghĩ...</p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Message Input */}
