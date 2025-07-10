@@ -1,6 +1,6 @@
 "use client";
 import { Sidebar } from "@/components/layout/Sidebar";
-import { OnboardingProvider, useOnboarding } from "@/contexts/AuthOnboardingContext";
+import { OnboardingProvider, useOnboarding } from "@/contexts/OnboardingContext";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

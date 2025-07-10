@@ -6,11 +6,6 @@ import Image from "next/image";
 
 const routes = [
   {
-    label: "AI Assistant",
-    href: "/agent",
-    icon: (props: { className?: string }) => <Image src="/icons/message-icon.svg" alt="AI Assistant" width={20} height={20} className={props.className} />,
-  },
-  {
     label: "Profile",
     href: "/profile",
     icon: (props: { className?: string }) => <Image src="/icons/profile-icon.svg" alt="Profile" width={20} height={20} className={props.className} />,

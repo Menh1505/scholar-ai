@@ -1,5 +1,6 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 interface UserProfile {
   fullname: string;
@@ -15,43 +16,88 @@ interface UserProfile {
 interface OnboardingContextType {
   userProfile: UserProfile | null;
   isOnboardingComplete: boolean;
-  updateProfile: (profile: UserProfile) => void;
+  isAuthenticated: boolean;
+  updateProfile: (profile: Partial<UserProfile>) => Promise<void>;
   resetOnboarding: () => void;
+  loading: boolean;
 }
 
 const OnboardingContext = createContext<OnboardingContextType | undefined>(undefined);
 
-const STORAGE_KEY = "scholar_ai_user_profile";
-
 export function OnboardingProvider({ children }: { children: React.ReactNode }) {
+  const { data: session, status } = useSession();
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [isOnboardingComplete, setIsOnboardingComplete] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const isAuthenticated = status === "authenticated";
 
   useEffect(() => {
-    // Load từ localStorage khi component mount
-    const savedProfile = localStorage.getItem(STORAGE_KEY);
-    if (savedProfile) {
-      try {
-        const profile = JSON.parse(savedProfile);
-        setUserProfile(profile);
-        setIsOnboardingComplete(true);
-      } catch (error) {
-        console.error("Error parsing saved profile:", error);
-        localStorage.removeItem(STORAGE_KEY);
-      }
-    }
-  }, []);
+    const loadUserProfile = async () => {
+      if (status === "loading") return;
 
-  const updateProfile = (profile: UserProfile) => {
-    setUserProfile(profile);
-    setIsOnboardingComplete(true);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+      if (!isAuthenticated) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch("/api/profile");
+        if (response.ok) {
+          const data = await response.json();
+          if (data.userProfile) {
+            setUserProfile(data.userProfile);
+            setIsOnboardingComplete(true);
+          } else {
+            // User logged in but no profile yet
+            setIsOnboardingComplete(false);
+          }
+        }
+      } catch (error) {
+        console.error("Error loading user profile:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadUserProfile();
+  }, [status, isAuthenticated]);
+
+  const updateProfile = async (profile: Partial<UserProfile>) => {
+    if (!isAuthenticated) return;
+
+    try {
+      const method = userProfile ? "PUT" : "POST";
+      const response = await fetch("/api/profile", {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(profile),
+      });
+
+      if (response.ok) {
+        const newProfile = {
+          ...userProfile,
+          email: session?.user?.email || "",
+          ...profile,
+        } as UserProfile;
+
+        setUserProfile(newProfile);
+        setIsOnboardingComplete(true);
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
   };
 
   const resetOnboarding = () => {
-    setUserProfile(null);
-    setIsOnboardingComplete(false);
-    localStorage.removeItem(STORAGE_KEY);
+    if (userProfile) {
+      // In real app, you might want to call an API to delete the profile
+      // For demo purposes, we'll just reset the local state
+      setUserProfile(null);
+      setIsOnboardingComplete(false);
+    }
   };
 
   return (
@@ -59,8 +105,10 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
       value={{
         userProfile,
         isOnboardingComplete,
+        isAuthenticated,
         updateProfile,
         resetOnboarding,
+        loading,
       }}>
       {children}
     </OnboardingContext.Provider>

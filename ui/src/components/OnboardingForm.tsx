@@ -70,12 +70,12 @@ export default function OnboardingForm() {
     }
   };
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     const profile = {
       ...formData,
       scholarPoints: 100, // Welcome bonus
     };
-    updateProfile(profile);
+    await updateProfile(profile);
   };
 
   const renderStep1 = () => (
