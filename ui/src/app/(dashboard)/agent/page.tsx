@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { useUserData } from "@/hooks/useUserData";
 
 interface Message {
   id: number;
@@ -8,17 +9,25 @@ interface Message {
   timestamp: string;
 }
 
-interface SuggestedQuestion {
-  id: number;
-  text: string;
-  active?: boolean;
-}
-
 function Agent() {
+  const { userProfile, documentStatus } = useUserData();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "Hello! I'm your AI assistant. How can I help you today?",
+      text: `Xin chào ${userProfile?.fullname || "bạn"}! Tôi là Scholar AI - trợ lý tư vấn du học Mỹ thông minh. 
+
+Tôi thấy bạn đã hoàn thành ${documentStatus?.filter((doc) => doc.completed).length || 0}/${
+        documentStatus?.filter((doc) => doc.required).length || 0
+      } tài liệu bắt buộc và có ${userProfile?.scholarPoints || 0} Scholar Points.
+
+Tôi có thể giúp bạn:
+• Tìm hiểu thông tin các trường đại học Mỹ
+• Lập kế hoạch du học cá nhân hóa
+• Hướng dẫn quy trình pháp lý và visa
+• Kiểm tra hồ sơ tài liệu còn thiếu
+• Tư vấn chi phí và học bổng
+
+Bạn cần hỗ trợ gì hôm nay?`,
       sender: "ai",
       timestamp: "10:30 AM",
     },
@@ -26,23 +35,40 @@ function Agent() {
 
   const [inputMessage, setInputMessage] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const suggestedQuestions: SuggestedQuestion[] = [
-    { id: 1, text: "How to get passport", active: true },
-    { id: 2, text: "What is scholar point", active: false },
-    { id: 3, text: "How to use website", active: false },
-  ];
+  const getSuggestedQuestions = (): { id: number; text: string; active: boolean }[] => {
+    const completed = documentStatus?.filter((doc) => doc.completed).length || 0;
+    const total = documentStatus?.filter((doc) => doc.required).length || 0;
 
-  const mockResponses = [
-    "Great question! Let me help you with that.",
-    "Here's what I found about your inquiry:",
-    "Based on the information available, I can provide you with the following guidance:",
-    "That's an interesting question. Let me break it down for you:",
-    "I'd be happy to assist you with this. Here's what you need to know:",
-  ];
+    if (completed === 0) {
+      // User mới bắt đầu
+      return [
+        { id: 1, text: "Tôi nên bắt đầu chuẩn bị gì trước tiên?", active: true },
+        { id: 2, text: "Lộ trình du học Mỹ từ A-Z", active: false },
+        { id: 3, text: "Cần bao nhiêu tiền để du học Mỹ?", active: false },
+      ];
+    } else if (completed < total) {
+      // User đang trong quá trình chuẩn bị
+      return [
+        { id: 1, text: "Tôi cần hoàn thành tài liệu gì tiếp theo?", active: true },
+        { id: 2, text: "Hướng dẫn xin visa F-1 du học Mỹ", active: false },
+        { id: 3, text: "Kiểm tra hồ sơ của tôi", active: false },
+      ];
+    } else {
+      // User đã hoàn thành cơ bản
+      return [
+        { id: 1, text: "Chuẩn bị phỏng vấn visa như thế nào?", active: true },
+        { id: 2, text: "Trường đại học nào phù hợp với tôi?", active: false },
+        { id: 3, text: "Lên kế hoạch tài chính chi tiết", active: false },
+      ];
+    }
+  };
 
-  const handleSendMessage = () => {
-    if (inputMessage.trim()) {
+  const suggestedQuestions = getSuggestedQuestions();
+
+  const handleSendMessage = async () => {
+    if (inputMessage.trim() && !isLoading) {
       const newUserMessage: Message = {
         id: messages.length + 1,
         text: inputMessage,
@@ -55,21 +81,52 @@ function Agent() {
 
       setMessages((prev) => [...prev, newUserMessage]);
       setInputMessage("");
+      setIsLoading(true);
 
-      // Simulate AI response after a short delay
-      setTimeout(() => {
-        const randomResponse = mockResponses[Math.floor(Math.random() * mockResponses.length)];
-        const aiResponse: Message = {
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: inputMessage,
+            userProfile,
+            documentStatus,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          const aiResponse: Message = {
+            id: messages.length + 2,
+            text: data.response,
+            sender: "ai",
+            timestamp: new Date().toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+          };
+          setMessages((prev) => [...prev, aiResponse]);
+        } else {
+          throw new Error(data.error || "Có lỗi xảy ra");
+        }
+      } catch (err) {
+        console.error("Error sending message:", err);
+        const errorResponse: Message = {
           id: messages.length + 2,
-          text: randomResponse,
+          text: "Xin lỗi, có lỗi xảy ra khi kết nối với AI. Vui lòng thử lại sau.",
           sender: "ai",
           timestamp: new Date().toLocaleTimeString("en-US", {
             hour: "2-digit",
             minute: "2-digit",
           }),
         };
-        setMessages((prev) => [...prev, aiResponse]);
-      }, 1000);
+        setMessages((prev) => [...prev, errorResponse]);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -90,11 +147,14 @@ function Agent() {
         {/* Chat Header with Search */}
         <div className="bg-white border-b border-gray-200 p-4">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-semibold text-gray-800">AI Assistant</h1>
+            <div>
+              <h1 className="text-2xl font-semibold text-gray-800">Scholar AI Assistant</h1>
+              <p className="text-sm text-gray-600">Trợ lý tư vấn du học thông minh</p>
+            </div>
             <div className="relative">
               <input
                 type="text"
-                placeholder="Search"
+                placeholder="Tìm kiếm trong cuộc trò chuyện..."
                 className="w-64 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -126,14 +186,25 @@ function Agent() {
           <div className="flex gap-2">
             <input
               type="text"
-              placeholder="Message"
+              placeholder="Nhập câu hỏi của bạn..."
               className="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
+              disabled={isLoading}
             />
-            <button onClick={handleSendMessage} className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors">
-              Submit
+            <button
+              onClick={handleSendMessage}
+              disabled={isLoading || !inputMessage.trim()}
+              className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2">
+              {isLoading ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  Đang gửi...
+                </>
+              ) : (
+                "Gửi"
+              )}
             </button>
           </div>
         </div>
@@ -141,7 +212,7 @@ function Agent() {
 
       {/* Sidebar with Suggested Questions */}
       <div className="w-80 bg-white border-l border-gray-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Suggested Questions</h2>
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">Câu hỏi gợi ý</h2>
         <div className="space-y-3">
           {suggestedQuestions.map((question) => (
             <button
@@ -162,13 +233,58 @@ function Agent() {
 
         {/* Additional Help Section */}
         <div className="mt-8">
-          <h3 className="text-md font-semibold text-gray-800 mb-3">How can I help you?</h3>
+          <h3 className="text-md font-semibold text-gray-800 mb-3">Tình hình hồ sơ của bạn:</h3>
+          <div className="bg-blue-50 rounded-lg p-3 mb-4">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm text-blue-800">Tiến độ tài liệu:</span>
+              <span className="text-sm font-bold text-blue-900">
+                {documentStatus?.filter((doc) => doc.completed).length || 0}/{documentStatus?.filter((doc) => doc.required).length || 0}
+              </span>
+            </div>
+            <div className="w-full bg-blue-200 rounded-full h-2">
+              <div
+                className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                style={{
+                  width: `${
+                    ((documentStatus?.filter((doc) => doc.completed).length || 0) / (documentStatus?.filter((doc) => doc.required).length || 1)) * 100
+                  }%`,
+                }}></div>
+            </div>
+          </div>
+
           <div className="space-y-2 text-sm text-gray-600">
-            <p>• Ask about passport requirements</p>
-            <p>• Learn about scholar points system</p>
-            <p>• Get guidance on website usage</p>
-            <p>• Inquire about study programs</p>
-            <p>• Request financial planning help</p>
+            <p>
+              • Scholar Points: <span className="font-bold text-blue-600">{userProfile?.scholarPoints || 0}</span>
+            </p>
+            <p>• Quốc tịch: {userProfile?.nationality}</p>
+            <p>• Hộ chiếu: {userProfile?.passportCode || "Chưa cập nhật"}</p>
+          </div>
+        </div>
+
+        {/* Dynamic Help */}
+        <div className="mt-6">
+          <h3 className="text-md font-semibold text-gray-800 mb-3">Bước tiếp theo:</h3>
+          <div className="space-y-2 text-sm text-gray-600">
+            {documentStatus
+              ?.filter((doc) => doc.required && !doc.completed)
+              .slice(0, 3)
+              .map((doc) => <p key={doc.id}>• {doc.name}</p>) || <p>• Hoàn thành tuyệt vời! 🎉</p>}
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="mt-8">
+          <h3 className="text-md font-semibold text-gray-800 mb-3">Thao tác nhanh:</h3>
+          <div className="space-y-2">
+            <button className="w-full text-left p-2 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 transition-colors text-sm">
+              📋 Kiểm tra hồ sơ của tôi
+            </button>
+            <button className="w-full text-left p-2 rounded-lg bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 transition-colors text-sm">
+              📚 Tìm trường phù hợp
+            </button>
+            <button className="w-full text-left p-2 rounded-lg bg-purple-50 text-purple-700 border border-purple-200 hover:bg-purple-100 transition-colors text-sm">
+              💰 Tính toán chi phí
+            </button>
           </div>
         </div>
       </div>

@@ -6,19 +6,24 @@ import Image from "next/image";
 
 const routes = [
   {
+    label: "AI Assistant",
+    href: "/agent",
+    icon: (props: { className?: string }) => <Image src="/icons/message-icon.svg" alt="AI Assistant" width={20} height={20} className={props.className} />,
+  },
+  {
     label: "Profile",
     href: "/profile",
-    icon: (props: { className?: string }) => <Image src="/icons/profile-icon.svg" alt="Finance" width={20} height={20} className={props.className} />,
+    icon: (props: { className?: string }) => <Image src="/icons/profile-icon.svg" alt="Profile" width={20} height={20} className={props.className} />,
   },
   {
     label: "Study",
     href: "/study",
-    icon: (props: { className?: string }) => <Image src="/icons/study-icon.svg" alt="Finance" width={20} height={20} className={props.className} />,
+    icon: (props: { className?: string }) => <Image src="/icons/study-icon.svg" alt="Study" width={20} height={20} className={props.className} />,
   },
   {
     label: "Legal",
     href: "/legal",
-    icon: (props: { className?: string }) => <Image src="/icons/legal-icon.svg" alt="Finance" width={20} height={20} className={props.className} />,
+    icon: (props: { className?: string }) => <Image src="/icons/legal-icon.svg" alt="Legal" width={20} height={20} className={props.className} />,
   },
   {
     label: "Finance",
@@ -28,7 +33,7 @@ const routes = [
   {
     label: "Scholar Point",
     href: "/point",
-    icon: (props: { className?: string }) => <Image src="/icons/point-icon.svg" alt="Finance" width={20} height={20} className={props.className} />,
+    icon: (props: { className?: string }) => <Image src="/icons/point-icon.svg" alt="Scholar Point" width={20} height={20} className={props.className} />,
   },
 ];
 
