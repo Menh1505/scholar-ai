@@ -1,1 +1,0 @@
-# Scholar AI Core Package
