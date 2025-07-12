@@ -1,12 +1,27 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
 import { useUserData } from "@/hooks/useUserData";
+import FileUpload from "@/components/FileUpload";
+import DocumentAnalysisDisplay from "@/components/DocumentAnalysisDisplay";
 
 interface Message {
   id: number;
   text: string;
   sender: "user" | "ai";
   timestamp: string;
+}
+
+interface DocumentAnalysisResult {
+  success: boolean;
+  analysis: {
+    documentType: string;
+    isValid: boolean;
+    missingRequirements: string[];
+    suggestions: string[];
+    confidence: number;
+  };
+  fileName: string;
+  originalFile: File;
 }
 
 function Agent() {
@@ -17,11 +32,17 @@ function Agent() {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingHistory, setLoadingHistory] = useState(true);
 
+  // File upload states
+  const [showFileUpload, setShowFileUpload] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [analysisResult, setAnalysisResult] = useState<DocumentAnalysisResult | null>(null);
+  const [isProcessingConfirmation, setIsProcessingConfirmation] = useState(false);
+
   // Helper function to create welcome message
   const createWelcomeMessage = useCallback((profile: any, docStatus: any): Message => {
     const completed = docStatus?.filter((doc: any) => doc.completed).length || 0;
     const total = docStatus?.filter((doc: any) => doc.required).length || 0;
-    
+
     return {
       id: 1,
       text: `Xin chào ${profile?.fullname || "bạn"}! Tôi là Scholar AI - trợ lý tư vấn du học Mỹ thông minh. 
@@ -39,37 +60,37 @@ Bạn cần hỗ trợ gì hôm nay?`,
       sender: "ai",
       timestamp: new Date().toLocaleTimeString("vi-VN", {
         hour: "2-digit",
-        minute: "2-digit"
-      })
+        minute: "2-digit",
+      }),
     };
   }, []);
 
   // Load chat history only once on component mount
   useEffect(() => {
     let isMounted = true; // Prevent race conditions
-    
+
     const loadChatHistory = async () => {
       if (!userProfile) {
         console.log("⏳ Waiting for userProfile to load...");
         return; // Wait for userProfile to be loaded
       }
-      
+
       console.log("🔄 Loading chat history...");
-      
+
       try {
         const response = await fetch("/api/chat-history");
         if (response.ok && isMounted) {
           const data = await response.json();
           console.log("✅ Chat history loaded:", data.messages.length, "messages");
-          
+
           const historyMessages = data.messages.map((msg: any, index: number) => ({
             id: index + 1,
             text: msg.content,
             sender: msg.role === "user" ? "user" : "ai",
             timestamp: new Date(msg.timestamp).toLocaleTimeString("vi-VN", {
               hour: "2-digit",
-              minute: "2-digit"
-            })
+              minute: "2-digit",
+            }),
           }));
 
           if (historyMessages.length === 0) {
@@ -139,9 +160,140 @@ Bạn cần hỗ trợ gì hôm nay?`,
   const [lastSentTime, setLastSentTime] = useState(0);
   const SEND_COOLDOWN = 1000; // 1 second cooldown between messages
 
+  // File upload handlers
+  const handleFileUpload = () => {
+    setShowFileUpload(true);
+    setAnalysisResult(null);
+  };
+
+  const handleFileAnalyzed = (result: DocumentAnalysisResult) => {
+    setAnalysisResult(result);
+    setShowFileUpload(false);
+
+    // Add AI message about the analysis
+    const aiMessage: Message = {
+      id: Date.now(),
+      text: `Tôi đã phân tích tài liệu "${result.fileName}" của bạn:
+
+📄 **Loại tài liệu:** ${result.analysis.documentType}
+${result.analysis.isValid ? "✅ **Trạng thái:** Hợp lệ" : "❌ **Trạng thái:** Cần cải thiện"}
+🎯 **Độ tin cậy:** ${result.analysis.confidence}%
+
+${
+  result.analysis.missingRequirements.length > 0
+    ? `⚠️ **Yêu cầu còn thiếu:**\n${result.analysis.missingRequirements.map((req) => `• ${req}`).join("\n")}\n\n`
+    : ""
+}
+
+${result.analysis.suggestions.length > 0 ? `💡 **Gợi ý cải thiện:**\n${result.analysis.suggestions.map((suggestion) => `• ${suggestion}`).join("\n")}\n\n` : ""}
+
+${
+  result.analysis.isValid
+    ? "✅ Tài liệu này đáp ứng yêu cầu! Bạn có muốn tôi thêm vào danh sách tài liệu pháp lý của bạn không?"
+    : "❌ Tài liệu cần được cải thiện trước khi có thể thêm vào danh sách."
+}`,
+      sender: "ai",
+      timestamp: new Date().toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    };
+
+    setMessages((prev) => [...prev, aiMessage]);
+  };
+
+  const handleFileUploadError = (error: string) => {
+    const errorMessage: Message = {
+      id: Date.now(),
+      text: `❌ Lỗi khi xử lý tài liệu: ${error}`,
+      sender: "ai",
+      timestamp: new Date().toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    };
+
+    setMessages((prev) => [...prev, errorMessage]);
+  };
+
+  const handleConfirmDocument = async () => {
+    if (!analysisResult) return;
+
+    setIsProcessingConfirmation(true);
+
+    try {
+      const response = await fetch("/api/legal-documents", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          documentType: analysisResult.analysis.documentType,
+          fileName: analysisResult.fileName,
+          analysisId: `analysis_${Date.now()}`,
+          confirmed: true,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const successMessage: Message = {
+          id: Date.now(),
+          text: `🎉 **Tài liệu đã được thêm thành công!**
+
+"${analysisResult.fileName}" đã được thêm vào danh sách tài liệu pháp lý của bạn và đánh dấu là đã hoàn thành.
+
+Bạn có thể kiểm tra trạng thái tại trang **Legal Documents** trong menu bên trái.`,
+          sender: "ai",
+          timestamp: new Date().toLocaleTimeString("vi-VN", {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+        };
+
+        setMessages((prev) => [...prev, successMessage]);
+        setAnalysisResult(null);
+      } else {
+        throw new Error(data.error || "Có lỗi xảy ra");
+      }
+    } catch (error) {
+      console.error("Error confirming document:", error);
+      const errorMessage: Message = {
+        id: Date.now(),
+        text: `❌ Lỗi khi thêm tài liệu: ${error}`,
+        sender: "ai",
+        timestamp: new Date().toLocaleTimeString("vi-VN", {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      };
+
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsProcessingConfirmation(false);
+    }
+  };
+
+  const handleCancelDocument = () => {
+    setAnalysisResult(null);
+
+    const cancelMessage: Message = {
+      id: Date.now(),
+      text: "Đã hủy việc thêm tài liệu. Bạn có thể upload tài liệu khác hoặc tiếp tục chat với tôi.",
+      sender: "ai",
+      timestamp: new Date().toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    };
+
+    setMessages((prev) => [...prev, cancelMessage]);
+  };
+
   const handleSendMessage = async () => {
     const now = Date.now();
-    
+
     // Protection against spam sending
     if (now - lastSentTime < SEND_COOLDOWN) {
       console.log("⏳ Cooldown active, ignoring send request");
@@ -235,16 +387,18 @@ Bạn cần hỗ trợ gì hôm nay?`,
       const response = await fetch("/api/chat-history", {
         method: "DELETE",
       });
-      
+
       if (response.ok) {
         const welcomeMessage = createWelcomeMessage(userProfile, documentStatus);
-        setMessages([{
-          ...welcomeMessage,
-          id: Date.now(),
-          text: `Xin chào ${userProfile?.fullname || "bạn"}! Tôi là Scholar AI - trợ lý tư vấn du học Mỹ thông minh.
+        setMessages([
+          {
+            ...welcomeMessage,
+            id: Date.now(),
+            text: `Xin chào ${userProfile?.fullname || "bạn"}! Tôi là Scholar AI - trợ lý tư vấn du học Mỹ thông minh.
 
 Lịch sử chat đã được xóa. Tôi có thể giúp bạn gì hôm nay?`,
-        }]);
+          },
+        ]);
         console.log("✅ Chat history cleared successfully");
       } else {
         throw new Error("Failed to clear chat history");
@@ -295,17 +449,19 @@ Lịch sử chat đã được xóa. Tôi có thể giúp bạn gì hôm nay?`,
                 onClick={clearChatHistory}
                 disabled={isClearing}
                 className={`px-4 py-2 text-sm rounded-lg transition-colors ${
-                  isClearing 
-                    ? "bg-gray-400 text-gray-200 cursor-not-allowed" 
-                    : "bg-red-500 text-white hover:bg-red-600"
+                  isClearing ? "bg-gray-400 text-gray-200 cursor-not-allowed" : "bg-red-500 text-white hover:bg-red-600"
                 }`}
-                title={isClearing ? "Đang xóa..." : "Xóa lịch sử chat"}
-              >
+                title={isClearing ? "Đang xóa..." : "Xóa lịch sử chat"}>
                 {isClearing ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                 ) : (
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
                   </svg>
                 )}
               </button>
@@ -335,7 +491,7 @@ Lịch sử chat đã được xóa. Tôi có thể giúp bạn gì hôm nay?`,
               </div>
             ))
           )}
-          
+
           {isLoading && (
             <div className="flex justify-start">
               <div className="bg-white text-gray-800 border border-gray-200 max-w-xs lg:max-w-md px-4 py-2 rounded-lg">
@@ -360,6 +516,21 @@ Lịch sử chat đã được xóa. Tôi có thể giúp bạn gì hôm nay?`,
               onKeyPress={handleKeyPress}
               disabled={isLoading}
             />
+            <button
+              onClick={handleFileUpload}
+              disabled={isLoading || isUploading}
+              className="bg-gray-600 text-white px-4 py-2 rounded-full hover:bg-gray-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
+              title="Tải lên tài liệu để phân tích">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                />
+              </svg>
+              {isUploading ? "Đang tải..." : "Tải file"}
+            </button>
             <button
               onClick={handleSendMessage}
               disabled={isLoading || !inputMessage.trim()}
@@ -455,6 +626,38 @@ Lịch sử chat đã được xóa. Tôi có thể giúp bạn gì hôm nay?`,
           </div>
         </div>
       </div>
+
+      {/* File Upload Component - Modal */}
+      {showFileUpload && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full mx-4">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Tải lên tài liệu để phân tích</h3>
+            <FileUpload onFileAnalyzed={handleFileAnalyzed} onError={handleFileUploadError} isUploading={isUploading} setIsUploading={setIsUploading} />
+            <div className="mt-4">
+              <button
+                onClick={() => setShowFileUpload(false)}
+                className="w-full px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                Hủy
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Document Analysis Result - Modal */}
+      {analysisResult && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Kết quả phân tích tài liệu</h3>
+            <DocumentAnalysisDisplay
+              result={analysisResult}
+              onConfirm={handleConfirmDocument}
+              onCancel={handleCancelDocument}
+              isProcessing={isProcessingConfirmation}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

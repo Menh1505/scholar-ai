@@ -52,7 +52,7 @@ function setCachedData(userId: string, data: any): void {
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -62,10 +62,7 @@ export async function GET() {
     // Rate limiting check
     if (isRateLimited(userId)) {
       console.log(`🚫 Rate limited user ${userId}`);
-      return NextResponse.json(
-        { error: "Too many requests. Please wait a moment." }, 
-        { status: 429 }
-      );
+      return NextResponse.json({ error: "Too many requests. Please wait a moment." }, { status: 429 });
     }
 
     // Check cache first
@@ -99,7 +96,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -119,20 +116,20 @@ export async function POST(request: NextRequest) {
     const newMessage: ChatMessage = {
       role,
       content,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
     // Thêm tin nhắn mới và giữ tối đa 20 tin nhắn gần nhất
     await collection.updateOne(
       { userId },
-      { 
-        $push: { 
+      {
+        $push: {
           messages: {
             $each: [newMessage],
-            $slice: -20 // Giữ 20 tin nhắn cuối
-          }
+            $slice: -20, // Giữ 20 tin nhắn cuối
+          },
         } as any,
-        $set: { updatedAt: new Date() }
+        $set: { updatedAt: new Date() },
       },
       { upsert: true }
     );
@@ -153,7 +150,7 @@ export async function POST(request: NextRequest) {
 export async function DELETE() {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
