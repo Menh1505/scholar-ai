@@ -13,7 +13,7 @@ const client = new MongoClient(process.env.MONGO_URI as string);
 export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -122,16 +122,16 @@ QUAN TRỌNG:
 Hãy trả lời bằng tiếng Việt, thân thiện và chi tiết. Đưa ra lời khuyên thực tế và cụ thể.`;
 
     // Xây dựng messages cho OpenAI bao gồm lịch sử chat
-    const messages: any[] = [
-      { role: "system", content: systemPrompt },
-    ];
+    const messages: any[] = [{ role: "system", content: systemPrompt }];
 
     // Thêm lịch sử chat (tối đa 10 cặp tin nhắn gần nhất để tiết kiệm tokens)
     const recentHistory = chatHistory.slice(-10);
-    messages.push(...recentHistory.map(msg => ({
-      role: msg.role,
-      content: msg.content
-    })));
+    messages.push(
+      ...recentHistory.map((msg) => ({
+        role: msg.role,
+        content: msg.content,
+      }))
+    );
 
     // Thêm tin nhắn hiện tại
     messages.push({ role: "user", content: message });
@@ -154,17 +154,17 @@ Hãy trả lời bằng tiếng Việt, thân thiện và chi tiết. Đưa ra l
       // Lưu tin nhắn của user
       await collection.updateOne(
         { userId: (session.user as any).id },
-        { 
-          $push: { 
+        {
+          $push: {
             messages: {
               $each: [
                 { role: "user", content: message, timestamp: new Date() },
-                { role: "assistant", content: response, timestamp: new Date() }
+                { role: "assistant", content: response, timestamp: new Date() },
               ],
-              $slice: -20 // Giữ 20 tin nhắn cuối
-            }
+              $slice: -20, // Giữ 20 tin nhắn cuối
+            },
           } as any,
-          $set: { updatedAt: new Date() }
+          $set: { updatedAt: new Date() },
         },
         { upsert: true }
       );
