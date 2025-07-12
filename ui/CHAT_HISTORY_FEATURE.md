@@ -7,18 +7,21 @@ Lịch sử chat đã được tích hợp hoàn toàn với database MongoDB v�
 ## 🚀 **New Features:**
 
 ### 📚 **Persistent Chat History**
+
 - Lưu tất cả tin nhắn vào MongoDB collection `chatHistory`
 - Tự động load lịch sử khi user quay lại trang
 - Giữ tối đa 20 tin nhắn gần nhất per user
 - Link với user account qua `userId`
 
 ### 🧠 **AI Context Awareness**
+
 - AI nhận được lịch sử 10 tin nhắn gần nhất
 - Không hỏi lại thông tin đã biết
 - Tiếp tục cuộc trò chuyện tự nhiên
 - Context-aware responses
 
 ### 🛠️ **Management Features**
+
 - Nút "Xóa lịch sử chat" với icon rác
 - Loading states khi tải lịch sử
 - Error handling robust
@@ -45,20 +48,24 @@ Lịch sử chat đã được tích hợp hoàn toàn với database MongoDB v�
 ## 🔄 **API Endpoints:**
 
 ### `GET /api/chat-history`
+
 - Lấy lịch sử chat của user hiện tại
 - Trả về array messages
 - Protected với session auth
 
-### `POST /api/chat-history` 
+### `POST /api/chat-history`
+
 - Lưu tin nhắn mới
 - Auto-slice giữ 20 tin nhắn cuối
 - Upsert pattern (tạo mới nếu chưa có)
 
 ### `DELETE /api/chat-history`
+
 - Xóa toàn bộ lịch sử chat của user
 - Reset về trạng thái ban đầu
 
-### `POST /api/chat` *(Updated)*
+### `POST /api/chat` _(Updated)_
+
 - Nhận lịch sử chat từ database
 - Gửi 10 tin nhắn gần nhất cho OpenAI
 - Tự động lưu cả user message và AI response
@@ -91,21 +98,25 @@ Lịch sử chat đã được tích hợp hoàn toàn với database MongoDB v�
 ## 🧪 **Testing Scenarios:**
 
 ### ✅ **Basic Chat Flow**
+
 1. Login → Chat với AI
 2. Chuyển qua tab Profile → quay lại Agent
 3. Lịch sử vẫn còn, AI nhớ context
 
 ### ✅ **Multi-Session Persistence**
+
 1. Chat vài tin nhắn → Logout
 2. Login lại → Agent page
 3. Lịch sử được restore hoàn toàn
 
 ### ✅ **Clear History**
+
 1. Chat nhiều tin nhắn
 2. Click nút "Xóa lịch sử"
 3. Reset về welcome message
 
 ### ✅ **AI Context Continuity**
+
 1. Hỏi AI về thông tin cá nhân
 2. Chat về topic khác
 3. Quay lại topic cũ → AI vẫn nhớ
@@ -113,7 +124,7 @@ Lịch sử chat đã được tích hợp hoàn toàn với database MongoDB v�
 ## 🚀 **Production Ready Features:**
 
 - ✅ Database integration
-- ✅ Session management  
+- ✅ Session management
 - ✅ Error handling
 - ✅ Performance optimization
 - ✅ User experience polish
