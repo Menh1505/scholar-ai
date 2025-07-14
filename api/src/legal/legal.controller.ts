@@ -72,4 +72,47 @@ export class LegalController {
   ) {
     return this.legalService.removeDocument(id, documentId);
   }
+
+  // AI Agent specific endpoints
+  @Post('agent/initialize')
+  async initializeForUser(@Body() body: { userId: string; school: string }) {
+    return this.legalService.initializeLegalDocumentsForUser(body.userId, body.school);
+  }
+
+  @Patch('agent/:userId/document/:documentName/status')
+  async updateDocumentStatus(
+    @Param('userId') userId: string,
+    @Param('documentName') documentName: string,
+    @Body() body: { status: 'pending' | 'done' | 'expired'; note?: string }
+  ) {
+    return this.legalService.updateDocumentStatusByName(userId, documentName, body.status, body.note);
+  }
+
+  @Get('agent/:userId/pending')
+  async getPendingDocuments(@Param('userId') userId: string) {
+    return this.legalService.getPendingDocuments(userId);
+  }
+
+  @Get('agent/:userId/completed')
+  async getCompletedDocuments(@Param('userId') userId: string) {
+    return this.legalService.getCompletedDocuments(userId);
+  }
+
+  @Get('agent/:userId/progress')
+  async getDocumentProgress(@Param('userId') userId: string) {
+    return this.legalService.getDocumentProgress(userId);
+  }
+
+  @Get('agent/school/:school/requirements')
+  async getSchoolRequirements(@Param('school') school: string) {
+    return this.legalService.getRequiredDocumentsForSchool(school);
+  }
+
+  @Post('agent/:userId/add-documents')
+  async addMissingDocuments(
+    @Param('userId') userId: string,
+    @Body() body: { documentNames: string[] }
+  ) {
+    return this.legalService.addMissingDocuments(userId, body.documentNames);
+  }
 }
