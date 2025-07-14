@@ -125,7 +125,7 @@ Bạn cần hỗ trợ gì hôm nay?`,
       isMounted = false;
       console.log("🧹 Agent component cleanup");
     };
-  }, [userProfile, documentStatus, createWelcomeMessage]); // Phụ thuộc vào userProfile và documentStatus
+  }, [userProfile, documentStatus, createWelcomeMessage]);
 
   const getSuggestedQuestions = (): { id: number; text: string; active: boolean }[] => {
     const completed = documentStatus?.filter((doc) => doc.completed).length || 0;
