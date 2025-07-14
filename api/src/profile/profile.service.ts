@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Model } from 'mongoose';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
+import { DatabaseService } from '../database/database.service';
+import { Profile, ProfileSchema } from './schemas/profile.schema';
 
 @Injectable()
-export class ProfileService {
-  create(createProfileDto: CreateProfileDto) {
-    return 'This action adds a new profile';
+export class ProfileService implements OnModuleInit {
+  private profileModel: Model<Profile>;
+
+  constructor(private readonly databaseService: DatabaseService) { }
+
+  async onModuleInit() {
+    // Wait for database connection to be established
+    const connection = this.databaseService.getConnection();
+    this.profileModel = connection.model<Profile>('Profile', ProfileSchema);
   }
 
-  findAll() {
-    return `This action returns all profile`;
+  async create(createProfileDto: CreateProfileDto): Promise<Profile> {
+    const profile = new this.profileModel(createProfileDto);
+    return await profile.save();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} profile`;
+  async findAll(): Promise<Profile[]> {
+    return await this.profileModel.find({ isActive: true }).exec();
   }
 
-  update(id: number, updateProfileDto: UpdateProfileDto) {
-    return `This action updates a #${id} profile`;
+  async findOne(id: string): Promise<Profile | null> {
+    return await this.profileModel.findById(id).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} profile`;
+  async update(id: string, updateProfileDto: UpdateProfileDto): Promise<Profile | null> {
+    return await this.profileModel.findByIdAndUpdate(id, updateProfileDto, { new: true }).exec();
+  }
+
+  async remove(id: string): Promise<Profile | null> {
+    return await this.profileModel.findByIdAndUpdate(id, { isActive: false }, { new: true }).exec();
+  }
+
+  async hardDelete(id: string): Promise<any> {
+    return await this.profileModel.findByIdAndDelete(id).exec();
   }
 }
