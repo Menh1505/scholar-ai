@@ -3,18 +3,22 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateScholarPointsDto } from './dto/update-scholar-points.dto';
+import { AuthRequired } from '../auth/decorators/auth-required.decorator';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  @AuthRequired()
+  create(@Body() createUserDto: CreateUserDto, @CurrentUser() user: any) {
     return this.userService.create(createUserDto);
   }
 
   @Get()
-  findAll() {
+  @AuthRequired()
+  findAll(@CurrentUser() user: any) {
     return this.userService.findAll();
   }
 
@@ -25,40 +29,48 @@ export class UserController {
   }
 
   @Get('email/:email')
-  findByEmail(@Param('email') email: string) {
+  @AuthRequired()
+  findByEmail(@Param('email') email: string, @CurrentUser() user: any) {
     return this.userService.findByEmail(email);
   }
 
   @Get('passport/:passportCode')
-  findByPassportCode(@Param('passportCode') passportCode: string) {
+  @AuthRequired()
+  findByPassportCode(@Param('passportCode') passportCode: string, @CurrentUser() user: any) {
     return this.userService.findByPassportCode(passportCode);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  @AuthRequired()
+  findOne(@Param('id') id: string, @CurrentUser() user: any) {
     return this.userService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  @AuthRequired()
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto, @CurrentUser() user: any) {
     return this.userService.update(id, updateUserDto);
   }
 
   @Patch(':id/scholar-points')
+  @AuthRequired()
   updateScholarPoints(
     @Param('id') id: string,
-    @Body() updateScholarPointsDto: UpdateScholarPointsDto
+    @Body() updateScholarPointsDto: UpdateScholarPointsDto,
+    @CurrentUser() user: any
   ) {
     return this.userService.updateScholarPoints(id, updateScholarPointsDto.points);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  @AuthRequired()
+  remove(@Param('id') id: string, @CurrentUser() user: any) {
     return this.userService.remove(id);
   }
 
   @Delete(':id/hard')
-  hardDelete(@Param('id') id: string) {
+  @AuthRequired()
+  hardDelete(@Param('id') id: string, @CurrentUser() user: any) {
     return this.userService.hardDelete(id);
   }
 }
