@@ -1,26 +1,14 @@
 import apiClient from "@/lib/axios";
 import { create } from "zustand";
+import { User } from "@/types/user";
 
 interface UserState {
-  user: {
-    _id: string;
-    fullname: string;
-    email: string;
-    phone: string;
-    sex: string;
-    dateOfBirth: string;
-    address: string;
-    nationality: string;
-    religion: string;
-    passportCode: string;
-    passportExpiryDate: string;
-    scholarPoints: number;
-  } | null;
+  user: User | null;
   loading: boolean;
-  setUser: (user: UserState["user"]) => void;
+  setUser: (user: User | null) => void;
   clearUser: () => void;
   fetchUser: () => void;
-  updateUser: (userData: Partial<Omit<UserState["user"], "_id">>) => Promise<void>;
+  updateUser: (userData: Partial<Omit<User, "_id">>) => Promise<void>;
 }
 
 export const useUserStore = create<UserState>((set) => ({

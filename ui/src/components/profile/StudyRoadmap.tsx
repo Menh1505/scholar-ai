@@ -1,19 +1,6 @@
 import React from "react";
 import Fieldset from "@/components/Fieldset";
-
-interface User {
-  _id: string;
-  fullname: string;
-  email: string;
-  phone: string;
-  sex: string;
-  dateOfBirth: string;
-  nationality: string;
-  religion: string;
-  passportCode: string;
-  passportExpiryDate: string;
-  scholarPoints: number;
-}
+import { User } from "@/types/user";
 
 interface StudyRoadmapProps {
   user: User;

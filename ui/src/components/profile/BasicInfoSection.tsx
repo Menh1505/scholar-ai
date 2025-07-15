@@ -1,21 +1,7 @@
 import React from "react";
 import Fieldset from "@/components/Fieldset";
 import ProfileInput from "./ProfileInput";
-
-interface User {
-  _id: string;
-  fullname: string;
-  email: string;
-  phone: string;
-  sex: string;
-  dateOfBirth: string;
-  address: string;
-  nationality: string;
-  religion: string;
-  passportCode: string;
-  passportExpiryDate: string;
-  scholarPoints: number;
-}
+import { User } from "@/types/user";
 
 interface BasicInfoSectionProps {
   user: User;
