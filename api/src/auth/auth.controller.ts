@@ -5,7 +5,8 @@ import {
   UseGuards,
   Req,
   Res,
-  Body,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
@@ -24,7 +25,13 @@ export class AuthController {
   @UseGuards(GoogleAuthGuard)
   googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
     const user = req.user as { userId: string };
+
+    if (!user || !user.userId) {
+      throw new HttpException('Authentication failed', HttpStatus.UNAUTHORIZED);
+    }
+
     const result = this.authService.googleLogin(user.userId);
+
     // Set JWT as httpOnly cookie
     res.cookie('access_token', result.access_token, {
       httpOnly: true,
@@ -40,8 +47,14 @@ export class AuthController {
 
   @Post('refresh')
   @UseGuards(JwtAuthGuard)
-  refreshToken(@Req() req: { userId: string }, @Res() res: Response) {
-    const result = this.authService.generateJwt(req.userId);
+  refreshToken(@Req() req: Request, @Res() res: Response) {
+    const user = req.user as { userId: string };
+
+    if (!user || !user.userId) {
+      throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
+    }
+
+    const result = this.authService.generateJwt(user.userId);
 
     // Update cookie with new token
     res.cookie('access_token', result.access_token, {
@@ -51,12 +64,12 @@ export class AuthController {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    return result;
+    return res.json(result);
   }
 
   @Post('logout')
   logout(@Res() res: Response) {
     res.clearCookie('access_token');
-    return { message: 'Logout successful' };
+    return res.json({ message: 'Logout successful' });
   }
 }

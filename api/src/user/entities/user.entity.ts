@@ -4,6 +4,7 @@ export interface User {
   phone: string;
   sex: string;
   dateOfBirth: string;
+  address: string;
   nationality: string;
   religion: string;
   passportCode: string;

@@ -17,15 +17,11 @@ import { UpdateScholarPointsDto } from './dto/update-scholar-points.dto';
 import { AuthRequired } from '../auth/decorators/auth-required.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Request } from 'express';
-import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from 'src/auth/auth.type';
 
 @Controller('user')
 export class UserController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
   @Post()
   @AuthRequired()
@@ -33,35 +29,11 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Get()
-  @AuthRequired()
-  findAll() {
-    return this.userService.findAll();
-  }
-
   @Get('top-scholars')
   getTopScholars(@Query('limit') limit?: string) {
     const limitNumber = limit ? parseInt(limit) : 10;
     return this.userService.getTopScholars(limitNumber);
   }
-
-  @Get('email/:email')
-  @AuthRequired()
-  findByEmail(@Param('email') email: string) {
-    return this.userService.findByEmail(email);
-  }
-
-  @Get('passport/:passportCode')
-  @AuthRequired()
-  findByPassportCode(@Param('passportCode') passportCode: string) {
-    return this.userService.findByPassportCode(passportCode);
-  }
-
-  /*   @Get(':id')
-  @AuthRequired()
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(id);
-  } */
 
   @Patch(':id')
   @AuthRequired()
@@ -111,6 +83,7 @@ export class UserController {
       phone: fullUserData.phone,
       sex: fullUserData.sex,
       dateOfBirth: fullUserData.dateOfBirth,
+      address: fullUserData.address,
       nationality: fullUserData.nationality,
       religion: fullUserData.religion,
       passportCode: fullUserData.passportCode,
