@@ -9,6 +9,7 @@ interface User {
   phone: string;
   sex: string;
   dateOfBirth: string;
+  address: string;
   nationality: string;
   religion: string;
   passportCode: string;
@@ -30,8 +31,7 @@ export default function BasicInfoSection({ user, isEditing, onInputChange }: Bas
           <ProfileInput label="Họ và tên" value={user.fullname} isEditing={isEditing} onChange={(value) => onInputChange("fullname", value)} />
           <ProfileInput label="Email" value={user.email} isEditing={isEditing} onChange={(value) => onInputChange("email", value)} type="email" />
           <ProfileInput label="Số điện thoại" value={user.phone} isEditing={isEditing} onChange={(value) => onInputChange("phone", value)} type="tel" />
-        </div>
-        <div className="space-y-4">
+          <ProfileInput label="Giới tính" value={user.sex} isEditing={isEditing} onChange={(value) => onInputChange("sex", value)} />
           <ProfileInput
             label="Ngày sinh"
             value={user.dateOfBirth}
@@ -39,7 +39,23 @@ export default function BasicInfoSection({ user, isEditing, onInputChange }: Bas
             onChange={(value) => onInputChange("dateOfBirth", value)}
             type="date"
           />
+        </div>
+        <div className="space-y-4">
+          <ProfileInput
+            label="Địa chỉ"
+            value={user.address}
+            isEditing={isEditing}
+            onChange={(value) => onInputChange("address", value)}
+            placeholder="Chưa cập nhật"
+          />
           <ProfileInput label="Quốc tịch" value={user.nationality} isEditing={isEditing} onChange={(value) => onInputChange("nationality", value)} />
+          <ProfileInput
+            label="Tôn giáo"
+            value={user.religion}
+            isEditing={isEditing}
+            onChange={(value) => onInputChange("religion", value)}
+            placeholder="Chưa cập nhật"
+          />
           <ProfileInput
             label="Số hộ chiếu"
             value={user.passportCode}

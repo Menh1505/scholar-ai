@@ -18,7 +18,7 @@ export default function HomePage() {
   useEffect(() => {
     if (!loading) {
       if (user) {
-        router.push("/agent");
+        router.push("/profile");
       } else {
         router.push("/signin");
       }

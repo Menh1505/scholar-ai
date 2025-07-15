@@ -11,18 +11,18 @@ interface ProfileInputProps {
 
 export default function ProfileInput({ label, value, isEditing, onChange, type = "text", placeholder }: ProfileInputProps) {
   return (
-    <div>
-      <label className="block text-sm font-medium text-green-600 mb-1">{label}:</label>
+    <div className="flex items-center space-x-3">
+      <label className="text-sm font-medium text-green-600 min-w-[120px]">{label}:</label>
       {isEditing ? (
         <input
           type={type}
           value={value || ""}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       ) : (
-        <p className="text-gray-900">{value || placeholder || "Chưa cập nhật"}</p>
+        <p className="text-gray-900 flex-1">{value || placeholder || "Chưa cập nhật"}</p>
       )}
     </div>
   );

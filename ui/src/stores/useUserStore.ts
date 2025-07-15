@@ -9,6 +9,7 @@ interface UserState {
     phone: string;
     sex: string;
     dateOfBirth: string;
+    address: string;
     nationality: string;
     religion: string;
     passportCode: string;
@@ -41,6 +42,7 @@ export const useUserStore = create<UserState>((set) => ({
         phone: userData.phone,
         sex: userData.sex,
         dateOfBirth: userData.dateOfBirth,
+        address: userData.address,
         nationality: userData.nationality,
         religion: userData.religion,
         passportCode: userData.passportCode,
@@ -69,6 +71,7 @@ export const useUserStore = create<UserState>((set) => ({
         phone: updatedUser.phone,
         sex: updatedUser.sex,
         dateOfBirth: updatedUser.dateOfBirth,
+        address: updatedUser.address,
         nationality: updatedUser.nationality,
         religion: updatedUser.religion,
         passportCode: updatedUser.passportCode,
