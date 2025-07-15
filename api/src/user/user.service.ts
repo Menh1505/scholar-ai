@@ -9,11 +9,11 @@ import { UserDocument, UserSchema } from './schemas/user.schema';
 export class UserService implements OnModuleInit {
   private userModel: Model<UserDocument>;
 
-  constructor(private readonly databaseService: DatabaseService) { }
+  constructor(private readonly databaseService: DatabaseService) {}
 
   async onModuleInit() {
     // Add a small delay to ensure database connection is established
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     try {
       const connection = this.databaseService.getConnection();
@@ -26,7 +26,9 @@ export class UserService implements OnModuleInit {
 
   private ensureModel() {
     if (!this.userModel) {
-      throw new Error('UserModel not initialized. Please wait for module initialization.');
+      throw new Error(
+        'UserModel not initialized. Please wait for module initialization.',
+      );
     }
   }
 
@@ -53,17 +55,26 @@ export class UserService implements OnModuleInit {
 
   async findByPassportCode(passportCode: string): Promise<UserDocument | null> {
     this.ensureModel();
-    return await this.userModel.findOne({ passportCode, isActive: true }).exec();
+    return await this.userModel
+      .findOne({ passportCode, isActive: true })
+      .exec();
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<UserDocument | null> {
+  async update(
+    id: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<UserDocument | null> {
     this.ensureModel();
-    return await this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true }).exec();
+    return await this.userModel
+      .findByIdAndUpdate(id, updateUserDto, { new: true })
+      .exec();
   }
 
   async remove(id: string): Promise<UserDocument | null> {
     this.ensureModel();
-    return await this.userModel.findByIdAndUpdate(id, { isActive: false }, { new: true }).exec();
+    return await this.userModel
+      .findByIdAndUpdate(id, { isActive: false }, { new: true })
+      .exec();
   }
 
   async hardDelete(id: string): Promise<any> {
@@ -71,13 +82,14 @@ export class UserService implements OnModuleInit {
     return await this.userModel.findByIdAndDelete(id).exec();
   }
 
-  async updateScholarPoints(id: string, points: number): Promise<UserDocument | null> {
+  async updateScholarPoints(
+    id: string,
+    points: number,
+  ): Promise<UserDocument | null> {
     this.ensureModel();
-    return await this.userModel.findByIdAndUpdate(
-      id,
-      { $inc: { scholarPoints: points } },
-      { new: true }
-    ).exec();
+    return await this.userModel
+      .findByIdAndUpdate(id, { $inc: { scholarPoints: points } }, { new: true })
+      .exec();
   }
 
   async getTopScholars(limit: number = 10): Promise<UserDocument[]> {

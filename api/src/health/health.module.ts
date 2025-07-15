@@ -3,7 +3,7 @@ import { HealthController } from './health.controller';
 import { DatabaseService } from '../database/database.service';
 
 @Module({
-    controllers: [HealthController],
-    providers: [DatabaseService],
+  controllers: [HealthController],
+  providers: [DatabaseService],
 })
-export class HealthModule { }
+export class HealthModule {}

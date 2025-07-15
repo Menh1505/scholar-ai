@@ -1,14 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { LegalService } from './legal.service';
 import { CreateLegalDto } from './dto/create-legal.dto';
-import { UpdateLegalDto, UpdateDocumentDto, AddDocumentDto } from './dto/update-legal.dto';
+import {
+  UpdateLegalDto,
+  UpdateDocumentDto,
+  AddDocumentDto,
+} from './dto/update-legal.dto';
 import { AuthRequired } from '../auth/decorators/auth-required.decorator';
-import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { CurrentUser } from '../auth/decorators/cookie.decorator';
 
 @Controller('legal')
 @AuthRequired()
 export class LegalController {
-  constructor(private readonly legalService: LegalService) { }
+  constructor(private readonly legalService: LegalService) {}
 
   @Post()
   create(@Body() createLegalDto: CreateLegalDto) {
@@ -26,7 +39,9 @@ export class LegalController {
   }
 
   @Get('documents/status/:status')
-  getDocumentsByStatus(@Param('status') status: 'pending' | 'done' | 'expired') {
+  getDocumentsByStatus(
+    @Param('status') status: 'pending' | 'done' | 'expired',
+  ) {
     return this.legalService.getDocumentsByStatus(status);
   }
 
@@ -60,7 +75,7 @@ export class LegalController {
   updateDocument(
     @Param('id') id: string,
     @Param('documentId') documentId: string,
-    @Body() updateDocumentDto: UpdateDocumentDto
+    @Body() updateDocumentDto: UpdateDocumentDto,
   ) {
     return this.legalService.updateDocument(id, documentId, updateDocumentDto);
   }
@@ -68,7 +83,7 @@ export class LegalController {
   @Delete(':id/documents/:documentId')
   removeDocument(
     @Param('id') id: string,
-    @Param('documentId') documentId: string
+    @Param('documentId') documentId: string,
   ) {
     return this.legalService.removeDocument(id, documentId);
   }
@@ -76,16 +91,24 @@ export class LegalController {
   // AI Agent specific endpoints
   @Post('agent/initialize')
   async initializeForUser(@Body() body: { userId: string; school: string }) {
-    return this.legalService.initializeLegalDocumentsForUser(body.userId, body.school);
+    return this.legalService.initializeLegalDocumentsForUser(
+      body.userId,
+      body.school,
+    );
   }
 
   @Patch('agent/:userId/document/:documentName/status')
   async updateDocumentStatus(
     @Param('userId') userId: string,
     @Param('documentName') documentName: string,
-    @Body() body: { status: 'pending' | 'done' | 'expired'; note?: string }
+    @Body() body: { status: 'pending' | 'done' | 'expired'; note?: string },
   ) {
-    return this.legalService.updateDocumentStatusByName(userId, documentName, body.status, body.note);
+    return this.legalService.updateDocumentStatusByName(
+      userId,
+      documentName,
+      body.status,
+      body.note,
+    );
   }
 
   @Get('agent/:userId/pending')
@@ -111,7 +134,7 @@ export class LegalController {
   @Post('agent/:userId/add-documents')
   async addMissingDocuments(
     @Param('userId') userId: string,
-    @Body() body: { documentNames: string[] }
+    @Body() body: { documentNames: string[] },
   ) {
     return this.legalService.addMissingDocuments(userId, body.documentNames);
   }

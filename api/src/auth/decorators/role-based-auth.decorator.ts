@@ -5,22 +5,13 @@ export const ROLES_KEY = 'roles';
 export const Roles = (...roles: string[]) => SetMetadata(ROLES_KEY, roles);
 
 export function AuthWithRoles(...roles: string[]) {
-    return applyDecorators(
-        UseGuards(JwtAuthGuard),
-        Roles(...roles),
-    );
+  return applyDecorators(UseGuards(JwtAuthGuard), Roles(...roles));
 }
 
 export function AdminOnly() {
-    return applyDecorators(
-        UseGuards(JwtAuthGuard),
-        Roles('admin'),
-    );
+  return applyDecorators(UseGuards(JwtAuthGuard), Roles('admin'));
 }
 
 export function ScholarOnly() {
-    return applyDecorators(
-        UseGuards(JwtAuthGuard),
-        Roles('scholar'),
-    );
+  return applyDecorators(UseGuards(JwtAuthGuard), Roles('scholar'));
 }

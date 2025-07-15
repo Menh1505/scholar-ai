@@ -7,7 +7,7 @@ export class AuthService {
   constructor(
     private jwtService: JwtService,
     private userService: UserService,
-  ) { }
+  ) {}
 
   async googleLogin(user: any) {
     const payload = {

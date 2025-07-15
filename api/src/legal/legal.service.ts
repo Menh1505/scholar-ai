@@ -1,7 +1,11 @@
 import { Injectable, OnModuleInit, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { CreateLegalDto, CreateDocumentDto } from './dto/create-legal.dto';
-import { UpdateLegalDto, UpdateDocumentDto, AddDocumentDto } from './dto/update-legal.dto';
+import {
+  UpdateLegalDto,
+  UpdateDocumentDto,
+  AddDocumentDto,
+} from './dto/update-legal.dto';
 import { Model } from 'mongoose';
 import { LegalSchema } from './schemas/legal.schema';
 
@@ -9,7 +13,7 @@ import { LegalSchema } from './schemas/legal.schema';
 export class LegalService implements OnModuleInit {
   private legalModel: Model<any>;
 
-  constructor(private databaseService: DatabaseService) { }
+  constructor(private databaseService: DatabaseService) {}
 
   async onModuleInit() {
     const connection = this.databaseService.getConnection();
@@ -21,7 +25,7 @@ export class LegalService implements OnModuleInit {
   async create(createLegalDto: CreateLegalDto) {
     const legalDoc = new this.legalModel({
       ...createLegalDto,
-      documents: createLegalDto.documents || []
+      documents: createLegalDto.documents || [],
     });
 
     const savedDoc = await legalDoc.save();
@@ -45,14 +49,16 @@ export class LegalService implements OnModuleInit {
   }
 
   async update(id: string, updateLegalDto: UpdateLegalDto) {
-    const updatedLegal = await this.legalModel.findByIdAndUpdate(
-      id,
-      {
-        ...updateLegalDto,
-        updatedAt: new Date()
-      },
-      { new: true }
-    ).exec();
+    const updatedLegal = await this.legalModel
+      .findByIdAndUpdate(
+        id,
+        {
+          ...updateLegalDto,
+          updatedAt: new Date(),
+        },
+        { new: true },
+      )
+      .exec();
 
     if (!updatedLegal) {
       throw new NotFoundException(`Legal document with ID ${id} not found`);
@@ -73,7 +79,9 @@ export class LegalService implements OnModuleInit {
   async addDocument(legalId: string, addDocumentDto: AddDocumentDto) {
     const legal = await this.legalModel.findById(legalId).exec();
     if (!legal) {
-      throw new NotFoundException(`Legal document with ID ${legalId} not found`);
+      throw new NotFoundException(
+        `Legal document with ID ${legalId} not found`,
+      );
     }
 
     const document = {
@@ -82,7 +90,7 @@ export class LegalService implements OnModuleInit {
       note: addDocumentDto.note,
       uploadedFileUrl: addDocumentDto.uploadedFileUrl,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     legal.documents.push(document);
@@ -91,13 +99,21 @@ export class LegalService implements OnModuleInit {
     const savedLegal = await legal.save();
     return savedLegal.toObject();
   }
-  async updateDocument(legalId: string, documentId: string, updateDocumentDto: UpdateDocumentDto) {
+  async updateDocument(
+    legalId: string,
+    documentId: string,
+    updateDocumentDto: UpdateDocumentDto,
+  ) {
     const legal = await this.legalModel.findById(legalId).exec();
     if (!legal) {
-      throw new NotFoundException(`Legal document with ID ${legalId} not found`);
+      throw new NotFoundException(
+        `Legal document with ID ${legalId} not found`,
+      );
     }
 
-    const documentIndex = legal.documents.findIndex(doc => doc._id?.toString() === documentId);
+    const documentIndex = legal.documents.findIndex(
+      (doc) => doc._id?.toString() === documentId,
+    );
     if (documentIndex === -1) {
       throw new NotFoundException(`Document with ID ${documentId} not found`);
     }
@@ -113,7 +129,8 @@ export class LegalService implements OnModuleInit {
       legal.documents[documentIndex].note = updateDocumentDto.note;
     }
     if (updateDocumentDto.uploadedFileUrl !== undefined) {
-      legal.documents[documentIndex].uploadedFileUrl = updateDocumentDto.uploadedFileUrl;
+      legal.documents[documentIndex].uploadedFileUrl =
+        updateDocumentDto.uploadedFileUrl;
     }
 
     legal.documents[documentIndex].updatedAt = new Date();
@@ -126,10 +143,14 @@ export class LegalService implements OnModuleInit {
   async removeDocument(legalId: string, documentId: string) {
     const legal = await this.legalModel.findById(legalId).exec();
     if (!legal) {
-      throw new NotFoundException(`Legal document with ID ${legalId} not found`);
+      throw new NotFoundException(
+        `Legal document with ID ${legalId} not found`,
+      );
     }
 
-    const documentIndex = legal.documents.findIndex(doc => doc._id?.toString() === documentId);
+    const documentIndex = legal.documents.findIndex(
+      (doc) => doc._id?.toString() === documentId,
+    );
     if (documentIndex === -1) {
       throw new NotFoundException(`Document with ID ${documentId} not found`);
     }
@@ -142,64 +163,83 @@ export class LegalService implements OnModuleInit {
   }
 
   async getDocumentsByStatus(status: 'pending' | 'done' | 'expired') {
-    return await this.legalModel.aggregate([
-      { $unwind: '$documents' },
-      { $match: { 'documents.status': status } },
-      {
-        $project: {
-          _id: 1,
-          userId: 1,
-          visaType: 1,
-          document: '$documents'
-        }
-      }
-    ]).exec();
+    return await this.legalModel
+      .aggregate([
+        { $unwind: '$documents' },
+        { $match: { 'documents.status': status } },
+        {
+          $project: {
+            _id: 1,
+            userId: 1,
+            visaType: 1,
+            document: '$documents',
+          },
+        },
+      ])
+      .exec();
   }
 
   async getDocumentsByType(documentType: string) {
-    return await this.legalModel.aggregate([
-      { $unwind: '$documents' },
-      { $match: { 'documents.name': documentType } },
-      {
-        $project: {
-          _id: 1,
-          userId: 1,
-          visaType: 1,
-          document: '$documents'
-        }
-      }
-    ]).exec();
+    return await this.legalModel
+      .aggregate([
+        { $unwind: '$documents' },
+        { $match: { 'documents.name': documentType } },
+        {
+          $project: {
+            _id: 1,
+            userId: 1,
+            visaType: 1,
+            document: '$documents',
+          },
+        },
+      ])
+      .exec();
   }
 
   // AI Agent specific methods
-  async createLegalDocumentForStudent(userId: string, school: string, documentNames: string[]) {
-    const documents = documentNames.map(name => ({
+  async createLegalDocumentForStudent(
+    userId: string,
+    school: string,
+    documentNames: string[],
+  ) {
+    const documents = documentNames.map((name) => ({
       name,
       status: 'pending' as const,
       note: `Document required for ${school}`,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     }));
 
     const legalDoc = new this.legalModel({
       userId,
       school,
-      documents
+      documents,
     });
 
     const savedDoc = await legalDoc.save();
     return savedDoc.toObject();
   }
 
-  async updateDocumentStatusByName(userId: string, documentName: string, status: 'pending' | 'done' | 'expired', note?: string) {
+  async updateDocumentStatusByName(
+    userId: string,
+    documentName: string,
+    status: 'pending' | 'done' | 'expired',
+    note?: string,
+  ) {
     const legal = await this.legalModel.findOne({ userId }).exec();
     if (!legal) {
-      throw new NotFoundException(`Legal document for user ${userId} not found`);
+      throw new NotFoundException(
+        `Legal document for user ${userId} not found`,
+      );
     }
 
-    const documentIndex = legal.documents.findIndex(doc => doc.name === documentName);
+    const documentIndex = legal.documents.findIndex(
+      (doc) => doc.name === documentName,
+    );
     if (documentIndex === -1) {
-      throw new NotFoundException(`Document ${documentName} not found for user ${userId}`);
+      throw new NotFoundException(
+        `Document ${documentName} not found for user ${userId}`,
+      );
     }
 
     legal.documents[documentIndex].status = status;
@@ -219,7 +259,7 @@ export class LegalService implements OnModuleInit {
       return [];
     }
 
-    return legal.documents.filter(doc => doc.status === 'pending');
+    return legal.documents.filter((doc) => doc.status === 'pending');
   }
 
   async getCompletedDocuments(userId: string) {
@@ -228,7 +268,7 @@ export class LegalService implements OnModuleInit {
       return [];
     }
 
-    return legal.documents.filter(doc => doc.status === 'done');
+    return legal.documents.filter((doc) => doc.status === 'done');
   }
 
   async getDocumentProgress(userId: string) {
@@ -239,14 +279,20 @@ export class LegalService implements OnModuleInit {
         completed: 0,
         pending: 0,
         expired: 0,
-        progress: 0
+        progress: 0,
       };
     }
 
     const total = legal.documents.length;
-    const completed = legal.documents.filter(doc => doc.status === 'done').length;
-    const pending = legal.documents.filter(doc => doc.status === 'pending').length;
-    const expired = legal.documents.filter(doc => doc.status === 'expired').length;
+    const completed = legal.documents.filter(
+      (doc) => doc.status === 'done',
+    ).length;
+    const pending = legal.documents.filter(
+      (doc) => doc.status === 'pending',
+    ).length;
+    const expired = legal.documents.filter(
+      (doc) => doc.status === 'expired',
+    ).length;
     const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
 
     return {
@@ -255,7 +301,7 @@ export class LegalService implements OnModuleInit {
       pending,
       expired,
       progress,
-      school: legal.school
+      school: legal.school,
     };
   }
 
@@ -270,13 +316,13 @@ export class LegalService implements OnModuleInit {
       'Financial Documents',
       'Academic Transcripts',
       'English Proficiency',
-      'Health Insurance'
+      'Health Insurance',
     ];
 
     // You can expand this to have school-specific requirements
     const schoolSpecificDocuments = {
       'Harvard University': [...commonDocuments, 'Harvard Application Form'],
-      'MIT': [...commonDocuments, 'MIT Supplemental Forms'],
+      MIT: [...commonDocuments, 'MIT Supplemental Forms'],
       'Stanford University': [...commonDocuments, 'Stanford Declaration'],
       // Add more schools as needed
     };
@@ -295,30 +341,38 @@ export class LegalService implements OnModuleInit {
     const requiredDocuments = await this.getRequiredDocumentsForSchool(school);
 
     // Create legal document entry
-    return await this.createLegalDocumentForStudent(userId, school, requiredDocuments);
+    return await this.createLegalDocumentForStudent(
+      userId,
+      school,
+      requiredDocuments,
+    );
   }
 
   async addMissingDocuments(userId: string, newDocumentNames: string[]) {
     const legal = await this.legalModel.findOne({ userId }).exec();
     if (!legal) {
-      throw new NotFoundException(`Legal document for user ${userId} not found`);
+      throw new NotFoundException(
+        `Legal document for user ${userId} not found`,
+      );
     }
 
     // Filter out documents that already exist
-    const existingDocNames = legal.documents.map(doc => doc.name);
-    const documentsToAdd = newDocumentNames.filter(name => !existingDocNames.includes(name));
+    const existingDocNames = legal.documents.map((doc) => doc.name);
+    const documentsToAdd = newDocumentNames.filter(
+      (name) => !existingDocNames.includes(name),
+    );
 
     if (documentsToAdd.length === 0) {
       return legal.toObject();
     }
 
     // Add new documents
-    const newDocuments = documentsToAdd.map(name => ({
+    const newDocuments = documentsToAdd.map((name) => ({
       name,
       status: 'pending' as const,
       note: `Additional document required for ${legal.school}`,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     }));
 
     legal.documents.push(...newDocuments);

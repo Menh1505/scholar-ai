@@ -7,6 +7,6 @@ import { DatabaseModule } from '../database/database.module';
   imports: [DatabaseModule],
   controllers: [LegalController],
   providers: [LegalService],
-  exports: [LegalService]
+  exports: [LegalService],
 })
-export class LegalModule { }
+export class LegalModule {}

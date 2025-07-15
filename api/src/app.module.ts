@@ -9,8 +9,15 @@ import { UserModule } from './user/user.module';
 import { AgentModule } from './agent/agent.module';
 
 @Module({
-  imports: [DatabaseModule, LegalModule, AuthModule, HealthModule, UserModule, AgentModule],
+  imports: [
+    DatabaseModule,
+    LegalModule,
+    AuthModule,
+    HealthModule,
+    UserModule,
+    AgentModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

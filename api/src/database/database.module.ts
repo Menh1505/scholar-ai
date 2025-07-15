@@ -3,12 +3,12 @@ import { DatabaseService } from './database.service';
 
 @Global()
 @Module({
-    providers: [
-        {
-            provide: DatabaseService,
-            useFactory: () => DatabaseService.getInstance(),
-        },
-    ],
-    exports: [DatabaseService],
+  providers: [
+    {
+      provide: DatabaseService,
+      useFactory: () => DatabaseService.getInstance(),
+    },
+  ],
+  exports: [DatabaseService],
 })
-export class DatabaseModule { }
+export class DatabaseModule {}

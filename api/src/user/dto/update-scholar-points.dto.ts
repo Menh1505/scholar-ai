@@ -1,3 +1,3 @@
 export class UpdateScholarPointsDto {
-    points: number;
+  points: number;
 }
