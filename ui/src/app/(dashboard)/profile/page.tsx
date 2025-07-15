@@ -1,37 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import Fieldset from "@/components/Fieldset";
-import { useOnboarding } from "@/contexts/OnboardingContext";
 
 function ProfilePage() {
-  const { userProfile, updateProfile, resetOnboarding } = useOnboarding();
   const [isEditing, setIsEditing] = useState(false);
-  const [tempProfile, setTempProfile] = useState(userProfile);
-
-  // If no profile (shouldn't happen due to onboarding flow)
-  if (!userProfile) {
-    return <div>Loading...</div>;
-  }
-
-  const handleSave = () => {
-    if (tempProfile) {
-      updateProfile(tempProfile);
-      setIsEditing(false);
-    }
-  };
-
-  const handleCancel = () => {
-    setTempProfile(userProfile);
-    setIsEditing(false);
-  };
-
-  const handleInputChange = (field: string, value: string | number) => {
-    if (!tempProfile) return;
-    setTempProfile({
-      ...tempProfile,
-      [field]: value,
-    });
-  };
 
   const currentProfile = isEditing ? tempProfile : userProfile;
   if (!currentProfile) return <div>Loading...</div>;

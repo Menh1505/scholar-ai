@@ -1,25 +1,30 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { useUserStore } from "@/stores/useUserStore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function HomePage() {
-  const { data: session, status } = useSession();
   const router = useRouter();
+  const { user, loading, fetchUser } = useUserStore();
 
   useEffect(() => {
-    if (status === "loading") return; // Still loading
+    const checkLogin = async () => {
+      await fetchUser();
+    };
 
-    if (session) {
-      // User is authenticated, redirect to dashboard
-      router.replace("/agent");
-    } else {
-      // User is not authenticated, redirect to signin
-      router.replace("/auth/signin");
+    checkLogin();
+  }, [fetchUser]);
+
+  useEffect(() => {
+    if (!loading) {
+      if (user) {
+        router.push("/agent");
+      } else {
+        router.push("/signin");
+      }
     }
-  }, [session, status, router]);
+  }, [user, loading, router]);
 
-  // Show loading while checking authentication
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
       <div className="text-center">

@@ -1,31 +1,17 @@
 "use client";
 import { Sidebar } from "@/components/layout/Sidebar";
-import { OnboardingProvider, useOnboarding } from "@/contexts/OnboardingContext";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import OnboardingForm from "@/components/OnboardingForm";
+import { useEffect, useState } from "react";
 
 interface DashBoardLayoutProps {
   children: React.ReactNode;
 }
 
-function DashboardContent({ children }: DashBoardLayoutProps) {
-  const { status } = useSession();
-  const { isOnboardingComplete, loading, isAuthenticated } = useOnboarding();
+const DashboardLayout = ({ children }: DashBoardLayoutProps) => {
   const router = useRouter();
-
-  useEffect(() => {
-    if (status === "loading" || loading) return;
-
-    if (!isAuthenticated) {
-      router.push("/auth/signin");
-      return;
-    }
-  }, [status, loading, isAuthenticated, router]);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   // Loading states
-  if (status === "loading" || loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
         <div className="text-center">
@@ -34,16 +20,6 @@ function DashboardContent({ children }: DashBoardLayoutProps) {
         </div>
       </div>
     );
-  }
-
-  // Not authenticated
-  if (!isAuthenticated) {
-    return null; // Will redirect to signin
-  }
-
-  // Authenticated but onboarding not complete
-  if (!isOnboardingComplete) {
-    return <OnboardingForm />;
   }
 
   // Authenticated and onboarding complete
@@ -60,14 +36,6 @@ function DashboardContent({ children }: DashBoardLayoutProps) {
         </div>
       </div>
     </div>
-  );
-}
-
-const DashboardLayout = ({ children }: DashBoardLayoutProps) => {
-  return (
-    <OnboardingProvider>
-      <DashboardContent>{children}</DashboardContent>
-    </OnboardingProvider>
   );
 };
 
