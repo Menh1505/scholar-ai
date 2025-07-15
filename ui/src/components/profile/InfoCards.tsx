@@ -13,7 +13,7 @@ export default function InfoCards({ user }: InfoCardsProps) {
 
       <Fieldset title="Thông tin liên lạc" className="min-h-48"></Fieldset>
 
-      <Fieldset title="Thông tin cá nhân" className="min-h-48"></Fieldset>
+      <Fieldset title="Gia đình" className="min-h-48"></Fieldset>
 
       <Fieldset title="Scholar Points" className="min-h-48"></Fieldset>
     </div>

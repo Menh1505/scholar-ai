@@ -80,9 +80,9 @@ function ProfilePage() {
     <div className="bg-[#DBD9FB] p-4 max-w-6xl mx-auto">
       <ProfileHeader isEditing={isEditing} onEdit={handleEdit} onSave={handleSave} onCancel={handleCancel} onReset={resetOnboarding} loading={isUpdating} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Left Column - Basic Information */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-3">
           <BasicInfoSection user={currentProfile} isEditing={isEditing} onInputChange={handleInputChange} />
         </div>
 
