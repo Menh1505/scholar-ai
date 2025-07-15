@@ -1,12 +1,6 @@
-export class CreateDocumentDto {
-  name: string;
-  status?: 'pending' | 'done' | 'expired';
-  note?: string;
-  uploadedFileUrl?: string;
-}
-
 export class CreateLegalDto {
+  title: string;
   userId: string;
-  school: string;
-  documents?: CreateDocumentDto[];
+  content: string;
+  status?: 'pending' | 'in_progress' | 'completed' | 'expired';
 }

@@ -6,14 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { LegalService } from './legal.service';
 import { CreateLegalDto } from './dto/create-legal.dto';
-import {
-  UpdateLegalDto,
-  UpdateDocumentDto,
-  AddDocumentDto,
-} from './dto/update-legal.dto';
+import { UpdateLegalDto } from './dto/update-legal.dto';
 import { AuthRequired } from '../auth/decorators/auth-required.decorator';
 
 @Controller('legal')
@@ -22,118 +19,163 @@ export class LegalController {
   constructor(private readonly legalService: LegalService) {}
 
   @Post()
-  create(@Body() createLegalDto: CreateLegalDto) {
-    return this.legalService.create(createLegalDto);
+  async create(
+    @Body() createLegalDto: CreateLegalDto,
+  ): Promise<{ success: boolean; message: string; data?: any }> {
+    try {
+      const data = await this.legalService.create(createLegalDto);
+      return {
+        success: true,
+        message: 'Legal document created successfully',
+        data,
+      };
+    } catch (error) {
+      console.log('[Error]', error);
+      return {
+        success: false,
+        message: 'Failed to create legal document',
+      };
+    }
   }
 
   @Get()
-  findAll() {
-    return this.legalService.findAll();
+  async findAll(): Promise<{ success: boolean; data: any[] }> {
+    try {
+      const data = await this.legalService.findAll();
+      return { success: true, data };
+    } catch (error) {
+      console.log('[Error]', error);
+      return { success: false, data: [] };
+    }
   }
 
   @Get('user/:userId')
-  findByUserId(@Param('userId') userId: string) {
-    return this.legalService.findByUserId(userId);
+  async findByUserId(
+    @Param('userId') userId: string,
+  ): Promise<{ success: boolean; data: any[] }> {
+    try {
+      const data = await this.legalService.findByUserId(userId);
+      return { success: true, data };
+    } catch (error) {
+      console.log('[Error]', error);
+      return { success: false, data: [] };
+    }
   }
 
-  @Get('documents/status/:status')
-  getDocumentsByStatus(
-    @Param('status') status: 'pending' | 'done' | 'expired',
-  ) {
-    return this.legalService.getDocumentsByStatus(status);
+  @Get('status/:status')
+  async findByStatus(
+    @Param('status')
+    status: 'pending' | 'in_progress' | 'completed' | 'expired',
+  ): Promise<{ success: boolean; data: any[] }> {
+    try {
+      const data = await this.legalService.findByStatus(status);
+      return { success: true, data };
+    } catch (error) {
+      console.log('[Error]', error);
+      return { success: false, data: [] };
+    }
   }
 
-  @Get('documents/type/:type')
-  getDocumentsByType(@Param('type') type: string) {
-    return this.legalService.getDocumentsByType(type);
+  @Get('search')
+  async findByTitle(
+    @Query('title') title: string,
+  ): Promise<{ success: boolean; data: any[] }> {
+    try {
+      const data = await this.legalService.findByTitle(title);
+      return { success: true, data };
+    } catch (error) {
+      console.log('[Error]', error);
+      return { success: false, data: [] };
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.legalService.findOne(id);
+  async findOne(
+    @Param('id') id: string,
+  ): Promise<{ success: boolean; data?: any; message?: string }> {
+    try {
+      const data = await this.legalService.findOne(id);
+      return { success: true, data };
+    } catch (error: any) {
+      console.log('[Error]', error);
+      return {
+        success: false,
+        message: 'Legal document not found',
+      };
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLegalDto: UpdateLegalDto) {
-    return this.legalService.update(id, updateLegalDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateLegalDto: UpdateLegalDto,
+  ): Promise<{ success: boolean; message: string; data?: any }> {
+    try {
+      const data = await this.legalService.update(id, updateLegalDto);
+      return {
+        success: true,
+        message: 'Legal document updated successfully',
+        data,
+      };
+    } catch (error: any) {
+      console.log('[Error]', error);
+      return {
+        success: false,
+        message: 'Failed to update legal document',
+      };
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.legalService.remove(id);
-  }
-
-  // Document management endpoints
-  @Post(':id/documents')
-  addDocument(@Param('id') id: string, @Body() addDocumentDto: AddDocumentDto) {
-    return this.legalService.addDocument(id, addDocumentDto);
-  }
-
-  @Patch(':id/documents/:documentId')
-  updateDocument(
+  async remove(
     @Param('id') id: string,
-    @Param('documentId') documentId: string,
-    @Body() updateDocumentDto: UpdateDocumentDto,
-  ) {
-    return this.legalService.updateDocument(id, documentId, updateDocumentDto);
+  ): Promise<{ success: boolean; message: string }> {
+    try {
+      await this.legalService.remove(id);
+      return { success: true, message: 'Legal document deleted successfully' };
+    } catch (error: any) {
+      console.log('[Error]', error);
+      return {
+        success: false,
+        message: 'Failed to delete legal document',
+      };
+    }
   }
 
-  @Delete(':id/documents/:documentId')
-  removeDocument(
+  // Agent specific endpoints
+  @Patch(':id/status')
+  async updateStatus(
     @Param('id') id: string,
-    @Param('documentId') documentId: string,
-  ) {
-    return this.legalService.removeDocument(id, documentId);
+    @Body()
+    body: { status: 'pending' | 'in_progress' | 'completed' | 'expired' },
+  ): Promise<{ success: boolean; message: string; data?: any }> {
+    try {
+      const data = await this.legalService.updateStatus(id, body.status);
+      return { success: true, message: 'Status updated successfully', data };
+    } catch (error: any) {
+      console.log('[Error]', error);
+      return {
+        success: false,
+        message: 'Failed to update status',
+      };
+    }
   }
 
-  // AI Agent specific endpoints
-  @Post('agent/initialize')
-  async initializeForUser(@Body() body: { userId: string; school: string }) {
-    return this.legalService.initializeLegalDocumentsForUser(
-      body.userId,
-      body.school,
-    );
-  }
-
-  @Patch('agent/:userId/document/:documentName/status')
-  async updateDocumentStatus(
+  @Get('user/:userId/status/:status')
+  async findByUserIdAndStatus(
     @Param('userId') userId: string,
-    @Param('documentName') documentName: string,
-    @Body() body: { status: 'pending' | 'done' | 'expired'; note?: string },
-  ) {
-    return this.legalService.updateDocumentStatusByName(
-      userId,
-      documentName,
-      body.status,
-      body.note,
-    );
-  }
-
-  @Get('agent/:userId/pending')
-  async getPendingDocuments(@Param('userId') userId: string) {
-    return this.legalService.getPendingDocuments(userId);
-  }
-
-  @Get('agent/:userId/completed')
-  async getCompletedDocuments(@Param('userId') userId: string) {
-    return this.legalService.getCompletedDocuments(userId);
-  }
-
-  @Get('agent/:userId/progress')
-  async getDocumentProgress(@Param('userId') userId: string) {
-    return this.legalService.getDocumentProgress(userId);
-  }
-
-  @Get('agent/school/:school/requirements')
-  async getSchoolRequirements(@Param('school') school: string) {
-    return this.legalService.getRequiredDocumentsForSchool(school);
-  }
-
-  @Post('agent/:userId/add-documents')
-  async addMissingDocuments(
-    @Param('userId') userId: string,
-    @Body() body: { documentNames: string[] },
-  ) {
-    return this.legalService.addMissingDocuments(userId, body.documentNames);
+    @Param('status')
+    status: 'pending' | 'in_progress' | 'completed' | 'expired',
+  ): Promise<{ success: boolean; data: any[] }> {
+    try {
+      const data = await this.legalService.findByUserIdAndStatus(
+        userId,
+        status,
+      );
+      return { success: true, data };
+    } catch (error) {
+      console.log('[Error]', error);
+      return { success: false, data: [] };
+    }
   }
 }

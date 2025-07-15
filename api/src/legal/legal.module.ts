@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { LegalService } from './legal.service';
 import { LegalController } from './legal.controller';
-import { DatabaseModule } from '../database/database.module';
+import { LegalSchema } from './schemas/legal.schema';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [
+    MongooseModule.forFeature([{ name: 'Legal', schema: LegalSchema }]),
+  ],
   controllers: [LegalController],
   providers: [LegalService],
   exports: [LegalService],
