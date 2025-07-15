@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  Query,
 } from '@nestjs/common';
 import { LegalService } from './legal.service';
 import { CreateLegalDto } from './dto/create-legal.dto';
@@ -16,7 +15,6 @@ import {
   AddDocumentDto,
 } from './dto/update-legal.dto';
 import { AuthRequired } from '../auth/decorators/auth-required.decorator';
-import { CurrentUser } from '../auth/decorators/cookie.decorator';
 
 @Controller('legal')
 @AuthRequired()

@@ -9,35 +9,26 @@ export class AuthService {
     private userService: UserService,
   ) {}
 
-  async googleLogin(user: any) {
-    const payload = {
-      id: user.id,
-      email: user.email,
-      fullname: user.fullname,
-      googleId: user.googleId,
-    };
-
+  googleLogin(userId: string) {
     return {
-      access_token: this.jwtService.sign(payload),
-      user: payload,
+      access_token: this.jwtService.sign(
+        { userId },
+        {
+          secret: process.env.JWT_SECRET,
+        },
+      ),
     };
   }
 
-  async validateUser(payload: any) {
-    const user = await this.userService.findOne(payload.id);
+  async validateUser(userId: string) {
+    const user = await this.userService.findOne(userId);
     return user;
   }
 
-  async generateJwt(user: any) {
-    const payload = {
-      id: user.id,
-      email: user.email,
-      fullname: user.fullname,
-    };
-
+  generateJwt(userId: string) {
     return {
-      access_token: this.jwtService.sign(payload),
-      user: payload,
+      access_token: this.jwtService.sign(userId),
+      user: userId,
     };
   }
 }

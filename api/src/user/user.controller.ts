@@ -17,10 +17,15 @@ import { UpdateScholarPointsDto } from './dto/update-scholar-points.dto';
 import { AuthRequired } from '../auth/decorators/auth-required.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Request } from 'express';
+import { JwtService } from '@nestjs/jwt';
+import { JwtPayload } from 'src/auth/auth.type';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   @Post()
   @AuthRequired()
@@ -52,11 +57,11 @@ export class UserController {
     return this.userService.findByPassportCode(passportCode);
   }
 
-  @Get(':id')
+  /*   @Get(':id')
   @AuthRequired()
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
-  }
+  } */
 
   @Patch(':id')
   @AuthRequired()
@@ -87,19 +92,13 @@ export class UserController {
   hardDelete(@Param('id') id: string) {
     return this.userService.hardDelete(id);
   }
+
   @Get('me')
   @UseGuards(JwtAuthGuard)
   async getMe(@Req() req: Request) {
-    const token = req.cookies?.access_token as string;
-    console.log('token: ', token);
+    const user = req.user as JwtPayload;
 
-    const user = (req as any).user;
-    if (!user) {
-      throw new Error('User not authenticated');
-    }
-
-    // Lấy thông tin chi tiết từ database
-    const fullUserData = await this.userService.findOne(user.id);
+    const fullUserData = await this.userService.findOne(user.userId);
 
     if (!fullUserData) {
       throw new Error('User not found');
@@ -107,14 +106,16 @@ export class UserController {
 
     return {
       id: fullUserData._id,
-      email: fullUserData.email,
       fullname: fullUserData.fullname,
-      dateOfBirth: fullUserData.dateOfBirth,
+      email: fullUserData.email,
       phone: fullUserData.phone,
+      sex: fullUserData.sex,
+      dateOfBirth: fullUserData.dateOfBirth,
+      nationality: fullUserData.nationality,
+      religion: fullUserData.religion,
       passportCode: fullUserData.passportCode,
+      passportExpiryDate: fullUserData.passportExpiryDate,
       scholarPoints: fullUserData.scholarPoints,
-      createdAt: fullUserData.createdAt,
-      updatedAt: fullUserData.updatedAt,
     };
   }
 }

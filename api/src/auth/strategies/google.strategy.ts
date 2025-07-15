@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 import { UserService } from '../../user/user.service';
+import { GooglePayload } from '../auth.type';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
@@ -17,16 +18,14 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   async validate(
     accessToken: string,
     refreshToken: string,
-    profile: any,
+    profile: GooglePayload,
     done: VerifyCallback,
   ): Promise<any> {
-    const { id, name, emails, photos } = profile;
+    const { name, emails } = profile;
 
     try {
-      // Kiểm tra user đã tồn tại chưa
       let user = await this.userService.findByEmail(emails[0].value);
       if (!user) {
-        // Tạo user mới nếu chưa tồn tại
         const createUserDto = {
           fullname: `${name.givenName} ${name.familyName}`,
           email: emails[0].value,
@@ -43,11 +42,11 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
         user = await this.userService.create(createUserDto);
       }
 
-      const payload = {
-        id: user._id,
-      };
-
-      done(null, payload);
+      if (user._id) {
+        done(null, { userId: user._id });
+      } else {
+        done(null, false);
+      }
     } catch (error) {
       done(error, false);
     }

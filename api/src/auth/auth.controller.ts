@@ -18,15 +18,13 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(GoogleAuthGuard)
-  async googleAuth(@Req() req: Request) {
-    // Redirects to Google OAuth
-  }
+  async googleAuth() {}
 
   @Get('google/callback')
   @UseGuards(GoogleAuthGuard)
-  async googleAuthRedirect(@Req() req: any, @Res() res: Response) {
-    const result = await this.authService.googleLogin(req.user);
-
+  googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
+    const user = req.user as { userId: string };
+    const result = this.authService.googleLogin(user.userId);
     // Set JWT as httpOnly cookie
     res.cookie('access_token', result.access_token, {
       httpOnly: true,
@@ -42,8 +40,8 @@ export class AuthController {
 
   @Post('refresh')
   @UseGuards(JwtAuthGuard)
-  async refreshToken(@Req() req: any, @Res() res: Response) {
-    const result = await this.authService.generateJwt(req.user);
+  refreshToken(@Req() req: { userId: string }, @Res() res: Response) {
+    const result = this.authService.generateJwt(req.userId);
 
     // Update cookie with new token
     res.cookie('access_token', result.access_token, {
@@ -57,7 +55,7 @@ export class AuthController {
   }
 
   @Post('logout')
-  async logout(@Res() res: Response) {
+  logout(@Res() res: Response) {
     res.clearCookie('access_token');
     return { message: 'Logout successful' };
   }
