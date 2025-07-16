@@ -37,11 +37,6 @@ export class UserService implements OnModuleInit {
     return await user.save();
   }
 
-  async findAll(): Promise<UserDocument[]> {
-    this.ensureModel();
-    return await this.userModel.find({ isActive: true }).exec();
-  }
-
   async findOne(id: string): Promise<UserDocument | null> {
     this.ensureModel();
     return await this.userModel.findById(id).exec();
@@ -50,13 +45,6 @@ export class UserService implements OnModuleInit {
   async findByEmail(email: string): Promise<UserDocument | null> {
     this.ensureModel();
     return await this.userModel.findOne({ email, isActive: true }).exec();
-  }
-
-  async findByPassportCode(passportCode: string): Promise<UserDocument | null> {
-    this.ensureModel();
-    return await this.userModel
-      .findOne({ passportCode, isActive: true })
-      .exec();
   }
 
   async update(
@@ -88,15 +76,6 @@ export class UserService implements OnModuleInit {
     this.ensureModel();
     return await this.userModel
       .findByIdAndUpdate(id, { $inc: { scholarPoints: points } }, { new: true })
-      .exec();
-  }
-
-  async getTopScholars(limit: number = 10): Promise<UserDocument[]> {
-    this.ensureModel();
-    return await this.userModel
-      .find({ isActive: true })
-      .sort({ scholarPoints: -1 })
-      .limit(limit)
       .exec();
   }
 }

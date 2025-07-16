@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -27,12 +26,6 @@ export class UserController {
   @AuthRequired()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
-  }
-
-  @Get('top-scholars')
-  getTopScholars(@Query('limit') limit?: string) {
-    const limitNumber = limit ? parseInt(limit) : 10;
-    return this.userService.getTopScholars(limitNumber);
   }
 
   @Patch(':id')
