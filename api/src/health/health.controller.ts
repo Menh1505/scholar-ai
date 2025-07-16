@@ -1,18 +1,22 @@
 import { Controller, Get } from '@nestjs/common';
-import { DatabaseService } from '../database/database.service';
+import { InjectConnection } from '@nestjs/mongoose';
+import { Connection } from 'mongoose';
 
 @Controller('health')
 export class HealthController {
-  constructor(private readonly databaseService: DatabaseService) {}
+  constructor(@InjectConnection() private readonly connection: Connection) {}
 
   @Get('database')
-  async checkDatabase() {
-    return await this.databaseService.healthCheck();
+  checkDatabase() {
+    return {
+      status: this.connection.readyState === 1 ? 'connected' : 'disconnected',
+      timestamp: new Date().toISOString(),
+    };
   }
 
   @Get()
-  async checkHealth() {
-    const dbHealth = await this.databaseService.healthCheck();
+  checkHealth() {
+    const dbHealth = this.checkDatabase();
     return {
       status: 'ok',
       timestamp: new Date().toISOString(),

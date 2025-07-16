@@ -1,23 +1,22 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { InjectConnection } from '@nestjs/mongoose';
+import { Connection, Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { DatabaseService } from '../database/database.service';
 import { UserDocument, UserSchema } from './schemas/user.schema';
 
 @Injectable()
 export class UserService implements OnModuleInit {
   private userModel: Model<UserDocument>;
 
-  constructor(private readonly databaseService: DatabaseService) {}
+  constructor(@InjectConnection() private readonly connection: Connection) {}
 
   async onModuleInit() {
     // Add a small delay to ensure database connection is established
     await new Promise((resolve) => setTimeout(resolve, 100));
 
     try {
-      const connection = this.databaseService.getConnection();
-      this.userModel = connection.model<UserDocument>('User', UserSchema);
+      this.userModel = this.connection.model<UserDocument>('User', UserSchema);
     } catch (error) {
       console.error('Failed to initialize UserService:', error);
       throw error;
