@@ -68,14 +68,4 @@ export class UserService implements OnModuleInit {
     this.ensureModel();
     return await this.userModel.findByIdAndDelete(id).exec();
   }
-
-  async updateScholarPoints(
-    id: string,
-    points: number,
-  ): Promise<UserDocument | null> {
-    this.ensureModel();
-    return await this.userModel
-      .findByIdAndUpdate(id, { $inc: { scholarPoints: points } }, { new: true })
-      .exec();
-  }
 }

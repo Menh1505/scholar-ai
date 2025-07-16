@@ -14,10 +14,6 @@ export class LegalService {
     return createdLegal.save();
   }
 
-  async findAll(): Promise<LegalDocument[]> {
-    return this.legalModel.find().exec();
-  }
-
   async findOne(id: string): Promise<LegalDocument> {
     const legal = await this.legalModel.findById(id).exec();
     if (!legal) {
@@ -48,38 +44,5 @@ export class LegalService {
     if (!result) {
       throw new NotFoundException(`Legal document with ID ${id} not found`);
     }
-  }
-
-  // Agent specific methods
-  async findByStatus(
-    status: 'pending' | 'in_progress' | 'completed' | 'expired',
-  ): Promise<LegalDocument[]> {
-    return this.legalModel.find({ status }).exec();
-  }
-
-  async updateStatus(
-    id: string,
-    status: 'pending' | 'in_progress' | 'completed' | 'expired',
-  ): Promise<LegalDocument> {
-    const updatedLegal = await this.legalModel
-      .findByIdAndUpdate(id, { status }, { new: true })
-      .exec();
-    if (!updatedLegal) {
-      throw new NotFoundException(`Legal document with ID ${id} not found`);
-    }
-    return updatedLegal;
-  }
-
-  async findByTitle(title: string): Promise<LegalDocument[]> {
-    return this.legalModel
-      .find({ title: { $regex: title, $options: 'i' } })
-      .exec();
-  }
-
-  async findByUserIdAndStatus(
-    userId: string,
-    status: 'pending' | 'in_progress' | 'completed' | 'expired',
-  ): Promise<LegalDocument[]> {
-    return this.legalModel.find({ userId, status }).exec();
   }
 }

@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  Query,
 } from '@nestjs/common';
 import { LegalService } from './legal.service';
 import { CreateLegalDto } from './dto/create-legal.dto';
@@ -38,50 +37,12 @@ export class LegalController {
     }
   }
 
-  @Get()
-  async findAll(): Promise<{ success: boolean; data: any[] }> {
-    try {
-      const data = await this.legalService.findAll();
-      return { success: true, data };
-    } catch (error) {
-      console.log('[Error]', error);
-      return { success: false, data: [] };
-    }
-  }
-
   @Get('user/:userId')
   async findByUserId(
     @Param('userId') userId: string,
   ): Promise<{ success: boolean; data: any[] }> {
     try {
       const data = await this.legalService.findByUserId(userId);
-      return { success: true, data };
-    } catch (error) {
-      console.log('[Error]', error);
-      return { success: false, data: [] };
-    }
-  }
-
-  @Get('status/:status')
-  async findByStatus(
-    @Param('status')
-    status: 'pending' | 'in_progress' | 'completed' | 'expired',
-  ): Promise<{ success: boolean; data: any[] }> {
-    try {
-      const data = await this.legalService.findByStatus(status);
-      return { success: true, data };
-    } catch (error) {
-      console.log('[Error]', error);
-      return { success: false, data: [] };
-    }
-  }
-
-  @Get('search')
-  async findByTitle(
-    @Query('title') title: string,
-  ): Promise<{ success: boolean; data: any[] }> {
-    try {
-      const data = await this.legalService.findByTitle(title);
       return { success: true, data };
     } catch (error) {
       console.log('[Error]', error);
@@ -139,43 +100,6 @@ export class LegalController {
         success: false,
         message: 'Failed to delete legal document',
       };
-    }
-  }
-
-  // Agent specific endpoints
-  @Patch(':id/status')
-  async updateStatus(
-    @Param('id') id: string,
-    @Body()
-    body: { status: 'pending' | 'in_progress' | 'completed' | 'expired' },
-  ): Promise<{ success: boolean; message: string; data?: any }> {
-    try {
-      const data = await this.legalService.updateStatus(id, body.status);
-      return { success: true, message: 'Status updated successfully', data };
-    } catch (error: any) {
-      console.log('[Error]', error);
-      return {
-        success: false,
-        message: 'Failed to update status',
-      };
-    }
-  }
-
-  @Get('user/:userId/status/:status')
-  async findByUserIdAndStatus(
-    @Param('userId') userId: string,
-    @Param('status')
-    status: 'pending' | 'in_progress' | 'completed' | 'expired',
-  ): Promise<{ success: boolean; data: any[] }> {
-    try {
-      const data = await this.legalService.findByUserIdAndStatus(
-        userId,
-        status,
-      );
-      return { success: true, data };
-    } catch (error) {
-      console.log('[Error]', error);
-      return { success: false, data: [] };
     }
   }
 }

@@ -12,7 +12,6 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UpdateScholarPointsDto } from './dto/update-scholar-points.dto';
 import { AuthRequired } from '../auth/decorators/auth-required.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Request } from 'express';
@@ -32,18 +31,6 @@ export class UserController {
   @AuthRequired()
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);
-  }
-
-  @Patch(':id/scholar-points')
-  @AuthRequired()
-  updateScholarPoints(
-    @Param('id') id: string,
-    @Body() updateScholarPointsDto: UpdateScholarPointsDto,
-  ) {
-    return this.userService.updateScholarPoints(
-      id,
-      updateScholarPointsDto.points,
-    );
   }
 
   @Delete(':id')

@@ -6,6 +6,7 @@ import { LegalModule } from './legal/legal.module';
 import { AuthModule } from './auth/auth.module';
 import { HealthModule } from './health/health.module';
 import { UserModule } from './user/user.module';
+import { ChatbotModule } from './chatbot/chatbot.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UserModule } from './user/user.module';
     AuthModule,
     HealthModule,
     UserModule,
+    ChatbotModule,
   ],
   controllers: [AppController],
   providers: [AppService],
