@@ -6,6 +6,7 @@ import { LegalModule } from './legal/legal.module';
 import { AuthModule } from './auth/auth.module';
 import { HealthModule } from './health/health.module';
 import { UserModule } from './user/user.module';
+import { AgentModule } from './agent/agent.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
@@ -22,6 +23,7 @@ import { UserModule } from './user/user.module';
     AuthModule,
     HealthModule,
     UserModule,
+    AgentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
