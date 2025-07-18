@@ -15,6 +15,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ inputMessage, setInputMess
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
+      console.log("sending message");
       e.preventDefault();
       onSendMessage();
     }

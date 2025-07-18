@@ -11,10 +11,10 @@ interface AgentState {
 
   // Actions
   sendMessage: (data: SendMessageRequest) => Promise<AgentMessage>;
-  getUserSession: (userId: string) => Promise<AgentSession>;
-  getMessageHistory: (userId: string, query?: MessageHistoryQuery) => Promise<MessageHistory>;
-  resetSession: (userId: string) => Promise<AgentResponse>;
-  completeSession: (userId: string) => Promise<AgentResponse>;
+  getUserSession: () => Promise<AgentSession>;
+  getMessageHistory: (query?: MessageHistoryQuery) => Promise<MessageHistory>;
+  resetSession: () => Promise<AgentResponse>;
+  completeSession: () => Promise<AgentResponse>;
   healthCheck: () => Promise<HealthCheck>;
 
   // State management
@@ -54,10 +54,10 @@ export const useAgentStore = create<AgentState>((set, get) => ({
     }
   },
 
-  async getUserSession(userId: string): Promise<AgentSession> {
+  async getUserSession(): Promise<AgentSession> {
     set({ loading: true, error: null });
     try {
-      const response = await apiClient.get(`/agent/session/${userId}`);
+      const response = await apiClient.get("/agent/session");
       const sessionData = response.data;
 
       // Convert timestamps to Date objects
@@ -76,14 +76,14 @@ export const useAgentStore = create<AgentState>((set, get) => ({
     }
   },
 
-  async getMessageHistory(userId: string, query: MessageHistoryQuery = {}): Promise<MessageHistory> {
+  async getMessageHistory(query: MessageHistoryQuery = {}): Promise<MessageHistory> {
     set({ loading: true, error: null });
     try {
       const params = new URLSearchParams();
       if (query.limit) params.append("limit", query.limit.toString());
       if (query.offset) params.append("offset", query.offset.toString());
 
-      const url = `/agent/session/${userId}/history${params.toString() ? `?${params.toString()}` : ""}`;
+      const url = `/agent/session/history${params.toString() ? `?${params.toString()}` : ""}`;
       const response = await apiClient.get(url);
       const historyData = response.data;
 
@@ -105,10 +105,10 @@ export const useAgentStore = create<AgentState>((set, get) => ({
     }
   },
 
-  async resetSession(userId: string): Promise<AgentResponse> {
+  async resetSession(): Promise<AgentResponse> {
     set({ loading: true, error: null });
     try {
-      const response = await apiClient.delete(`/agent/session/${userId}`);
+      const response = await apiClient.delete("/agent/session");
       const responseData = response.data;
 
       // Convert timestamp to Date object
@@ -132,10 +132,10 @@ export const useAgentStore = create<AgentState>((set, get) => ({
     }
   },
 
-  async completeSession(userId: string): Promise<AgentResponse> {
+  async completeSession(): Promise<AgentResponse> {
     set({ loading: true, error: null });
     try {
-      const response = await apiClient.post(`/agent/session/${userId}/complete`);
+      const response = await apiClient.post("/agent/session/complete");
       const responseData = response.data;
 
       // Convert timestamp to Date object
@@ -146,7 +146,7 @@ export const useAgentStore = create<AgentState>((set, get) => ({
 
       // Update current session to completed if it exists
       const { currentSession } = get();
-      if (currentSession && currentSession.userId === userId) {
+      if (currentSession) {
         set({
           currentSession: {
             ...currentSession,

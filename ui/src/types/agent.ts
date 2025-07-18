@@ -1,6 +1,6 @@
 export interface AgentMessage {
   response: string;
-  phase: string;
+  phase: AgentPhase;
   sessionId: string;
   timestamp: Date;
 }
@@ -8,7 +8,7 @@ export interface AgentMessage {
 export interface AgentSession {
   sessionId: string;
   userId: string;
-  phase: string;
+  phase: AgentPhase;
   selectedSchool: string | null;
   selectedMajor: string | null;
   userInfo: object | null;
@@ -20,11 +20,9 @@ export interface AgentSession {
 }
 
 export interface MessageHistoryItem {
-  id: string;
-  message: string;
-  response: string;
+  role: "user" | "agent";
+  content: string;
   timestamp: Date;
-  phase: string;
 }
 
 export interface MessageHistory {
@@ -48,10 +46,9 @@ export interface HealthCheck {
   version: string;
 }
 
-export type AgentPhase = "intro" | "collect_info" | "select_school" | "legal_checklist" | "progress_tracking" | "life_planning";
+export type AgentPhase = "greeting" | "information_gathering" | "school_major_selection" | "document_preparation" | "final_advice";
 
 export interface SendMessageRequest {
-  userId: string;
   message: string;
 }
 

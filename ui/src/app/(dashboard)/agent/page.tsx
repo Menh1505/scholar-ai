@@ -6,6 +6,7 @@ import { useUserStore } from "@/stores/useUserStore";
 import { ChatArea } from "@/components/agent/ChatArea";
 import { SuggestedQuestions } from "@/components/agent/SuggestedQuestions";
 import { Message } from "@/components/agent/MessageBubble";
+import toast from "react-hot-toast";
 
 export default function AgentPage() {
   const { user } = useUserStore();
@@ -19,41 +20,35 @@ export default function AgentPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (user?._id) {
-      getUserSession(user._id);
-      getMessageHistory(user._id);
+    getUserSession();
+    getMessageHistory();
+  }, [getUserSession, getMessageHistory]);
+
+  // Show error toast when error occurs
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      clearError(); // Auto clear error after showing toast
     }
-  }, [user, getUserSession, getMessageHistory]);
+  }, [error, clearError]);
 
   useEffect(() => {
     if (messageHistory?.messages) {
-      const formattedMessages: Message[] = messageHistory.messages
-        .map((msg) => [
-          {
-            id: `${msg.id}-user`,
-            content: msg.message,
-            isUser: true,
-            timestamp: msg.timestamp,
-            phase: msg.phase,
-          },
-          {
-            id: `${msg.id}-agent`,
-            content: msg.response,
-            isUser: false,
-            timestamp: msg.timestamp,
-            phase: msg.phase,
-          },
-        ])
-        .flat();
+      const formattedMessages: Message[] = messageHistory.messages.map((msg, index) => ({
+        id: `${index}-${msg.role}`,
+        content: msg.content,
+        isUser: msg.role === "user",
+        timestamp: msg.timestamp,
+      }));
       setMessages(formattedMessages);
     }
   }, [messageHistory]);
 
   const handleSendMessage = async () => {
-    console.log("handleSendMessage called", { inputMessage, userId: user?._id });
+    console.log("handleSendMessage called", { inputMessage });
 
-    if (!inputMessage.trim() || !user?._id) {
-      console.log("Early return - missing message or user", { inputMessage: inputMessage.trim(), userId: user?._id });
+    if (!inputMessage.trim()) {
+      console.log("Early return - missing message", { inputMessage: inputMessage.trim() });
       return;
     }
 
@@ -72,7 +67,6 @@ export default function AgentPage() {
     try {
       console.log("Calling sendMessage API...");
       const response = await sendMessage({
-        userId: user._id,
         message: inputMessage.trim(),
       });
 
@@ -90,6 +84,10 @@ export default function AgentPage() {
       setMessages((prev) => [...prev, agentMessage]);
     } catch (error) {
       console.error("Failed to send message:", error);
+
+      // Show error toast
+      toast.error("Failed to send message. Please try again.");
+
       const errorMessage: Message = {
         id: `${Date.now()}-error`,
         content: "Sorry, I encountered an error. Please try again.",
@@ -111,8 +109,6 @@ export default function AgentPage() {
     <div className="h-screen flex">
       <ChatArea
         currentSession={currentSession}
-        error={error}
-        onClearError={clearError}
         messages={messages}
         isTyping={isTyping}
         inputMessage={inputMessage}
