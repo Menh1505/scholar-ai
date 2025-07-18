@@ -9,6 +9,7 @@ export enum Phase {
   SELECT_SCHOOL = 'select_school',
   LEGAL_CHECKLIST = 'legal_checklist',
   PROGRESS_TRACKING = 'progress_tracking',
+  LIFE_PLANNING = 'life_planning',
 }
 
 export interface UserInfo {
@@ -21,15 +22,6 @@ export interface UserInfo {
   preferredRegion?: string;
   academicBackground?: string;
   workExperience?: string;
-}
-
-export interface LegalDocument {
-  name: string;
-  id: string;
-  status: 'pending' | 'in_progress' | 'completed' | 'expired';
-  createdAt: Date;
-  deadline?: Date;
-  notes?: string;
 }
 
 export interface ChatMessage {
@@ -59,25 +51,6 @@ export class AgentSession {
 
   @Prop({ type: Object, default: {} })
   userInfo: UserInfo;
-
-  @Prop({
-    type: [
-      {
-        name: String,
-        id: String,
-        status: {
-          type: String,
-          enum: ['pending', 'in_progress', 'completed', 'expired'],
-          default: 'pending',
-        },
-        createdAt: { type: Date, default: Date.now },
-        deadline: Date,
-        notes: String,
-      },
-    ],
-    default: [],
-  })
-  legalChecklist: LegalDocument[];
 
   @Prop({
     type: [
@@ -144,13 +117,19 @@ AgentSessionSchema.virtual('sessionDuration').get(function () {
 
 // Add virtual for progress percentage
 AgentSessionSchema.virtual('progressPercentage').get(function () {
-  if (this.legalChecklist.length === 0) return 0;
+  // Progress is now calculated based on phase completion
+  const phaseOrder = [
+    Phase.INTRO,
+    Phase.COLLECT_INFO,
+    Phase.SELECT_SCHOOL,
+    Phase.LEGAL_CHECKLIST,
+    Phase.PROGRESS_TRACKING,
+  ];
 
-  const completedCount = this.legalChecklist.filter(
-    (doc) => doc.status === 'completed',
-  ).length;
+  const currentPhaseIndex = phaseOrder.indexOf(this.phase);
+  if (currentPhaseIndex === -1) return 0;
 
-  return Math.round((completedCount / this.legalChecklist.length) * 100);
+  return Math.round(((currentPhaseIndex + 1) / phaseOrder.length) * 100);
 });
 
 // Pre-save middleware to update analytics

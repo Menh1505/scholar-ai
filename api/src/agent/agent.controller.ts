@@ -110,7 +110,6 @@ export class AgentController {
         phase: session.phase,
         selectedSchool: session.selectedSchool,
         selectedMajor: session.selectedMajor,
-        legalChecklist: session.legalChecklist,
         userInfo: session.userInfo,
         isCompleted: session.isCompleted,
         progressPercentage: (session as any).progressPercentage,

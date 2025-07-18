@@ -31,24 +31,31 @@ export function createAgentTools(authToken: string) {
     new DynamicTool({
       name: 'createLegalDocument',
       description:
-        'Tạo giấy tờ pháp lý mới cho du học. Input: tên giấy tờ (VD: I-20, Passport, Visa Application)',
+        'Tạo giấy tờ pháp lý mới cho du học. Input: userId|documentTitle (VD: "123|I-20 Form")',
       func: async (input: string) => {
         try {
-          const documentName = input.trim();
+          const [userId, documentTitle] = input.split('|');
+          if (!userId || !documentTitle) {
+            return JSON.stringify({
+              success: false,
+              error: 'Input không hợp lệ. Cần format: userId|documentTitle',
+            });
+          }
+
           const res = await axios.post(
             `${API_BASE_URL}/legal`,
             {
-              name: documentName,
-              type: 'study_abroad',
+              userId: userId.trim(),
+              title: documentTitle.trim(),
+              content: `Giấy tờ ${documentTitle.trim()} cần chuẩn bị cho du học Mỹ`,
               status: 'pending',
-              description: `Giấy tờ ${documentName} cần chuẩn bị cho du học Mỹ`,
             },
             { headers: { Authorization: `Bearer ${authToken}` } },
           );
           return JSON.stringify({
             success: true,
             data: res.data,
-            message: `Đã tạo giấy tờ ${documentName} thành công`,
+            message: `Đã tạo giấy tờ ${documentTitle} thành công`,
           });
         } catch (error) {
           return JSON.stringify({
@@ -96,16 +103,25 @@ export function createAgentTools(authToken: string) {
 
     new DynamicTool({
       name: 'getLegalDocuments',
-      description: 'Lấy danh sách tất cả giấy tờ pháp lý của người dùng',
+      description:
+        'Lấy danh sách tất cả giấy tờ pháp lý của người dùng. Input: userId',
       func: async (input: string) => {
         try {
-          const res = await axios.get(`${API_BASE_URL}/legal`, {
+          const userId = input.trim();
+          if (!userId) {
+            return JSON.stringify({
+              success: false,
+              error: 'Cần cung cấp userId',
+            });
+          }
+
+          const res = await axios.get(`${API_BASE_URL}/legal/user/${userId}`, {
             headers: { Authorization: `Bearer ${authToken}` },
           });
           return JSON.stringify({
             success: true,
             data: res.data,
-            total: res.data.length,
+            total: res.data.data ? res.data.data.length : 0,
           });
         } catch (error) {
           return JSON.stringify({
@@ -215,6 +231,84 @@ export function createAgentTools(authToken: string) {
             success: false,
             error: 'Không thể tìm kiếm trường học',
             details: error.message,
+          });
+        }
+      },
+    }),
+
+    new DynamicTool({
+      name: 'ensureLegalDocuments',
+      description:
+        'Kiểm tra và tạo danh sách giấy tờ pháp lý cần thiết cho du học, chỉ tạo những gì chưa có. Input: userId',
+      func: async (input: string) => {
+        try {
+          const userId = input.trim();
+          if (!userId) {
+            return JSON.stringify({
+              success: false,
+              error: 'Cần cung cấp userId',
+            });
+          }
+
+          // First, get existing legal documents
+          const existingRes = await axios.get(
+            `${API_BASE_URL}/legal/user/${userId}`,
+            {
+              headers: { Authorization: `Bearer ${authToken}` },
+            },
+          );
+
+          const existingDocs = existingRes.data.data || [];
+          const existingTitles = existingDocs.map((doc) =>
+            doc.title.toLowerCase(),
+          );
+
+          // Define required documents for studying abroad
+          const requiredDocs = [
+            'I-20 Form',
+            'Passport',
+            'Visa Application (DS-160)',
+            'Financial Statement',
+            'Academic Transcripts',
+          ];
+
+          // Create only missing documents
+          const missingDocs = requiredDocs.filter(
+            (doc) => !existingTitles.includes(doc.toLowerCase()),
+          );
+
+          const createdDocs: any[] = [];
+          for (const docTitle of missingDocs) {
+            const createRes = await axios.post(
+              `${API_BASE_URL}/legal`,
+              {
+                userId: userId,
+                title: docTitle,
+                content: `Giấy tờ ${docTitle} cần chuẩn bị cho du học Mỹ`,
+                type: 'document',
+                status: 'pending',
+                priority:
+                  docTitle.includes('I-20') || docTitle.includes('Passport')
+                    ? 'high'
+                    : 'medium',
+              },
+              { headers: { Authorization: `Bearer ${authToken}` } },
+            );
+            createdDocs.push(createRes.data);
+          }
+
+          return JSON.stringify({
+            success: true,
+            existing: existingDocs.length,
+            created: createdDocs.length,
+            createdDocs: createdDocs,
+            message: `Đã kiểm tra và tạo ${createdDocs.length} giấy tờ mới. Tổng cộng có ${existingDocs.length + createdDocs.length} giấy tờ.`,
+          });
+        } catch (error) {
+          return JSON.stringify({
+            success: false,
+            error: 'Không thể kiểm tra/tạo giấy tờ pháp lý',
+            details: error.response?.data || error.message,
           });
         }
       },

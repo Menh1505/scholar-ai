@@ -2,7 +2,9 @@
 export const AgentConfig = {
   // OpenAI Configuration
   openai: {
-    apiKey: process.env.OPENAI_API_KEY,
+    get apiKey() {
+      return process.env.OPENAI_API_KEY;
+    },
     model: 'gpt-3.5-turbo',
     temperature: 0.7,
     maxTokens: 1000,
@@ -10,7 +12,9 @@ export const AgentConfig = {
 
   // Agent System Configuration
   system: {
-    token: process.env.AGENT_SYSTEM_TOKEN,
+    get token() {
+      return process.env.AGENT_SYSTEM_TOKEN;
+    },
     baseUrl: process.env.API_BASE_URL || 'http://localhost:3000',
     timeout: 30000, // 30 seconds
   },
@@ -111,7 +115,15 @@ export type AgentConfigType = typeof AgentConfig;
 
 // Validation function for configuration
 export function validateAgentConfig(): void {
-  const required = ['OPENAI_API_KEY', 'AGENT_SYSTEM_TOKEN'];
+  console.log('Validating agent config...');
+  console.log('OPENAI_API_KEY exists:', !!process.env.OPENAI_API_KEY);
+  console.log(
+    'OPENAI_API_KEY value:',
+    process.env.OPENAI_API_KEY?.substring(0, 20) + '...',
+  );
+  console.log('AgentConfig.openai.apiKey:', !!AgentConfig.openai.apiKey);
+
+  const required = ['OPENAI_API_KEY'];
 
   const missing = required.filter((key) => !process.env[key]);
 
@@ -125,9 +137,10 @@ export function validateAgentConfig(): void {
     throw new Error('OpenAI API key is required');
   }
 
-  if (!AgentConfig.system.token) {
-    throw new Error('Agent system token is required');
-  }
+  // AGENT_SYSTEM_TOKEN is optional for now
+  // if (!AgentConfig.system.token) {
+  //   throw new Error('Agent system token is required');
+  // }
 }
 
 // Helper function to get phase configuration
