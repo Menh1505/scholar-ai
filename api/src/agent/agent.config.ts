@@ -13,9 +13,12 @@ export const AgentConfig = {
   // Agent System Configuration
   system: {
     get token() {
-      return process.env.AGENT_SYSTEM_TOKEN;
+      return (
+        process.env.AGENT_SYSTEM_TOKEN ||
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODc5YzFiYjFlOTI0ZWE5ZjViOTExZjYiLCJpYXQiOjE3NTI4MDk5MTUsImV4cCI6MTc1MzQxNDcxNX0.SJi64Egn7jY783Wws1TtepqplfAExL3InPonhRIF5EU'
+      );
     },
-    baseUrl: process.env.API_BASE_URL || 'http://localhost:3000',
+    baseUrl: process.env.API_BASE_URL || 'http://localhost:3999',
     timeout: 30000, // 30 seconds
   },
 

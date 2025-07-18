@@ -1,10 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ChatOpenAI } from '@langchain/openai';
-import { ChatPromptTemplate } from '@langchain/core/prompts';
+import {
+  ChatPromptTemplate,
+  MessagesPlaceholder,
+} from '@langchain/core/prompts';
 import { AgentConfig } from '../agent.config';
 import { createAgentTools } from '../agent.tools';
 import { AgentSessionDocument } from '../schema/agent.schema';
 import { AgentPromptService } from './agent.prompt.service';
+import { createToolCallingAgent, AgentExecutor } from 'langchain/agents';
 
 @Injectable()
 export class AgentChatService {
@@ -17,11 +21,84 @@ export class AgentChatService {
     message: string,
     authToken: string,
   ): Promise<string> {
-    // Khởi tạo tools với system token
-    const systemToken = AgentConfig.system.token || authToken;
-    const tools = createAgentTools(systemToken);
+    try {
+      // Khởi tạo tools với system token
+      const systemToken = AgentConfig.system.token || authToken;
+      this.logger.log(
+        `Using system token: ${systemToken?.substring(0, 20)}...`,
+      );
+      const tools = createAgentTools(systemToken);
 
-    // Agent LangChain setup với configuration
+      // Agent LangChain setup với configuration
+      const llm = new ChatOpenAI({
+        temperature: AgentConfig.openai.temperature,
+        openAIApiKey: AgentConfig.openai.apiKey,
+        modelName: AgentConfig.openai.model,
+        maxTokens: AgentConfig.openai.maxTokens,
+        timeout: AgentConfig.system.timeout,
+      });
+
+      const systemPrompt = this.promptService.buildSystemPrompt(session);
+
+      // Tạo prompt template cho agent
+      const prompt = ChatPromptTemplate.fromMessages([
+        ['system', systemPrompt],
+        ['human', '{input}'],
+        new MessagesPlaceholder('agent_scratchpad'),
+      ]);
+
+      // Tạo Tool Calling Agent
+      const agent = await createToolCallingAgent({
+        llm,
+        tools,
+        prompt,
+      });
+
+      // Tạo Agent Executor
+      const agentExecutor = new AgentExecutor({
+        agent,
+        tools,
+        verbose: true,
+        returnIntermediateSteps: true,
+        maxIterations: 3,
+        earlyStoppingMethod: 'generate',
+      });
+
+      // Thực thi agent với input
+      const result = await agentExecutor.invoke({
+        input: message,
+      });
+
+      // Ghi lại phản hồi agent
+      let responseContent = result.output || 'No response generated';
+
+      // Nếu có intermediate steps, thêm thông tin về tool calls
+      if (result.intermediateSteps && result.intermediateSteps.length > 0) {
+        const toolResults = result.intermediateSteps.map((step) => {
+          if (step.action && step.observation) {
+            return `Tool: ${step.action.tool} - Result: ${step.observation}`;
+          }
+          return 'Tool executed';
+        });
+        responseContent += `\n\nTools executed: ${toolResults.join(', ')}`;
+      }
+
+      this.logger.log(`Agent response: ${responseContent}`);
+      return responseContent;
+    } catch (error) {
+      this.logger.error(`Error in processMessage: ${error.message}`);
+
+      // Fallback to simple chat if agent fails
+      return this.fallbackProcessMessage(session, message, authToken);
+    }
+  }
+
+  private async fallbackProcessMessage(
+    session: AgentSessionDocument,
+    message: string,
+    authToken: string,
+  ): Promise<string> {
+    // Simple chat chain as fallback
     const llm = new ChatOpenAI({
       temperature: AgentConfig.openai.temperature,
       openAIApiKey: AgentConfig.openai.apiKey,
@@ -32,7 +109,6 @@ export class AgentChatService {
 
     const systemPrompt = this.promptService.buildSystemPrompt(session);
 
-    // Tạo một simple chat chain thay vì ReAct agent
     const prompt = ChatPromptTemplate.fromMessages([
       ['system', systemPrompt],
       ['human', '{input}'],
@@ -40,18 +116,13 @@ export class AgentChatService {
 
     const chain = prompt.pipe(llm);
 
-    // Chạy chain với input
     const response = await chain.invoke({
       input: message,
     });
 
-    // Ghi lại phản hồi agent
-    const responseContent =
-      typeof response.content === 'string'
-        ? response.content
-        : JSON.stringify(response.content);
-
-    return responseContent;
+    return typeof response.content === 'string'
+      ? response.content
+      : JSON.stringify(response.content);
   }
 
   addUserMessage(session: AgentSessionDocument, message: string): void {

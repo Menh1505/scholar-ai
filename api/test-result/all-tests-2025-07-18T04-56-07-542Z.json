@@ -1,0 +1,783 @@
+{
+  "health": true,
+  "fullFlow": {
+    "timestamp": "2025-07-18T04:55:03.710Z",
+    "testSuite": "Agent API Integration Test",
+    "userToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODc5YzFiYjFlOTI0ZWE5ZjViOTExZjYiLCJpYXQiOjE3NTI4MDk5MTUsImV4cCI6MTc1MzQxNDcxNX0.SJi64Egn7jY783Wws1TtepqplfAExL3InPonhRIF5EU",
+    "userId": "6879c1bb1e924ea9f5b911f6",
+    "results": {
+      "phase1": {
+        "phase": "collect_info",
+        "response": "Chào bạn! Rất vui được hỗ trợ bạn trong việc tư vấn du học Mỹ. Bạn đã chọn trường và ngành học nào chưa ạ? Nếu có bất kỳ câu hỏi nào, đừng ngần ngại để lại cho mình biết nhé. Mình sẽ cố gắng giúp bạn!",
+        "timestamp": "2025-07-18T04:55:06.798Z"
+      },
+      "phase2": {
+        "phase": "collect_info",
+        "response": "Chào bạn! Dường như bạn đã có điểm GPA và điểm TOEFL khá ấn tượng! Với ngân sách khoảng 60000$/năm và sở thích học tại California hoặc New York, bạn đã chọn hai địa điểm rất phổ biến và tốt cho việc học Computer Science.\n\nBạn có bất kỳ trường nào ưa thích tại California hoặc New York chưa? Nếu chưa, tôi có thể giúp bạn tìm các trường phù hợp với tiêu chí của mình. Hãy cho mình biết để bắt đầu tìm kiếm nhé!",
+        "timestamp": "2025-07-18T04:55:10.493Z"
+      },
+      "phase3": {
+        "phase": "collect_info",
+        "response": "Chào bạn! Đó là một lựa chọn tuyệt vời! Stanford University là một trong những trường đại học hàng đầu tại Mỹ và ngành Computer Science tại đây cũng rất phổ biến và uy tín. Nếu bạn cần bất kỳ thông tin hay hỗ trợ nào về việc chuẩn bị hồ sơ, các bước apply hay bất kỳ câu hỏi nào khác, đừng ngần ngại để lại cho mình biết nhé!",
+        "selectedSchool": "Stanford University",
+        "selectedMajor": "Computer Science",
+        "timestamp": "2025-07-18T04:55:24.213Z"
+      },
+      "phase4": {
+        "phase": "collect_info",
+        "response": "Chắc chắn! Để chuẩn bị cho việc du học tại Stanford University ngành Computer Science, bạn cần chuẩn bị các giấy tờ sau đây:\n1. Bằng tốt nghiệp trung học hoặc tương đương\n2. Bằng tốt nghiệp cử nhân và bảng điểm\n3. Điểm thi TOEFL hoặc IELTS\n4. Thư giới thiệu (Letter of Recommendation)\n5. Bài luận cá nhân (Personal Statement)\n6. Hồ sơ cá nhân và CV\n7. Bằng chứng nhận tài chính\n8. Hộ chiếu và visa (nếu áp dụng)\n\nBạn có sẵn một số giấy tờ nào trong danh sách trên chưa? Hãy cho mình biết để mình có thể hướng dẫn bạn tiếp theo nhé!",
+        "timestamp": "2025-07-18T04:55:32.978Z"
+      },
+      "phase5": {
+        "phase": "collect_info",
+        "response": "Chào bạn! Đó là một bước quan trọng đã hoàn thành. Kế hoạch sinh sống khi du học ở Mỹ là một phần không thể thiếu để đảm bảo bạn có một trải nghiệm học tập suôn sẻ. Bạn có những câu hỏi cụ thể về kế hoạch sinh sống tại Stanford University mà bạn muốn tôi giúp đỡ không?",
+        "timestamp": "2025-07-18T04:55:43.610Z"
+      },
+      "phase6": {
+        "phase": "collect_info",
+        "response": "Chắc chắn bạn có thể làm việc part-time khi học tại Mỹ. Tuy nhiên, có một số quy định cụ thể mà sinh viên quốc tế cần tuân thủ, bao gồm số giờ làm việc tối đa mỗi tuần và loại công việc được phép tham gia.\n\nĐể thích nghi với văn hóa Mỹ, bạn có thể chuẩn bị những điều sau:\n1. **Tìm hiểu về văn hóa và xã hội Mỹ**: Hiểu rõ về giá trị, thói quen và tập quán của người Mỹ sẽ giúp bạn dễ dàng hòa nhập và tương tác.\n   \n2. **Nâng cao kỹ năng giao tiếp**: Kỹ năng giao tiếp hiệu quả sẽ giúp bạn tương tác tốt với bạn bè, giáo viên và cộng đồng xung quanh.\n\n3. **Tham gia các hoạt động ngoại khóa**: Tham gia các hoạt động văn hóa, xã hội sẽ giúp bạn mở rộng mối quan hệ và hiểu biết về văn hóa địa phương.\n\n4. **Tìm hiểu về luật pháp và quy định tại Mỹ**: Đảm bảo bạn hiểu rõ về quy định về visa, làm việc, sống cư trú để tránh vi phạm luật pháp.\n\nNếu bạn cần hỗ trợ về vấn đề giấy tờ pháp lý hoặc danh sách cần chuẩn bị khi đi du học, đừng ngần ngại hỏi Scholar AI nhé!",
+        "timestamp": "2025-07-18T04:56:02.112Z"
+      },
+      "finalSession": {
+        "sessionId": "6879d3a88966c36d95cb08b8",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "phase": "collect_info",
+        "selectedSchool": "stanford university",
+        "selectedMajor": "computer science",
+        "userInfo": {},
+        "isCompleted": false,
+        "progressPercentage": 40,
+        "analytics": {
+          "message_sent_count": 1,
+          "totalMessages": 4,
+          "averageResponseTime": 838.5
+        },
+        "createdAt": "2025-07-18T04:55:04.813Z",
+        "updatedAt": "2025-07-18T04:56:02.103Z"
+      },
+      "allLegalDocuments": [
+        {
+          "_id": "6879d3c48966c36d95cb0941",
+          "title": "I-20 Form",
+          "userId": "6879c1bb1e924ea9f5b911f6",
+          "content": "admission document - I-20 Form",
+          "status": "pending",
+          "createdAt": "2025-07-18T04:55:32.993Z",
+          "updatedAt": "2025-07-18T04:55:32.993Z",
+          "__v": 0
+        },
+        {
+          "_id": "6879d3c58966c36d95cb0944",
+          "title": "Passport",
+          "userId": "6879c1bb1e924ea9f5b911f6",
+          "content": "identity document - Passport",
+          "status": "pending",
+          "createdAt": "2025-07-18T04:55:33.001Z",
+          "updatedAt": "2025-07-18T04:55:33.001Z",
+          "__v": 0
+        },
+        {
+          "_id": "6879d3c58966c36d95cb0947",
+          "title": "Visa Application (DS-160)",
+          "userId": "6879c1bb1e924ea9f5b911f6",
+          "content": "visa document - Visa Application (DS-160)",
+          "status": "pending",
+          "createdAt": "2025-07-18T04:55:33.014Z",
+          "updatedAt": "2025-07-18T04:55:33.014Z",
+          "__v": 0
+        },
+        {
+          "_id": "6879d3c58966c36d95cb094a",
+          "title": "Financial Statement",
+          "userId": "6879c1bb1e924ea9f5b911f6",
+          "content": "financial document - Financial Statement",
+          "status": "pending",
+          "createdAt": "2025-07-18T04:55:33.023Z",
+          "updatedAt": "2025-07-18T04:55:33.023Z",
+          "__v": 0
+        },
+        {
+          "_id": "6879d3c58966c36d95cb094d",
+          "title": "Academic Transcripts",
+          "userId": "6879c1bb1e924ea9f5b911f6",
+          "content": "academic document - Academic Transcripts",
+          "status": "pending",
+          "createdAt": "2025-07-18T04:55:33.029Z",
+          "updatedAt": "2025-07-18T04:55:33.029Z",
+          "__v": 0
+        }
+      ],
+      "updatedUser": {
+        "_id": "6879c1bb1e924ea9f5b911f6",
+        "fullname": "Mệnh Thiên",
+        "email": "dinhthienmenh1505@gmail.com",
+        "phone": "",
+        "sex": "other",
+        "dateOfBirth": "",
+        "nationality": "",
+        "religion": "",
+        "passportCode": "",
+        "passportExpiryDate": "",
+        "scholarPoints": 0,
+        "isActive": true,
+        "createdAt": "2025-07-18T03:38:35.211Z",
+        "updatedAt": "2025-07-18T04:56:04.145Z",
+        "__v": 0
+      }
+    },
+    "logs": [
+      {
+        "timestamp": "2025-07-18T04:55:03.711Z",
+        "type": "info",
+        "message": "🎯 Starting Agent API Integration Tests"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:03.712Z",
+        "type": "info",
+        "message": "Testing against: http://localhost:3999"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:03.713Z",
+        "type": "info",
+        "message": "\n🏥 Health Check"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:03.750Z",
+        "type": "success",
+        "message": "Health check: healthy"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:03.751Z",
+        "type": "info",
+        "message": "🚀 Starting Full Conversation Flow Test"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:03.751Z",
+        "type": "info",
+        "message": "\n📍 Phase 0: USER AUTHENTICATION - Kiểm tra thông tin user"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:03.776Z",
+        "type": "database",
+        "message": "User info retrieved: dinhthienmenh1505@gmail.com"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:03.776Z",
+        "type": "success",
+        "message": "User authenticated: dinhthienmenh1505@gmail.com"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:03.783Z",
+        "type": "success",
+        "message": "Session reset successfully"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:04.793Z",
+        "type": "info",
+        "message": "\n📍 Phase 1: INTRO - Giới thiệu"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:04.794Z",
+        "type": "user",
+        "message": "Sending message: \"Xin chào, tôi muốn tư vấn du học Mỹ\""
+      },
+      {
+        "timestamp": "2025-07-18T04:55:06.797Z",
+        "type": "success",
+        "message": "Response received - Phase: collect_info"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:06.797Z",
+        "type": "agent",
+        "message": "Agent Response: Chào bạn! Rất vui được hỗ trợ bạn trong việc tư vấn du học Mỹ. Bạn đã chọn trường và ngành học nào chưa ạ? Nếu có bất kỳ câu hỏi nào, đừng ngần ngại để lại cho mình biết nhé. Mình sẽ cố gắng giúp bạn!"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:08.802Z",
+        "type": "info",
+        "message": "\n📍 Phase 2: COLLECT_INFO - Thu thập thông tin học tập"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:08.803Z",
+        "type": "user",
+        "message": "Sending message: \"Tôi có GPA 3.8, TOEFL 105, muốn học Computer Science, ngân sách khoảng 60000$/năm, thích California hoặc New York\""
+      },
+      {
+        "timestamp": "2025-07-18T04:55:10.492Z",
+        "type": "success",
+        "message": "Response received - Phase: collect_info"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:10.493Z",
+        "type": "agent",
+        "message": "Agent Response: Chào bạn! Dường như bạn đã có điểm GPA và điểm TOEFL khá ấn tượng! Với ngân sách khoảng 60000$/năm và sở thích học tại California hoặc New York, bạn đã chọn hai địa điểm rất phổ biến và tốt cho việc học Computer Science.\n\nBạn có bất kỳ trường nào ưa thích tại California hoặc New York chưa? Nếu chưa, tôi có thể giúp bạn tìm các trường phù hợp với tiêu chí của mình. Hãy cho mình biết để bắt đầu tìm kiếm nhé!"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:12.508Z",
+        "type": "user",
+        "message": "Sending message: \"Tôi có kinh nghiệm làm việc 2 năm trong lĩnh vực IT, tốt nghiệp đại học ngành Công nghệ thông tin tại Việt Nam\""
+      },
+      {
+        "timestamp": "2025-07-18T04:55:14.600Z",
+        "type": "success",
+        "message": "Response received - Phase: collect_info"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:14.600Z",
+        "type": "agent",
+        "message": "Agent Response: Chào bạn! Kinh nghiệm làm việc 2 năm trong lĩnh vực IT và tốt nghiệp ngành Công nghệ thông tin sẽ là một điểm mạnh khi bạn muốn xin học bổng du học ngành Computer Science tại Mỹ. Điều này giúp bạn có sự hiểu biết sâu rộng về lĩnh vực và có cơ hội áp dụng kiến thức thực tế vào quá trình học tập tại nước ngoài.\n\nNếu bạn cần bất kỳ thông tin hoặc hỗ trợ nào về việc chuẩn bị hồ sơ du học hay quy trình xin học bổng, đừng ngần ngại để lại câu hỏi cho mình nhé!"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:16.614Z",
+        "type": "info",
+        "message": "\n📍 Phase 3: SELECT_SCHOOL - Gợi ý trường và ngành học"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:16.615Z",
+        "type": "user",
+        "message": "Sending message: \"Hãy gợi ý cho tôi một số trường đại học phù hợp\""
+      },
+      {
+        "timestamp": "2025-07-18T04:55:20.596Z",
+        "type": "success",
+        "message": "Response received - Phase: collect_info"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:20.596Z",
+        "type": "agent",
+        "message": "Agent Response: Chắc chắn! Dưới đây là một số trường đại học hàng đầu tại Mỹ với chương trình Computer Science mạnh mẽ mà bạn có thể xem xét:\n\n1. Massachusetts Institute of Technology (MIT) - Trường Cao đẳng Công nghệ Massachusetts\n2. Stanford University - Đại học Stanford\n3. Carnegie Mellon University - Đại học Carnegie Mellon\n4. University of California, Berkeley - Đại học California, Berkeley\n5. California Institute of Technology (Caltech) - Viện Công nghệ California\n6. Harvard University - Đại học Harvard\n7. University of Illinois at Urbana-Champaign - Đại học Illinois tại Urbana-Champaign\n8. University of Washington - Đại học Washington\n9. Georgia Institute of Technology - Viện Công nghệ Georgia\n10. University of Texas at Austin - Đại học Texas tại Austin\n\nĐây chỉ là một số trong số các trường hàng đầu, tuy nhiên, tùy thuộc vào tiêu chí và mong muốn cá nhân của bạn, bạn có thể cân nhắc chọn trường phù hợp nhất. Nếu cần thêm thông tin về bất kỳ trường nào hoặc có bất kỳ câu hỏi nào khác, đừng ngần ngại để cho mình biết nhé!"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:22.610Z",
+        "type": "user",
+        "message": "Sending message: \"Tôi muốn chọn Stanford University, ngành Computer Science\""
+      },
+      {
+        "timestamp": "2025-07-18T04:55:24.213Z",
+        "type": "success",
+        "message": "Response received - Phase: collect_info"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:24.213Z",
+        "type": "agent",
+        "message": "Agent Response: Chào bạn! Đó là một lựa chọn tuyệt vời! Stanford University là một trong những trường đại học hàng đầu tại Mỹ và ngành Computer Science tại đây cũng rất phổ biến và uy tín. Nếu bạn cần bất kỳ thông tin hay hỗ trợ nào về việc chuẩn bị hồ sơ, các bước apply hay bất kỳ câu hỏi nào khác, đừng ngần ngại để lại cho mình biết nhé!"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:26.219Z",
+        "type": "info",
+        "message": "\n📍 Phase 4: LEGAL_CHECKLIST - Tạo danh sách giấy tờ pháp lý"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:26.219Z",
+        "type": "user",
+        "message": "Sending message: \"Tôi cần danh sách giấy tờ cần chuẩn bị để du học\""
+      },
+      {
+        "timestamp": "2025-07-18T04:55:28.972Z",
+        "type": "success",
+        "message": "Response received - Phase: collect_info"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:28.972Z",
+        "type": "agent",
+        "message": "Agent Response: Chào bạn! Để chuẩn bị cho việc du học tại Mỹ, bạn cần chuẩn bị các giấy tờ sau đây:\n1. Hồ sơ học bạ, bằng cấp (bản sao và bản dịch công chứng)\n2. Bảng điểm học bạ (transcript)\n3. Chứng minh nhân dân hoặc hộ chiếu (bản sao)\n4. Thư ngỏ giới thiệu bản thân và mục tiêu học tập\n5. Phiếu đăng ký dự thi (nếu có)\n6. Kết quả bài kiểm tra tiếng Anh như TOEFL, IELTS (nếu có)\n7. Thư giới thiệu từ giáo viên, cố vấn học về khả năng học tập và phẩm chất cá nhân\n\nNếu bạn cần hỗ trợ với việc kiểm tra các giấy tờ cần chuẩn bị, hãy cung cấp thông tin chi tiết để tôi hỗ trợ bạn kiểm tra những gì bạn đã có và những gì còn thiếu nhé."
+      },
+      {
+        "timestamp": "2025-07-18T04:55:30.983Z",
+        "type": "user",
+        "message": "Sending message: \"Hãy tạo danh sách chi tiết các giấy tờ tôi cần chuẩn bị\""
+      },
+      {
+        "timestamp": "2025-07-18T04:55:32.977Z",
+        "type": "success",
+        "message": "Response received - Phase: collect_info"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:32.977Z",
+        "type": "agent",
+        "message": "Agent Response: Chắc chắn! Để chuẩn bị cho việc du học tại Stanford University ngành Computer Science, bạn cần chuẩn bị các giấy tờ sau đây:\n1. Bằng tốt nghiệp trung học hoặc tương đương\n2. Bằng tốt nghiệp cử nhân và bảng điểm\n3. Điểm thi TOEFL hoặc IELTS\n4. Thư giới thiệu (Letter of Recommendation)\n5. Bài luận cá nhân (Personal Statement)\n6. Hồ sơ cá nhân và CV\n7. Bằng chứng nhận tài chính\n8. Hộ chiếu và visa (nếu áp dụng)\n\nBạn có sẵn một số giấy tờ nào trong danh sách trên chưa? Hãy cho mình biết để mình có thể hướng dẫn bạn tiếp theo nhé!"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:32.978Z",
+        "type": "info",
+        "message": "\n💾 Checking existing legal documents"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:32.987Z",
+        "type": "info",
+        "message": "Found 0 existing legal documents"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:32.987Z",
+        "type": "info",
+        "message": "Creating 5 missing legal documents"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:32.996Z",
+        "type": "database",
+        "message": "Legal document created: I-20 Form"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:33.006Z",
+        "type": "database",
+        "message": "Legal document created: Passport"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:33.018Z",
+        "type": "database",
+        "message": "Legal document created: Visa Application (DS-160)"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:33.025Z",
+        "type": "database",
+        "message": "Legal document created: Financial Statement"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:33.032Z",
+        "type": "database",
+        "message": "Legal document created: Academic Transcripts"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:35.037Z",
+        "type": "info",
+        "message": "\n📍 Phase 5: PROGRESS_TRACKING - Theo dõi tiến độ chuẩn bị"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:35.038Z",
+        "type": "user",
+        "message": "Sending message: \"Tôi đã hoàn thành I-20 và Passport\""
+      },
+      {
+        "timestamp": "2025-07-18T04:55:36.506Z",
+        "type": "success",
+        "message": "Response received - Phase: collect_info"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:36.506Z",
+        "type": "agent",
+        "message": "Agent Response: Xin chúc mừng bạn đã hoàn thành I-20 và Passport! Đó là bước quan trọng để chuẩn bị cho việc du học tại Mỹ. Nếu bạn cần hỗ trợ với bất kỳ điều gì khác, đừng ngần ngại để lại câu hỏi. Chúc bạn thành công trên hành trình du học của mình!"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:38.508Z",
+        "type": "user",
+        "message": "Sending message: \"Tôi cũng đã nộp đơn xin visa rồi\""
+      },
+      {
+        "timestamp": "2025-07-18T04:55:39.823Z",
+        "type": "success",
+        "message": "Response received - Phase: collect_info"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:39.823Z",
+        "type": "agent",
+        "message": "Agent Response: Chúc mừng bạn đã hoàn thành bước nộp đơn xin visa! Nếu có bất kỳ câu hỏi nào về quá trình xin visa hoặc cần hỗ trợ gì thêm, đừng ngần ngại để lại cho mình biết nhé. Mình sẽ cố gắng giúp bạn trong quá trình chuẩn bị cho du học tại Stanford University."
+      },
+      {
+        "timestamp": "2025-07-18T04:55:41.835Z",
+        "type": "info",
+        "message": "\n📝 Updating legal documents status"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:41.835Z",
+        "type": "user",
+        "message": "Sending message: \"Tôi đã hoàn thành tất cả giấy tờ, bây giờ tôi cần tư vấn về kế hoạch sinh sống\""
+      },
+      {
+        "timestamp": "2025-07-18T04:55:43.609Z",
+        "type": "success",
+        "message": "Response received - Phase: collect_info"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:43.609Z",
+        "type": "agent",
+        "message": "Agent Response: Chào bạn! Đó là một bước quan trọng đã hoàn thành. Kế hoạch sinh sống khi du học ở Mỹ là một phần không thể thiếu để đảm bảo bạn có một trải nghiệm học tập suôn sẻ. Bạn có những câu hỏi cụ thể về kế hoạch sinh sống tại Stanford University mà bạn muốn tôi giúp đỡ không?"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:45.621Z",
+        "type": "info",
+        "message": "\n📍 Phase 6: LIFE_PLANNING - Tư vấn kế hoạch sinh sống"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:45.622Z",
+        "type": "user",
+        "message": "Sending message: \"Tôi cần tư vấn về chỗ ở, chi phí sinh hoạt, và cách thích nghi với cuộc sống ở Mỹ\""
+      },
+      {
+        "timestamp": "2025-07-18T04:55:51.542Z",
+        "type": "success",
+        "message": "Response received - Phase: collect_info"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:51.543Z",
+        "type": "agent",
+        "message": "Agent Response: Chắc chắn! Để bắt đầu, bạn đã chọn Stanford University là trường đại học của mình, đúng không? Stanford nằm ở California, một trong những bang đắt đỏ nhất ở Mỹ, vì vậy chi phí sinh hoạt ở đây sẽ cao hơn so với nhiều khu vực khác. Tuy nhiên, Stanford cũng cung cấp nhiều hỗ trợ tài chính và lựa chọn chỗ ở phong phú cho sinh viên.\n\nVề chỗ ở, bạn có thể chọn ở trong ký túc xá của trường hoặc thuê nhà ngoại trường. Stanford cung cấp nhiều lựa chọn ký túc xá từ tiện nghi đến sang trọng, tùy thuộc vào ngân sách và sở thích của bạn. Nếu bạn muốn thuê nhà ngoại trường, khu vực xung quanh Palo Alto cũng có nhiều lựa chọn, tuy nhiên giá cả sẽ cao hơn.\n\nĐể thích nghi với cuộc sống ở Mỹ, bạn có thể tìm hiểu về văn hóa, xã hội và quy định tại địa phương. Tham gia các hoạt động sinh viên, tìm hiểu về văn hóa địa phương, và kết bạn với sinh viên trong và ngoài lớp để tạo cơ hội giao lưu và học hỏi. Đừng ngần ngại tìm kiếm sự hỗ trợ từ trường, cộng đồng sinh viên và các tổ chức học sinh Việt Nam tại Mỹ.\n\nNếu bạn cần thêm thông tin hoặc có bất kỳ câu hỏi nào khác, đừng ngần ngại để lại cho mình biết nhé!"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:53.548Z",
+        "type": "user",
+        "message": "Sending message: \"Làm thế nào để tìm được chỗ ở gần trường? Chi phí sinh hoạt hàng tháng khoảng bao nhiêu?\""
+      },
+      {
+        "timestamp": "2025-07-18T04:55:56.004Z",
+        "type": "success",
+        "message": "Response received - Phase: collect_info"
+      },
+      {
+        "timestamp": "2025-07-18T04:55:56.004Z",
+        "type": "agent",
+        "message": "Agent Response: Để tìm chỗ ở gần trường, bạn có thể tham khảo trên các trang web như Craigslist, Zillow, Apartments.com, hay sử dụng các ứng dụng như Zumper, Rent.com. Ngoài ra, có thể tham gia các nhóm Facebook hoặc diễn đàn trực tuyến của trường để tìm thông tin về chỗ ở gần trường.\n\nChi phí sinh hoạt hàng tháng ở gần trường Stanford University có thể dao động từ khoảng $1000 - $2000 tùy thuộc vào loại chỗ ở (phòng trọ, căn hộ, nhà riêng) và tiện ích kèm theo. Ngoài việc thuê chỗ ở, bạn cũng cần tính thêm chi phí cho thức ăn, đi lại, sách vở, và các hoạt động giải trí khác. Để tiết kiệm chi phí, bạn có thể cân nhắc việc ở chung với bạn bè hoặc tìm phòng trọ ngoài khu vực trung tâm."
+      },
+      {
+        "timestamp": "2025-07-18T04:55:58.012Z",
+        "type": "user",
+        "message": "Sending message: \"Tôi có thể làm việc part-time khi học không? Cần chuẩn bị gì để thích nghi với văn hóa Mỹ?\""
+      },
+      {
+        "timestamp": "2025-07-18T04:56:02.111Z",
+        "type": "success",
+        "message": "Response received - Phase: collect_info"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:02.112Z",
+        "type": "agent",
+        "message": "Agent Response: Chắc chắn bạn có thể làm việc part-time khi học tại Mỹ. Tuy nhiên, có một số quy định cụ thể mà sinh viên quốc tế cần tuân thủ, bao gồm số giờ làm việc tối đa mỗi tuần và loại công việc được phép tham gia.\n\nĐể thích nghi với văn hóa Mỹ, bạn có thể chuẩn bị những điều sau:\n1. **Tìm hiểu về văn hóa và xã hội Mỹ**: Hiểu rõ về giá trị, thói quen và tập quán của người Mỹ sẽ giúp bạn dễ dàng hòa nhập và tương tác.\n   \n2. **Nâng cao kỹ năng giao tiếp**: Kỹ năng giao tiếp hiệu quả sẽ giúp bạn tương tác tốt với bạn bè, giáo viên và cộng đồng xung quanh.\n\n3. **Tham gia các hoạt động ngoại khóa**: Tham gia các hoạt động văn hóa, xã hội sẽ giúp bạn mở rộng mối quan hệ và hiểu biết về văn hóa địa phương.\n\n4. **Tìm hiểu về luật pháp và quy định tại Mỹ**: Đảm bảo bạn hiểu rõ về quy định về visa, làm việc, sống cư trú để tránh vi phạm luật pháp.\n\nNếu bạn cần hỗ trợ về vấn đề giấy tờ pháp lý hoặc danh sách cần chuẩn bị khi đi du học, đừng ngần ngại hỏi Scholar AI nhé!"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:04.120Z",
+        "type": "info",
+        "message": "\n📊 Getting final session summary"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:04.128Z",
+        "type": "database",
+        "message": "Session retrieved: 6879d3a88966c36d95cb08b8"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:04.128Z",
+        "type": "info",
+        "message": "\n📋 Getting all legal documents for user"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:04.137Z",
+        "type": "database",
+        "message": "Legal documents retrieved: 5 documents"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:04.137Z",
+        "type": "info",
+        "message": "\n👤 Updating user profile"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:04.154Z",
+        "type": "success",
+        "message": "User profile updated: dinhthienmenh1505@gmail.com"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:04.154Z",
+        "type": "info",
+        "message": "Final Phase: collect_info"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:04.154Z",
+        "type": "info",
+        "message": "Selected School: stanford university"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:04.154Z",
+        "type": "info",
+        "message": "Selected Major: computer science"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:04.154Z",
+        "type": "info",
+        "message": "Progress: 40%"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:04.154Z",
+        "type": "info",
+        "message": "Total Messages: 4"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:04.155Z",
+        "type": "success",
+        "message": "\n✅ Full conversation flow test completed successfully!"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:04.155Z",
+        "type": "info",
+        "message": "\n🔧 Testing Session Management Features"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:04.155Z",
+        "type": "user",
+        "message": "Sending message: \"6879c1bb1e924ea9f5b911f6\""
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.684Z",
+        "type": "success",
+        "message": "Response received - Phase: intro"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.684Z",
+        "type": "agent",
+        "message": "Agent Response: Chào bạn! Để có thể hỗ trợ bạn tốt hơn, bạn có thể cung cấp thêm thông tin về điều gì bạn cần hỗ trợ không? Bạn đang quan tâm đến việc du học ở Mỹ hay có câu hỏi cụ thể nào về quá trình du học không? Mình sẽ cố gắng giúp bạn!"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.687Z",
+        "type": "database",
+        "message": "Session retrieved: 6879d3a88966c36d95cb08b8"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.688Z",
+        "type": "success",
+        "message": "Session retrieved: 6879d3a88966c36d95cb08b8"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.695Z",
+        "type": "database",
+        "message": "Message history retrieved: 26 messages"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.695Z",
+        "type": "success",
+        "message": "Message history: 26 messages"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.700Z",
+        "type": "success",
+        "message": "Session reset successfully"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.701Z",
+        "type": "success",
+        "message": "Session management tests passed!"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.701Z",
+        "type": "info",
+        "message": "\n🛡️ Testing Error Handling"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.701Z",
+        "type": "user",
+        "message": "Sending message: \"\""
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.708Z",
+        "type": "error",
+        "message": "Error sending message: Request failed with status code 400"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.708Z",
+        "type": "error",
+        "message": "Error details: {\"message\":\"userId và message là bắt buộc\",\"error\":\"Bad Request\",\"statusCode\":400}"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.708Z",
+        "type": "success",
+        "message": "Empty user ID validation works correctly"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.708Z",
+        "type": "user",
+        "message": "Sending message: \"6879c1bb1e924ea9f5b911f6\""
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.714Z",
+        "type": "error",
+        "message": "Error sending message: Request failed with status code 400"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.714Z",
+        "type": "error",
+        "message": "Error details: {\"message\":\"userId và message là bắt buộc\",\"error\":\"Bad Request\",\"statusCode\":400}"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.715Z",
+        "type": "success",
+        "message": "Empty message validation works correctly"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:05.715Z",
+        "type": "user",
+        "message": "Sending message: \"6879c1bb1e924ea9f5b911f6\""
+      },
+      {
+        "timestamp": "2025-07-18T04:56:06.207Z",
+        "type": "success",
+        "message": "Response received - Phase: intro"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:06.208Z",
+        "type": "agent",
+        "message": "Agent Response: "
+      },
+      {
+        "timestamp": "2025-07-18T04:56:06.208Z",
+        "type": "error",
+        "message": "Should have failed with long message"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:06.208Z",
+        "type": "success",
+        "message": "Error handling tests passed!"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:06.208Z",
+        "type": "info",
+        "message": "\n👥 Testing Concurrent Users"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:06.208Z",
+        "type": "user",
+        "message": "Sending message: \"user1\""
+      },
+      {
+        "timestamp": "2025-07-18T04:56:06.209Z",
+        "type": "user",
+        "message": "Sending message: \"user2\""
+      },
+      {
+        "timestamp": "2025-07-18T04:56:06.210Z",
+        "type": "user",
+        "message": "Sending message: \"user3\""
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.084Z",
+        "type": "success",
+        "message": "Response received - Phase: intro"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.085Z",
+        "type": "agent",
+        "message": "Agent Response: Chào bạn! Tôi là Scholar AI, trợ lý AI chuyên tư vấn du học Mỹ. Có điều gì tôi có thể giúp bạn hôm nay không?"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.090Z",
+        "type": "database",
+        "message": "Session retrieved: 6879d3e78966c36d95cb0ad7"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.357Z",
+        "type": "success",
+        "message": "Response received - Phase: intro"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.358Z",
+        "type": "agent",
+        "message": "Agent Response: Chào user3, có điều gì Scholar có thể hỗ trợ bạn không ạ? Bạn cần thông tin về du học Mỹ hay có câu hỏi gì cần tư vấn không? Hãy chia sẻ để mình có thể giúp đỡ bạn nhé!"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.364Z",
+        "type": "database",
+        "message": "Session retrieved: 6879d3e78966c36d95cb0adf"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.527Z",
+        "type": "success",
+        "message": "Response received - Phase: intro"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.527Z",
+        "type": "agent",
+        "message": "Agent Response: Chào user2, chào mừng bạn đến với trợ lý tư vấn du học của mình! Cần Scholar AI hỗ trợ bạn với thông tin gì hôm nay?"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.533Z",
+        "type": "database",
+        "message": "Session retrieved: 6879d3e78966c36d95cb0ae7"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.533Z",
+        "type": "success",
+        "message": "User user1: Success (6879d3e78966c36d95cb0ad7)"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.534Z",
+        "type": "success",
+        "message": "User user2: Success (6879d3e78966c36d95cb0ae7)"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.534Z",
+        "type": "success",
+        "message": "User user3: Success (6879d3e78966c36d95cb0adf)"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.538Z",
+        "type": "success",
+        "message": "Session reset successfully"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.539Z",
+        "type": "success",
+        "message": "Session reset successfully"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.540Z",
+        "type": "success",
+        "message": "Session reset successfully"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.540Z",
+        "type": "success",
+        "message": "Concurrent users test passed!"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.540Z",
+        "type": "info",
+        "message": "\n📊 Test Results Summary"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.541Z",
+        "type": "success",
+        "message": "health: ✅ PASSED"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.541Z",
+        "type": "success",
+        "message": "fullFlow: ✅ PASSED"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.541Z",
+        "type": "success",
+        "message": "sessionManagement: ✅ PASSED"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.542Z",
+        "type": "success",
+        "message": "errorHandling: ✅ PASSED"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.542Z",
+        "type": "success",
+        "message": "concurrentUsers: ✅ PASSED"
+      },
+      {
+        "timestamp": "2025-07-18T04:56:07.542Z",
+        "type": "success",
+        "message": "\nOverall: 5/5 tests passed"
+      }
+    ],
+    "userInfo": {
+      "id": "6879c1bb1e924ea9f5b911f6",
+      "fullname": "Mệnh Thiên",
+      "email": "dinhthienmenh1505@gmail.com",
+      "phone": "",
+      "sex": "other",
+      "dateOfBirth": "",
+      "nationality": "",
+      "religion": "",
+      "passportCode": "",
+      "passportExpiryDate": "",
+      "scholarPoints": 0
+    }
+  },
+  "sessionManagement": true,
+  "errorHandling": true,
+  "concurrentUsers": true,
+  "summary": {
+    "totalTests": 5,
+    "passedTests": 5,
+    "startTime": "2025-07-18T04:55:03.713Z",
+    "endTime": "2025-07-18T04:56:07.542Z"
+  }
+}

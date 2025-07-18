@@ -17,7 +17,18 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:agent": "node test-agent-runner.js all",
+    "test:agent:quick": "node test-agent-runner.js quick",
+    "test:agent:integration": "node test-agent-runner.js integration",
+    "test:agent:performance": "node test-agent-runner.js performance",
+    "test:agent:legal": "node test-agent-runner.js legal",
+    "test:agent:simple": "node test-agent-simple.js quick",
+    "demo:agent": "node demo-agent.js",
+    "demo:agent:quick": "node demo-agent.js quick",
+    "demo:agent:full": "node demo-agent.js full",
+    "health:check": "node health-check.js",
+    "quick:start": "node quick-start.js"
   },
   "dependencies": {
     "@langchain/core": "^0.3.64",
@@ -32,6 +43,7 @@
     "@types/cookie-parser": "^1.4.9",
     "axios": "^1.10.0",
     "class-validator": "^0.14.2",
+    "colors": "^1.4.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.0",
     "langchain": "^0.3.30",

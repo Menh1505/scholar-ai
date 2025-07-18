@@ -1,8 +1,9 @@
 // agent.tools.ts
 import { DynamicTool } from '@langchain/core/tools';
 import axios from 'axios';
+import { AgentConfig } from './agent.config';
 
-const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3000';
+const API_BASE_URL = AgentConfig.system.baseUrl;
 
 export function createAgentTools(authToken: string) {
   return [
@@ -61,40 +62,6 @@ export function createAgentTools(authToken: string) {
           return JSON.stringify({
             success: false,
             error: `Không thể tạo giấy tờ ${input}`,
-            details: error.response?.data || error.message,
-          });
-        }
-      },
-    }),
-
-    new DynamicTool({
-      name: 'updateLegalStatus',
-      description:
-        'Cập nhật trạng thái giấy tờ đã hoàn thành. Input: "documentId|status" (VD: "123|completed")',
-      func: async (input: string) => {
-        try {
-          const [id, status] = input.split('|');
-          if (!id || !status) {
-            return JSON.stringify({
-              success: false,
-              error: 'Format không đúng. Cần: documentId|status',
-            });
-          }
-
-          const res = await axios.patch(
-            `${API_BASE_URL}/legal/${id}`,
-            { status: status.trim() },
-            { headers: { Authorization: `Bearer ${authToken}` } },
-          );
-          return JSON.stringify({
-            success: true,
-            data: res.data,
-            message: `Đã cập nhật trạng thái giấy tờ thành ${status}`,
-          });
-        } catch (error) {
-          return JSON.stringify({
-            success: false,
-            error: 'Không thể cập nhật trạng thái giấy tờ',
             details: error.response?.data || error.message,
           });
         }
