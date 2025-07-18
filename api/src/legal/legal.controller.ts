@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { LegalService } from './legal.service';
 import { CreateLegalDto } from './dto/create-legal.dto';
@@ -34,6 +35,24 @@ export class LegalController {
         success: false,
         message: 'Failed to create legal document',
       };
+    }
+  }
+
+  @Get('me')
+  async findMyDocuments(
+    @Req() req: any,
+  ): Promise<{ success: boolean; data: any[] }> {
+    try {
+      const userId = req.user?.userId;
+      if (!userId) {
+        return { success: false, data: [] };
+      }
+
+      const data = await this.legalService.findByUserId(userId);
+      return { success: true, data };
+    } catch (error) {
+      console.log('[Error]', error);
+      return { success: false, data: [] };
     }
   }
 
