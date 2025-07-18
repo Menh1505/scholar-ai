@@ -17,6 +17,7 @@ export default function AgentPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [historyLoaded, setHistoryLoaded] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -32,8 +33,9 @@ export default function AgentPage() {
     }
   }, [error, clearError]);
 
+  // Load message history only once when page loads
   useEffect(() => {
-    if (messageHistory?.messages) {
+    if (messageHistory?.messages && !historyLoaded) {
       const formattedMessages: Message[] = messageHistory.messages.map((msg, index) => ({
         id: `${index}-${msg.role}`,
         content: msg.content,
@@ -41,8 +43,9 @@ export default function AgentPage() {
         timestamp: msg.timestamp,
       }));
       setMessages(formattedMessages);
+      setHistoryLoaded(true);
     }
-  }, [messageHistory]);
+  }, [messageHistory, historyLoaded]);
 
   const handleSendMessage = async () => {
     console.log("handleSendMessage called", { inputMessage });
