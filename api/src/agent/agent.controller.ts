@@ -11,11 +11,12 @@ import {
   HttpException,
   HttpStatus,
   Logger,
+  UseGuards,
 } from '@nestjs/common';
 import { AgentService } from './agent.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 interface MessageRequest {
-  userId: string;
   message: string;
 }
 
@@ -33,19 +34,21 @@ export class AgentController {
   constructor(private readonly agentService: AgentService) {}
 
   @Post('message')
+  @UseGuards(JwtAuthGuard)
   async handleMessage(
     @Body() body: MessageRequest,
     @Req() req: any,
   ): Promise<MessageResponse> {
     try {
-      const { userId, message } = body;
+      const { message } = body;
+      const userId = req.user.userId; // Lấy userId từ JWT token
 
-      if (!userId || !message) {
-        throw new BadRequestException('userId và message là bắt buộc');
+      if (!message) {
+        throw new BadRequestException('message là bắt buộc');
       }
 
-      if (typeof userId !== 'string' || typeof message !== 'string') {
-        throw new BadRequestException('userId và message phải là string');
+      if (typeof message !== 'string') {
+        throw new BadRequestException('message phải là string');
       }
 
       if (message.trim().length === 0) {
@@ -95,12 +98,11 @@ export class AgentController {
     }
   }
 
-  @Get('session/:userId')
-  async getSession(@Param('userId') userId: string) {
+  @Get('session')
+  @UseGuards(JwtAuthGuard)
+  async getSession(@Req() req: any) {
     try {
-      if (!userId) {
-        throw new BadRequestException('userId là bắt buộc');
-      }
+      const userId = req.user.userId; // Lấy userId từ JWT token
 
       const session = await this.agentService.getOrCreateSession(userId);
 
@@ -129,12 +131,11 @@ export class AgentController {
     }
   }
 
-  @Get('session/:userId/history')
-  async getMessageHistory(@Param('userId') userId: string, @Req() req: any) {
+  @Get('session/history')
+  @UseGuards(JwtAuthGuard)
+  async getMessageHistory(@Req() req: any) {
     try {
-      if (!userId) {
-        throw new BadRequestException('userId là bắt buộc');
-      }
+      const userId = req.user.userId; // Lấy userId từ JWT token
 
       const limit = parseInt(req.query.limit) || 50;
       const offset = parseInt(req.query.offset) || 0;
@@ -165,12 +166,11 @@ export class AgentController {
     }
   }
 
-  @Delete('session/:userId')
-  async resetSession(@Param('userId') userId: string) {
+  @Delete('session')
+  @UseGuards(JwtAuthGuard)
+  async resetSession(@Req() req: any) {
     try {
-      if (!userId) {
-        throw new BadRequestException('userId là bắt buộc');
-      }
+      const userId = req.user.userId; // Lấy userId từ JWT token
 
       await this.agentService.resetSession(userId);
 
@@ -196,12 +196,11 @@ export class AgentController {
     }
   }
 
-  @Post('session/:userId/complete')
-  async completeSession(@Param('userId') userId: string) {
+  @Post('session/complete')
+  @UseGuards(JwtAuthGuard)
+  async completeSession(@Req() req: any) {
     try {
-      if (!userId) {
-        throw new BadRequestException('userId là bắt buộc');
-      }
+      const userId = req.user.userId; // Lấy userId từ JWT token
 
       await this.agentService.completeSession(userId);
 

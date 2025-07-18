@@ -71,16 +71,14 @@ export function createAgentTools(authToken: string) {
     new DynamicTool({
       name: 'getLegalDocuments',
       description:
-        'Lấy danh sách tất cả giấy tờ pháp lý của người dùng. Input: userId',
+        'Lấy danh sách tất cả giấy tờ pháp lý của người dùng hiện tại',
       func: async (input: string) => {
         try {
-          const userId = input.trim();
-          if (!userId) {
-            return JSON.stringify({
-              success: false,
-              error: 'Cần cung cấp userId',
-            });
-          }
+          // Lấy thông tin user từ token thay vì input
+          const userRes = await axios.get(`${API_BASE_URL}/user/me`, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          });
+          const userId = userRes.data._id;
 
           const res = await axios.get(`${API_BASE_URL}/legal/user/${userId}`, {
             headers: { Authorization: `Bearer ${authToken}` },
