@@ -20,6 +20,7 @@ interface CreateLegalDocumentData {
 
 interface UpdateLegalDocumentData {
   title?: string;
+  userId?: string;
   content?: string;
   status?: "pending" | "in_progress" | "completed" | "expired";
 }
@@ -36,13 +37,10 @@ interface LegalState {
 
   // API Methods
   createDocument: (data: CreateLegalDocumentData) => Promise<LegalDocument>;
-  getAllDocuments: () => Promise<void>;
   getDocumentById: (id: string) => Promise<void>;
-  getDocumentsByUserId: (userId: string) => Promise<void>;
-  getDocumentsByStatus: (status: "pending" | "in_progress" | "completed" | "expired") => Promise<void>;
-  searchDocuments: (title: string) => Promise<void>;
-  getUserDocumentsByStatus: (userId: string, status: "pending" | "in_progress" | "completed" | "expired") => Promise<void>;
+  getMyDocuments: () => Promise<void>;
   updateDocument: (id: string, data: UpdateLegalDocumentData) => Promise<LegalDocument>;
+  deleteDocument: (id: string) => Promise<void>;
 }
 
 export const useLegalStore = create<LegalState>((set, get) => ({
@@ -77,22 +75,6 @@ export const useLegalStore = create<LegalState>((set, get) => ({
     }
   },
 
-  async getAllDocuments() {
-    set({ loading: true, error: null });
-    try {
-      const response = await apiClient.get("/legal");
-
-      if (response.data.success) {
-        set({ documents: response.data.data, loading: false });
-      } else {
-        throw new Error("Failed to fetch documents");
-      }
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || error.message || "Failed to fetch documents";
-      set({ error: errorMessage, loading: false, documents: [] });
-    }
-  },
-
   async getDocumentById(id) {
     set({ loading: true, error: null });
     try {
@@ -109,66 +91,18 @@ export const useLegalStore = create<LegalState>((set, get) => ({
     }
   },
 
-  async getDocumentsByUserId(userId) {
+  async getMyDocuments() {
     set({ loading: true, error: null });
     try {
-      const response = await apiClient.get(`/legal/user/${userId}`);
+      const response = await apiClient.get("/legal/me");
 
       if (response.data.success) {
         set({ documents: response.data.data, loading: false });
       } else {
-        throw new Error("Failed to fetch user documents");
+        throw new Error("Failed to fetch my documents");
       }
     } catch (error: any) {
-      const errorMessage = error.response?.data?.message || error.message || "Failed to fetch user documents";
-      set({ error: errorMessage, loading: false, documents: [] });
-    }
-  },
-
-  async getDocumentsByStatus(status) {
-    set({ loading: true, error: null });
-    try {
-      const response = await apiClient.get(`/legal/status/${status}`);
-
-      if (response.data.success) {
-        set({ documents: response.data.data, loading: false });
-      } else {
-        throw new Error("Failed to fetch documents by status");
-      }
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || error.message || "Failed to fetch documents by status";
-      set({ error: errorMessage, loading: false, documents: [] });
-    }
-  },
-
-  async searchDocuments(title) {
-    set({ loading: true, error: null });
-    try {
-      const response = await apiClient.get(`/legal/search?title=${encodeURIComponent(title)}`);
-
-      if (response.data.success) {
-        set({ documents: response.data.data, loading: false });
-      } else {
-        throw new Error("Failed to search documents");
-      }
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || error.message || "Failed to search documents";
-      set({ error: errorMessage, loading: false, documents: [] });
-    }
-  },
-
-  async getUserDocumentsByStatus(userId, status) {
-    set({ loading: true, error: null });
-    try {
-      const response = await apiClient.get(`/legal/user/${userId}/status/${status}`);
-
-      if (response.data.success) {
-        set({ documents: response.data.data, loading: false });
-      } else {
-        throw new Error("Failed to fetch user documents by status");
-      }
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || error.message || "Failed to fetch user documents by status";
+      const errorMessage = error.response?.data?.message || error.message || "Failed to fetch my documents";
       set({ error: errorMessage, loading: false, documents: [] });
     }
   },
@@ -191,6 +125,27 @@ export const useLegalStore = create<LegalState>((set, get) => ({
       }
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || error.message || "Failed to update document";
+      set({ error: errorMessage, loading: false });
+      throw error;
+    }
+  },
+
+  async deleteDocument(id) {
+    set({ loading: true, error: null });
+    try {
+      const response = await apiClient.delete(`/legal/${id}`);
+
+      if (response.data.success) {
+        set((state) => ({
+          documents: state.documents.filter((doc) => doc._id !== id),
+          currentDocument: state.currentDocument?._id === id ? null : state.currentDocument,
+          loading: false,
+        }));
+      } else {
+        throw new Error(response.data.message || "Failed to delete document");
+      }
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || error.message || "Failed to delete document";
       set({ error: errorMessage, loading: false });
       throw error;
     }
