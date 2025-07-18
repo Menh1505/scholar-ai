@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ChatOpenAI } from '@langchain/openai';
 import {
   ChatPromptTemplate,
@@ -12,8 +12,6 @@ import { createToolCallingAgent, AgentExecutor } from 'langchain/agents';
 
 @Injectable()
 export class AgentChatService {
-  private readonly logger = new Logger(AgentChatService.name);
-
   constructor(private readonly promptService: AgentPromptService) {}
 
   async processMessage(
@@ -24,9 +22,6 @@ export class AgentChatService {
     try {
       // Khởi tạo tools với system token
       const systemToken = AgentConfig.system.token || authToken;
-      this.logger.log(
-        `Using system token: ${systemToken?.substring(0, 20)}...`,
-      );
       const tools = createAgentTools(systemToken);
 
       // Agent LangChain setup với configuration
@@ -58,7 +53,7 @@ export class AgentChatService {
       const agentExecutor = new AgentExecutor({
         agent,
         tools,
-        verbose: true,
+        verbose: false, // Tắt verbose logs
         returnIntermediateSteps: true,
         maxIterations: 3,
         earlyStoppingMethod: 'generate',
@@ -72,22 +67,13 @@ export class AgentChatService {
       // Ghi lại phản hồi agent
       let responseContent = result.output || 'No response generated';
 
-      // Nếu có intermediate steps, thêm thông tin về tool calls
+      // Nếu có intermediate steps, xử lý kết quả (không log)
       if (result.intermediateSteps && result.intermediateSteps.length > 0) {
-        const toolResults = result.intermediateSteps.map((step) => {
-          if (step.action && step.observation) {
-            return `Tool: ${step.action.tool} - Result: ${step.observation}`;
-          }
-          return 'Tool executed';
-        });
-        responseContent += `\n\nTools executed: ${toolResults.join(', ')}`;
+        // Tools đã được sử dụng nhưng không cần log
       }
 
-      this.logger.log(`Agent response: ${responseContent}`);
       return responseContent;
     } catch (error) {
-      this.logger.error(`Error in processMessage: ${error.message}`);
-
       // Fallback to simple chat if agent fails
       return this.fallbackProcessMessage(session, message, authToken);
     }

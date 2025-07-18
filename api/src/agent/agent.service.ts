@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AgentSession, AgentSessionDocument } from './schema/agent.schema';
@@ -14,8 +14,6 @@ import {
 
 @Injectable()
 export class AgentService {
-  private readonly logger = new Logger(AgentService.name);
-
   constructor(
     @InjectModel(AgentSession.name)
     private sessionModel: Model<AgentSessionDocument>,
@@ -29,12 +27,7 @@ export class AgentService {
     // Validate configuration on service initialization
     try {
       validateAgentConfig();
-      this.logger.log('Agent configuration validated successfully');
     } catch (error) {
-      this.logger.error(
-        'Agent configuration validation failed:',
-        error.message,
-      );
       throw error;
     }
   }
@@ -74,15 +67,10 @@ export class AgentService {
     authToken: string,
   ): Promise<string> {
     try {
-      this.logger.log(`Processing message for user ${userId}`);
-
       const session = await this.getOrCreateSession(userId);
 
       // Extract school and major from user message BEFORE processing
-      console.log('🔍 Extracting school and major from:', message);
       this.extractionService.extractSchoolAndMajor(message, session);
-      console.log('🔍 After extraction - School:', session.selectedSchool);
-      console.log('🔍 After extraction - Major:', session.selectedMajor);
 
       // Add user message to session
       this.chatService.addUserMessage(session, message);
@@ -106,13 +94,8 @@ export class AgentService {
       // Save session
       await session.save();
 
-      this.logger.log(`Successfully processed message for user ${userId}`);
       return responseContent;
     } catch (error) {
-      this.logger.error(
-        `Error processing message for user ${userId}:`,
-        error.message,
-      );
       throw error;
     }
   }

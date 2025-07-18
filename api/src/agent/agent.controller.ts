@@ -61,10 +61,6 @@ export class AgentController {
 
       const token = req.headers.authorization || '';
 
-      this.logger.log(
-        `Handling message from user ${userId}: ${message.substring(0, 50)}...`,
-      );
-
       const response = await this.agentService.handlePrompt(
         userId,
         message,
@@ -174,8 +170,6 @@ export class AgentController {
 
       await this.agentService.resetSession(userId);
 
-      this.logger.log(`Session reset for user ${userId}`);
-
       return {
         message: 'Session đã được reset thành công',
         userId,
@@ -203,8 +197,6 @@ export class AgentController {
       const userId = req.user.userId; // Lấy userId từ JWT token
 
       await this.agentService.completeSession(userId);
-
-      this.logger.log(`Session completed for user ${userId}`);
 
       return {
         message: 'Session đã hoàn thành thành công',
