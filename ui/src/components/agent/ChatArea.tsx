@@ -16,6 +16,7 @@ interface ChatAreaProps {
 }
 
 export const ChatArea: React.FC<ChatAreaProps> = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   currentSession,
   messages,
   isTyping,

@@ -6,6 +6,7 @@ interface InfoCardsProps {
   user: User;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function InfoCards({ user }: InfoCardsProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">

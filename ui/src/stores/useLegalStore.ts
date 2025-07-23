@@ -43,7 +43,7 @@ interface LegalState {
   deleteDocument: (id: string) => Promise<void>;
 }
 
-export const useLegalStore = create<LegalState>((set, get) => ({
+export const useLegalStore = create<LegalState>((set) => ({
   documents: [],
   currentDocument: null,
   loading: false,

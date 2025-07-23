@@ -1,15 +1,13 @@
 "use client";
 import { Sidebar } from "@/components/layout/Sidebar";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface DashBoardLayoutProps {
   children: React.ReactNode;
 }
 
 const DashboardLayout = ({ children }: DashBoardLayoutProps) => {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading] = useState<boolean>(false);
   // Loading states
   if (isLoading) {
     return (

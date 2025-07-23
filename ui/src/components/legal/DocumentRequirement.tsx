@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Fieldset from "../Fieldset";
 import { useLegalStore } from "@/stores/useLegalStore";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export const DocumentRequirement = () => {
   const { documents, loading, error, getMyDocuments, deleteDocument, updateDocument, clearError } = useLegalStore();

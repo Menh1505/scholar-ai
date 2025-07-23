@@ -37,6 +37,7 @@ function ProfilePage() {
     setIsUpdating(true);
     try {
       // Extract only the fields that can be updated (exclude _id)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { _id, ...updateData } = tempProfile;
       await updateUser(updateData);
       setIsEditing(false);

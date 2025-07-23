@@ -1,44 +1,41 @@
-# Use Node.js Alpine image
-FROM node:18-alpine AS base
+# Stage 1: Build
+FROM node:18-alpine AS builder
 
-# Install dependencies only when needed
-FROM base AS deps
-RUN apk add --no-cache libc6-compat
+# Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package.json package-lock.json* ./
-# Install ALL dependencies (including devDependencies for build)
-RUN npm ci
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Rebuild the source code only when needed
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the project files
 COPY . .
 
-# Build application
+# Build the Next.js app
 RUN npm run build
 
-# Production image, copy all files and run next
-FROM base AS runner
+# Stage 2: Production
+FROM node:18-alpine AS runner
+
+# Set working directory
 WORKDIR /app
 
-ENV NODE_ENV production
+# Install production dependencies only
+COPY --from=builder /app/package*.json ./
+RUN npm install --omit=dev
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+# Copy built app and public files from builder
+COPY --from=builder /app/.next .next
+COPY --from=builder /app/public public
+COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/tsconfig.json ./
+COPY --from=builder /app/.env ./
 
-# Copy necessary files
-COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-USER nextjs
-
+# Optional: define NODE_ENV
+ENV NODE_ENV=production
 EXPOSE 3000
 
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
-
-CMD ["node", "server.js"]
+# Start the app
+CMD ["npm", "start"]

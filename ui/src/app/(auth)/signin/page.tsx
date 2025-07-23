@@ -1,9 +1,9 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
-export default function SignIn() {
+function SignInContent() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export default function SignIn() {
       console.log("Login error: ", isError);
       toast.error("Failed to login, please try again.");
     }
-  }, []);
+  }, [searchParams]);
 
   const handleGoogleLogin = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/google`;
@@ -67,5 +67,13 @@ export default function SignIn() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SignIn() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignInContent />
+    </Suspense>
   );
 }
