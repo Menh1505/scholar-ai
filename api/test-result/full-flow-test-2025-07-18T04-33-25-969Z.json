@@ -1,0 +1,586 @@
+{
+  "timestamp": "2025-07-18T04:32:20.120Z",
+  "testSuite": "Agent API Integration Test",
+  "userToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODc5YzFiYjFlOTI0ZWE5ZjViOTExZjYiLCJpYXQiOjE3NTI4MDk5MTUsImV4cCI6MTc1MzQxNDcxNX0.SJi64Egn7jY783Wws1TtepqplfAExL3InPonhRIF5EU",
+  "userId": "6879c1bb1e924ea9f5b911f6",
+  "results": {
+    "phase1": {
+      "phase": "collect_info",
+      "response": "Chào bạn! Rất vui được hỗ trợ bạn trong việc tư vấn du học Mỹ. Bạn đã có trong kế hoạch cụ thể về việc du học ở Mỹ chưa? Nếu có bất kỳ câu hỏi nào hay thông tin cụ thể bạn cần tư vấn, đừng ngần ngại chia sẻ với mình nhé. Mình sẽ cố gắng giúp bạn trong quá trình tìm hiểu và chuẩn bị cho việc du học tại Mỹ.",
+      "timestamp": "2025-07-18T04:32:23.947Z"
+    },
+    "phase2": {
+      "phase": "collect_info",
+      "response": "Chào bạn! Đầu tiên, chúc mừng vì bạn đã có GPA 3.8 và điểm TOEFL 105, đó là thành tích rất tốt! Với nguyện vọng học Computer Science và ngân sách khoảng 60000$/năm, bạn có nhiều lựa chọn tuyệt vời ở California và New York.\n\nỞ California, bạn có thể xem xét các trường như University of California - Berkeley, Stanford University, California Institute of Technology. Ở New York, có Columbia University, New York University, và Cornell University. Tất cả các trường này đều có chương trình Computer Science rất mạnh và có vị trí địa lý thuận lợi.\n\nNếu có bất kỳ câu hỏi nào khác hoặc cần thêm thông tin, đừng ngần ngại để tôi biết nhé!",
+      "timestamp": "2025-07-18T04:32:29.636Z"
+    },
+    "phase3": {
+      "phase": "collect_info",
+      "response": "Chào bạn! Stanford University là một lựa chọn tuyệt vời và ngành Computer Science tại đây rất phát triển và danh tiếng. Để bắt đầu quá trình chuẩn bị và nộp đơn vào ngành này, bạn cần tập trung vào việc chuẩn bị bài thi TOEFL/IELTS, bảng điểm trung học và đại học, thư ngỏ và bài luận cá nhân sáng tạo. Nếu có bất kỳ câu hỏi nào khác, đừng ngần ngại để lại cho mình biết để được hỗ trợ nhé!",
+      "selectedSchool": "Stanford University",
+      "selectedMajor": "Computer Science",
+      "timestamp": "2025-07-18T04:32:42.409Z"
+    },
+    "phase4": {
+      "phase": "collect_info",
+      "response": "Chắc chắn! Để chuẩn bị hồ sơ du học Mỹ, bạn cần chuẩn bị các giấy tờ sau đây:\n\n1. Hồ sơ đăng ký trực tuyến (nếu có)\n2. Bằng tốt nghiệp THPT và bản dịch công chứng (nếu bằng tiếng không phải tiếng Anh)\n3. Bảng điểm của các năm học cấp 3 và bản dịch công chứng\n4. Điểm thi TOEFL, IELTS hoặc các chứng chỉ tiếng Anh tương đương\n5. Điểm thi SAT, ACT hoặc GRE (tuỳ theo yêu cầu của trường và ngành học)\n6. Thư giới thiệu từ giáo viên hoặc người quen biết\n7. Bài luận (personal statement) giới thiệu bản thân và lý do muốn du học\n8. Hồ sơ tài chính chứng minh khả năng tài chính để du học\n9. Hộ chiếu và các giấy tờ cá nhân khác\n\nĐảm bảo rằng bạn chuẩn bị đầy đủ và chính xác các giấy tờ này để nâng cao cơ hội được nhận vào trường đại học mơ ước của mình. Nếu cần thêm thông tin hoặc hỗ trợ, đừng ngần ngại để lại câu hỏi cho mình nhé!",
+      "timestamp": "2025-07-18T04:32:52.798Z"
+    },
+    "legalDocuments": [
+      {
+        "title": "I-20 Form",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "admission document - I-20 Form",
+        "status": "pending",
+        "_id": "6879ce7486901e62a41ed325",
+        "createdAt": "2025-07-18T04:32:52.803Z",
+        "updatedAt": "2025-07-18T04:32:52.803Z",
+        "__v": 0
+      },
+      {
+        "title": "Passport",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "identity document - Passport",
+        "status": "pending",
+        "_id": "6879ce7486901e62a41ed328",
+        "createdAt": "2025-07-18T04:32:52.809Z",
+        "updatedAt": "2025-07-18T04:32:52.809Z",
+        "__v": 0
+      },
+      {
+        "title": "Visa Application (DS-160)",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "visa document - Visa Application (DS-160)",
+        "status": "pending",
+        "_id": "6879ce7486901e62a41ed32b",
+        "createdAt": "2025-07-18T04:32:52.815Z",
+        "updatedAt": "2025-07-18T04:32:52.815Z",
+        "__v": 0
+      },
+      {
+        "title": "Financial Statement",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "financial document - Financial Statement",
+        "status": "pending",
+        "_id": "6879ce7486901e62a41ed32e",
+        "createdAt": "2025-07-18T04:32:52.819Z",
+        "updatedAt": "2025-07-18T04:32:52.819Z",
+        "__v": 0
+      },
+      {
+        "title": "Academic Transcripts",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "academic document - Academic Transcripts",
+        "status": "pending",
+        "_id": "6879ce7486901e62a41ed331",
+        "createdAt": "2025-07-18T04:32:52.825Z",
+        "updatedAt": "2025-07-18T04:32:52.825Z",
+        "__v": 0
+      }
+    ],
+    "phase5": {
+      "phase": "collect_info",
+      "response": "Chào bạn! Rất tuyệt vời khi bạn đã hoàn thành tất cả giấy tờ cần thiết. Để kế hoạch sinh sống tại Mỹ suôn sẻ hơn, dưới đây là một số gợi ý mà bạn có thể cân nhắc:\n\n1. Chỗ ở: Tìm hiểu các tùy chọn về chỗ ở như ký túc xá trường học, căn hộ cho sinh viên, hoặc phòng trọ trong khu vực gần trường học.\n\n2. Giao thông: Xem xét vận chuyển và giao thông ở khu vực bạn sẽ sinh sống. Nếu bạn không có ô tô, cần tìm hiểu về phương tiện công cộng hoặc xe đạp.\n\n3. Công việc bán thời gian: Nếu bạn muốn tìm cách kiếm thêm thu nhập, hãy xem xét việc làm bán thời gian hoặc thực tập phù hợp với lịch học của bạn.\n\n4. Tạo mạng lưới xã hội: Kết bạn với sinh viên quốc tế khác và người địa phương để học hỏi và tạo mối quan hệ xã hội.\n\n5. Thực phẩm: Tìm hiểu về cửa hàng thực phẩm gần trường học để mua sắm và nấu ăn tại nhà để tiết kiệm chi phí.\n\n6. Sức khỏe: Kiểm tra và hiểu rõ về bảo hiểm sức khỏe sinh viên, cũng như vị trí của các cơ sở y tế gần bạn.\n\nNhớ rằng, việc lên kế hoạch sẽ giúp bạn tự tin hơn khi bắt đầu cuộc sống mới tại Mỹ. Nếu bạn cần thêm thông tin hoặc có bất kỳ câu hỏi nào khác, đừng ngần ngại để lại cho mình biết nhé!",
+      "timestamp": "2025-07-18T04:33:08.250Z"
+    },
+    "phase6": {
+      "phase": "collect_info",
+      "response": "Chắc chắn bạn có thể làm việc part-time khi đang du học tại Mỹ. Tuy nhiên, có một số quy định cụ thể về việc làm part-time dành cho sinh viên quốc tế mà bạn cần phải tuân thủ. \n\nĐầu tiên, theo luật pháp Mỹ, sinh viên quốc tế chỉ được phép làm việc part-time trên trường hoặc ngoài trường trong khoảng thời gian nhất định mỗi tuần. Thường thì trong kỳ học, bạn chỉ được làm tối đa 20 giờ một tuần, còn trong kỳ nghỉ hè hoặc kỳ nghỉ lễ dài, bạn có thể làm full-time (tối đa 40 giờ một tuần).\n\nĐể thích nghi với văn hóa làm việc tại Mỹ, bạn cần hiểu và tuân thủ các quy tắc, luật lệ và văn hóa làm việc tại đất nước này. Điều quan trọng là bạn cần chú trọng đến sự chính xác, đúng giờ, trách nhiệm và sự chuyên nghiệp trong công việc. Ngoài ra, việc giao tiếp một cách trực tiếp, tự tin và hiệu quả cũng là yếu tố quan trọng giúp bạn thành công trong môi trường làm việc Mỹ.\n\nNếu bạn muốn biết thêm thông tin cụ thể hoặc có bất kỳ câu hỏi nào khác, đừng ngần ngại để lại cho mình biết nhé!",
+      "timestamp": "2025-07-18T04:33:23.939Z"
+    },
+    "finalSession": {
+      "sessionId": "6879ce5586901e62a41ed29e",
+      "userId": "6879c1bb1e924ea9f5b911f6",
+      "phase": "collect_info",
+      "userInfo": {},
+      "isCompleted": false,
+      "progressPercentage": 40,
+      "analytics": {
+        "message_sent_count": 1,
+        "totalMessages": 4,
+        "averageResponseTime": 1837
+      },
+      "createdAt": "2025-07-18T04:32:21.233Z",
+      "updatedAt": "2025-07-18T04:33:23.933Z"
+    },
+    "allLegalDocuments": [
+      {
+        "_id": "6879c860a36bd42ef12d3296",
+        "title": "I-20 Form",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "admission document - I-20 Form",
+        "status": "pending",
+        "createdAt": "2025-07-18T04:06:56.791Z",
+        "updatedAt": "2025-07-18T04:06:56.791Z",
+        "__v": 0
+      },
+      {
+        "_id": "6879c860a36bd42ef12d3299",
+        "title": "Passport",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "identity document - Passport",
+        "status": "pending",
+        "createdAt": "2025-07-18T04:06:56.799Z",
+        "updatedAt": "2025-07-18T04:06:56.799Z",
+        "__v": 0
+      },
+      {
+        "_id": "6879c860a36bd42ef12d329c",
+        "title": "Visa Application (DS-160)",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "visa document - Visa Application (DS-160)",
+        "status": "pending",
+        "createdAt": "2025-07-18T04:06:56.806Z",
+        "updatedAt": "2025-07-18T04:06:56.806Z",
+        "__v": 0
+      },
+      {
+        "_id": "6879c860a36bd42ef12d329f",
+        "title": "Financial Statement",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "financial document - Financial Statement",
+        "status": "pending",
+        "createdAt": "2025-07-18T04:06:56.813Z",
+        "updatedAt": "2025-07-18T04:06:56.813Z",
+        "__v": 0
+      },
+      {
+        "_id": "6879c860a36bd42ef12d32a2",
+        "title": "Academic Transcripts",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "academic document - Academic Transcripts",
+        "status": "pending",
+        "createdAt": "2025-07-18T04:06:56.819Z",
+        "updatedAt": "2025-07-18T04:06:56.819Z",
+        "__v": 0
+      },
+      {
+        "_id": "6879ce7486901e62a41ed325",
+        "title": "I-20 Form",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "admission document - I-20 Form",
+        "status": "pending",
+        "createdAt": "2025-07-18T04:32:52.803Z",
+        "updatedAt": "2025-07-18T04:32:52.803Z",
+        "__v": 0
+      },
+      {
+        "_id": "6879ce7486901e62a41ed328",
+        "title": "Passport",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "identity document - Passport",
+        "status": "pending",
+        "createdAt": "2025-07-18T04:32:52.809Z",
+        "updatedAt": "2025-07-18T04:32:52.809Z",
+        "__v": 0
+      },
+      {
+        "_id": "6879ce7486901e62a41ed32b",
+        "title": "Visa Application (DS-160)",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "visa document - Visa Application (DS-160)",
+        "status": "pending",
+        "createdAt": "2025-07-18T04:32:52.815Z",
+        "updatedAt": "2025-07-18T04:32:52.815Z",
+        "__v": 0
+      },
+      {
+        "_id": "6879ce7486901e62a41ed32e",
+        "title": "Financial Statement",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "financial document - Financial Statement",
+        "status": "pending",
+        "createdAt": "2025-07-18T04:32:52.819Z",
+        "updatedAt": "2025-07-18T04:32:52.819Z",
+        "__v": 0
+      },
+      {
+        "_id": "6879ce7486901e62a41ed331",
+        "title": "Academic Transcripts",
+        "userId": "6879c1bb1e924ea9f5b911f6",
+        "content": "academic document - Academic Transcripts",
+        "status": "pending",
+        "createdAt": "2025-07-18T04:32:52.825Z",
+        "updatedAt": "2025-07-18T04:32:52.825Z",
+        "__v": 0
+      }
+    ],
+    "updatedUser": {
+      "_id": "6879c1bb1e924ea9f5b911f6",
+      "fullname": "Mệnh Thiên",
+      "email": "dinhthienmenh1505@gmail.com",
+      "phone": "",
+      "sex": "other",
+      "dateOfBirth": "",
+      "nationality": "",
+      "religion": "",
+      "passportCode": "",
+      "passportExpiryDate": "",
+      "scholarPoints": 0,
+      "isActive": true,
+      "createdAt": "2025-07-18T03:38:35.211Z",
+      "updatedAt": "2025-07-18T04:33:25.964Z",
+      "__v": 0
+    }
+  },
+  "logs": [
+    {
+      "timestamp": "2025-07-18T04:32:20.121Z",
+      "type": "info",
+      "message": "🚀 Starting Full Conversation Flow Test"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:20.123Z",
+      "type": "info",
+      "message": "\n📍 Phase 0: USER AUTHENTICATION - Kiểm tra thông tin user"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:20.188Z",
+      "type": "database",
+      "message": "User info retrieved: dinhthienmenh1505@gmail.com"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:20.188Z",
+      "type": "success",
+      "message": "User authenticated: dinhthienmenh1505@gmail.com"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:20.197Z",
+      "type": "success",
+      "message": "Session reset successfully"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:21.211Z",
+      "type": "info",
+      "message": "\n📍 Phase 1: INTRO - Giới thiệu"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:21.213Z",
+      "type": "user",
+      "message": "Sending message: \"Xin chào, tôi muốn tư vấn du học Mỹ\""
+    },
+    {
+      "timestamp": "2025-07-18T04:32:23.947Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:23.947Z",
+      "type": "agent",
+      "message": "Agent Response: Chào bạn! Rất vui được hỗ trợ bạn trong việc tư vấn du học Mỹ. Bạn đã có trong kế hoạch cụ thể về việc du học ở Mỹ chưa? Nếu có bất kỳ câu hỏi nào hay thông tin cụ thể bạn cần tư vấn, đừng ngần ngại chia sẻ với mình nhé. Mình sẽ cố gắng giúp bạn trong quá trình tìm hiểu và chuẩn bị cho việc du học tại Mỹ."
+    },
+    {
+      "timestamp": "2025-07-18T04:32:25.949Z",
+      "type": "info",
+      "message": "\n📍 Phase 2: COLLECT_INFO - Thu thập thông tin học tập"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:25.949Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi có GPA 3.8, TOEFL 105, muốn học Computer Science, ngân sách khoảng 60000$/năm, thích California hoặc New York\""
+    },
+    {
+      "timestamp": "2025-07-18T04:32:29.636Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:29.636Z",
+      "type": "agent",
+      "message": "Agent Response: Chào bạn! Đầu tiên, chúc mừng vì bạn đã có GPA 3.8 và điểm TOEFL 105, đó là thành tích rất tốt! Với nguyện vọng học Computer Science và ngân sách khoảng 60000$/năm, bạn có nhiều lựa chọn tuyệt vời ở California và New York.\n\nỞ California, bạn có thể xem xét các trường như University of California - Berkeley, Stanford University, California Institute of Technology. Ở New York, có Columbia University, New York University, và Cornell University. Tất cả các trường này đều có chương trình Computer Science rất mạnh và có vị trí địa lý thuận lợi.\n\nNếu có bất kỳ câu hỏi nào khác hoặc cần thêm thông tin, đừng ngần ngại để tôi biết nhé!"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:31.650Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi có kinh nghiệm làm việc 2 năm trong lĩnh vực IT, tốt nghiệp đại học ngành Công nghệ thông tin tại Việt Nam\""
+    },
+    {
+      "timestamp": "2025-07-18T04:32:33.806Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:33.806Z",
+      "type": "agent",
+      "message": "Agent Response: Chào bạn! Đó là một thông tin tuyệt vời. Với kinh nghiệm làm việc 2 năm trong lĩnh vực IT và bằng cử nhân ngành Công nghệ thông tin, bạn đã có một nền tảng vững chắc để tiếp tục phát triển sự nghiệp của mình. Nếu bạn đang quan tâm đến việc du học Mỹ để mở rộng kiến thức và cơ hội nghề nghiệp, hãy cung cấp thêm thông tin về mục tiêu của bạn để chúng tôi có thể hỗ trợ bạn tốt hơn. Bạn đặt câu hỏi hoặc chia sẻ thêm về dự định của mình được không?"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:35.819Z",
+      "type": "info",
+      "message": "\n📍 Phase 3: SELECT_SCHOOL - Gợi ý trường và ngành học"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:35.819Z",
+      "type": "user",
+      "message": "Sending message: \"Hãy gợi ý cho tôi một số trường đại học phù hợp\""
+    },
+    {
+      "timestamp": "2025-07-18T04:32:38.094Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:38.094Z",
+      "type": "agent",
+      "message": "Agent Response: Chắc chắn! Để có thể gợi ý cho bạn những trường đại học phù hợp, mình cần biết một số thông tin cụ thể như:\n1. Bạn quan tâm đến việc học ở bang nào ở Mỹ?\n2. Bạn đang tìm kiếm ngành học nào?\n3. Bạn có yêu cầu về kích thước trường, vị trí địa lý, chi phí học phí không?\n\nKhi bạn cung cấp thông tin này, mình sẽ có thể đưa ra những gợi ý phù hợp nhất cho bạn."
+    },
+    {
+      "timestamp": "2025-07-18T04:32:40.096Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi muốn chọn Stanford University, ngành Computer Science\""
+    },
+    {
+      "timestamp": "2025-07-18T04:32:42.408Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:42.409Z",
+      "type": "agent",
+      "message": "Agent Response: Chào bạn! Stanford University là một lựa chọn tuyệt vời và ngành Computer Science tại đây rất phát triển và danh tiếng. Để bắt đầu quá trình chuẩn bị và nộp đơn vào ngành này, bạn cần tập trung vào việc chuẩn bị bài thi TOEFL/IELTS, bảng điểm trung học và đại học, thư ngỏ và bài luận cá nhân sáng tạo. Nếu có bất kỳ câu hỏi nào khác, đừng ngần ngại để lại cho mình biết để được hỗ trợ nhé!"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:44.422Z",
+      "type": "info",
+      "message": "\n📍 Phase 4: LEGAL_CHECKLIST - Tạo danh sách giấy tờ pháp lý"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:44.423Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi cần danh sách giấy tờ cần chuẩn bị để du học\""
+    },
+    {
+      "timestamp": "2025-07-18T04:32:47.526Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:47.526Z",
+      "type": "agent",
+      "message": "Agent Response: Chào bạn! Để chuẩn bị hồ sơ du học, bạn cần chuẩn bị các giấy tờ sau đây:\n1. Hồ sơ cá nhân (bản sao và bản dịch)\n2. Bằng tốt nghiệp THPT và bằng Đại học (nếu có)\n3. Điểm danh sách (transcript) của tất cả các năm học\n4. Bảng điểm kỳ thi tiếng Anh như IELTS, TOEFL, hoặc các chứng chỉ tương đương (nếu có)\n5. Thư giới thiệu từ giáo viên hoặc người quen\n6. CV/Resume\n7. Bài luận (Statement of Purpose) hoặc bài luận cá nhân\n8. Hộ chiếu và ảnh hộ chiếu\n9. Hồ sơ tài chính và chứng minh tài chính\n10. Bảo hiểm sức khỏe quốc tế\n11. Một số giấy tờ khác tùy thuộc vào yêu cầu cụ thể của trường và quốc gia bạn định học.\n\nĐảm bảo rằng bạn chuẩn bị đầy đủ và chính xác các giấy tờ này để hồ sơ du học của bạn được xem xét suôn sẻ. Nếu cần thêm thông tin hoặc hỗ trợ, đừng ngần ngại hỏi mình nhé!"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:49.536Z",
+      "type": "user",
+      "message": "Sending message: \"Hãy tạo danh sách chi tiết các giấy tờ tôi cần chuẩn bị\""
+    },
+    {
+      "timestamp": "2025-07-18T04:32:52.797Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:52.798Z",
+      "type": "agent",
+      "message": "Agent Response: Chắc chắn! Để chuẩn bị hồ sơ du học Mỹ, bạn cần chuẩn bị các giấy tờ sau đây:\n\n1. Hồ sơ đăng ký trực tuyến (nếu có)\n2. Bằng tốt nghiệp THPT và bản dịch công chứng (nếu bằng tiếng không phải tiếng Anh)\n3. Bảng điểm của các năm học cấp 3 và bản dịch công chứng\n4. Điểm thi TOEFL, IELTS hoặc các chứng chỉ tiếng Anh tương đương\n5. Điểm thi SAT, ACT hoặc GRE (tuỳ theo yêu cầu của trường và ngành học)\n6. Thư giới thiệu từ giáo viên hoặc người quen biết\n7. Bài luận (personal statement) giới thiệu bản thân và lý do muốn du học\n8. Hồ sơ tài chính chứng minh khả năng tài chính để du học\n9. Hộ chiếu và các giấy tờ cá nhân khác\n\nĐảm bảo rằng bạn chuẩn bị đầy đủ và chính xác các giấy tờ này để nâng cao cơ hội được nhận vào trường đại học mơ ước của mình. Nếu cần thêm thông tin hoặc hỗ trợ, đừng ngần ngại để lại câu hỏi cho mình nhé!"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:52.798Z",
+      "type": "info",
+      "message": "\n💾 Creating legal documents in database"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:52.805Z",
+      "type": "database",
+      "message": "Legal document created: I-20 Form"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:52.810Z",
+      "type": "database",
+      "message": "Legal document created: Passport"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:52.816Z",
+      "type": "database",
+      "message": "Legal document created: Visa Application (DS-160)"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:52.821Z",
+      "type": "database",
+      "message": "Legal document created: Financial Statement"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:52.826Z",
+      "type": "database",
+      "message": "Legal document created: Academic Transcripts"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:54.842Z",
+      "type": "info",
+      "message": "\n📍 Phase 5: PROGRESS_TRACKING - Theo dõi tiến độ chuẩn bị"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:54.843Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi đã hoàn thành I-20 và Passport\""
+    },
+    {
+      "timestamp": "2025-07-18T04:32:56.617Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:56.617Z",
+      "type": "agent",
+      "message": "Agent Response: Chúc mừng bạn đã hoàn thành I-20 và Passport! Đó là bước quan trọng trong quá trình chuẩn bị để du học tại Mỹ. Bước tiếp theo mà bạn cần làm là chuẩn bị hồ sơ visa và lên kế hoạch cho chuyến đi của mình. Nếu có bất kỳ câu hỏi nào hoặc cần hỗ trợ gì thêm, đừng ngần ngại để tôi biết nhé. Chúc bạn may mắn trong hành trình du học sắp tới!"
+    },
+    {
+      "timestamp": "2025-07-18T04:32:58.627Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi cũng đã nộp đơn xin visa rồi\""
+    },
+    {
+      "timestamp": "2025-07-18T04:33:00.718Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:00.719Z",
+      "type": "agent",
+      "message": "Agent Response: Chúc mừng bạn đã hoàn thành bước nộp đơn xin visa! Đừng quên theo dõi trạng thái xử lý của đơn xin visa và chuẩn bị tâm lý cho cuộc phỏng vấn nếu cần. Nếu có bất kỳ câu hỏi nào hoặc cần hỗ trợ thêm, đừng ngần ngại để lại cho mình biết nhé. Chúc bạn may mắn!"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:02.729Z",
+      "type": "info",
+      "message": "\n📝 Updating legal documents status"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:02.730Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi đã hoàn thành tất cả giấy tờ, bây giờ tôi cần tư vấn về kế hoạch sinh sống\""
+    },
+    {
+      "timestamp": "2025-07-18T04:33:08.249Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:08.249Z",
+      "type": "agent",
+      "message": "Agent Response: Chào bạn! Rất tuyệt vời khi bạn đã hoàn thành tất cả giấy tờ cần thiết. Để kế hoạch sinh sống tại Mỹ suôn sẻ hơn, dưới đây là một số gợi ý mà bạn có thể cân nhắc:\n\n1. Chỗ ở: Tìm hiểu các tùy chọn về chỗ ở như ký túc xá trường học, căn hộ cho sinh viên, hoặc phòng trọ trong khu vực gần trường học.\n\n2. Giao thông: Xem xét vận chuyển và giao thông ở khu vực bạn sẽ sinh sống. Nếu bạn không có ô tô, cần tìm hiểu về phương tiện công cộng hoặc xe đạp.\n\n3. Công việc bán thời gian: Nếu bạn muốn tìm cách kiếm thêm thu nhập, hãy xem xét việc làm bán thời gian hoặc thực tập phù hợp với lịch học của bạn.\n\n4. Tạo mạng lưới xã hội: Kết bạn với sinh viên quốc tế khác và người địa phương để học hỏi và tạo mối quan hệ xã hội.\n\n5. Thực phẩm: Tìm hiểu về cửa hàng thực phẩm gần trường học để mua sắm và nấu ăn tại nhà để tiết kiệm chi phí.\n\n6. Sức khỏe: Kiểm tra và hiểu rõ về bảo hiểm sức khỏe sinh viên, cũng như vị trí của các cơ sở y tế gần bạn.\n\nNhớ rằng, việc lên kế hoạch sẽ giúp bạn tự tin hơn khi bắt đầu cuộc sống mới tại Mỹ. Nếu bạn cần thêm thông tin hoặc có bất kỳ câu hỏi nào khác, đừng ngần ngại để lại cho mình biết nhé!"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:10.264Z",
+      "type": "info",
+      "message": "\n📍 Phase 6: LIFE_PLANNING - Tư vấn kế hoạch sinh sống"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:10.264Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi cần tư vấn về chỗ ở, chi phí sinh hoạt, và cách thích nghi với cuộc sống ở Mỹ\""
+    },
+    {
+      "timestamp": "2025-07-18T04:33:11.597Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:11.597Z",
+      "type": "agent",
+      "message": "Agent Response: Chào bạn! Để tư vấn chính xác hơn, bạn có thể cho mình biết bạn đang quan tâm đến việc du học ở thành phố nào ở Mỹ không? Mỗi thành phố sẽ có chi phí sinh hoạt và cách sống khác nhau, vì vậy thông tin này sẽ giúp mình cung cấp thông tin chi tiết hơn cho bạn."
+    },
+    {
+      "timestamp": "2025-07-18T04:33:13.608Z",
+      "type": "user",
+      "message": "Sending message: \"Làm thế nào để tìm được chỗ ở gần trường? Chi phí sinh hoạt hàng tháng khoảng bao nhiêu?\""
+    },
+    {
+      "timestamp": "2025-07-18T04:33:16.128Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:16.128Z",
+      "type": "agent",
+      "message": "Agent Response: Để tìm chỗ ở gần trường, bạn có thể tham khảo trên các trang web như Zillow, Apartments.com, Craigslist, Trulia, hay Facebook groups của trường hoặc khu vực đó. Ngoài ra, bạn cũng có thể tìm kiếm thông tin về các khu vực an toàn và thuận tiện giao thông để dễ dàng di chuyển đến trường.\n\nChi phí sinh hoạt hàng tháng có thể thay đổi tùy theo vị trí trường, loại chỗ ở, chế độ ăn uống, và các chi phí khác như đi lại, giải trí. Trong các thành phố lớn ở Mỹ, chi phí sinh hoạt trung bình có thể dao động từ 800-1500 USD mỗi tháng, bao gồm tiền thuê nhà, tiện ích, điện, nước, Internet, thực phẩm, và các chi phí cá nhân khác.\n\nNếu bạn cần thêm thông tin cụ thể về khu vực nào hoặc trường nào, hãy cho mình biết để mình có thể hỗ trợ bạn tốt hơn nhé!"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:18.135Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi có thể làm việc part-time khi học không? Cần chuẩn bị gì để thích nghi với văn hóa Mỹ?\""
+    },
+    {
+      "timestamp": "2025-07-18T04:33:23.938Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:23.938Z",
+      "type": "agent",
+      "message": "Agent Response: Chắc chắn bạn có thể làm việc part-time khi đang du học tại Mỹ. Tuy nhiên, có một số quy định cụ thể về việc làm part-time dành cho sinh viên quốc tế mà bạn cần phải tuân thủ. \n\nĐầu tiên, theo luật pháp Mỹ, sinh viên quốc tế chỉ được phép làm việc part-time trên trường hoặc ngoài trường trong khoảng thời gian nhất định mỗi tuần. Thường thì trong kỳ học, bạn chỉ được làm tối đa 20 giờ một tuần, còn trong kỳ nghỉ hè hoặc kỳ nghỉ lễ dài, bạn có thể làm full-time (tối đa 40 giờ một tuần).\n\nĐể thích nghi với văn hóa làm việc tại Mỹ, bạn cần hiểu và tuân thủ các quy tắc, luật lệ và văn hóa làm việc tại đất nước này. Điều quan trọng là bạn cần chú trọng đến sự chính xác, đúng giờ, trách nhiệm và sự chuyên nghiệp trong công việc. Ngoài ra, việc giao tiếp một cách trực tiếp, tự tin và hiệu quả cũng là yếu tố quan trọng giúp bạn thành công trong môi trường làm việc Mỹ.\n\nNếu bạn muốn biết thêm thông tin cụ thể hoặc có bất kỳ câu hỏi nào khác, đừng ngần ngại để lại cho mình biết nhé!"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:25.942Z",
+      "type": "info",
+      "message": "\n📊 Getting final session summary"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:25.949Z",
+      "type": "database",
+      "message": "Session retrieved: 6879ce5586901e62a41ed29e"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:25.949Z",
+      "type": "info",
+      "message": "\n📋 Getting all legal documents for user"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:25.957Z",
+      "type": "database",
+      "message": "Legal documents retrieved: 10 documents"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:25.957Z",
+      "type": "info",
+      "message": "\n👤 Updating user profile"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:25.969Z",
+      "type": "success",
+      "message": "User profile updated: dinhthienmenh1505@gmail.com"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:25.969Z",
+      "type": "info",
+      "message": "Final Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:25.969Z",
+      "type": "info",
+      "message": "Selected School: undefined"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:25.969Z",
+      "type": "info",
+      "message": "Selected Major: undefined"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:25.969Z",
+      "type": "info",
+      "message": "Progress: 40%"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:25.969Z",
+      "type": "info",
+      "message": "Total Messages: 4"
+    },
+    {
+      "timestamp": "2025-07-18T04:33:25.969Z",
+      "type": "success",
+      "message": "\n✅ Full conversation flow test completed successfully!"
+    }
+  ],
+  "userInfo": {
+    "id": "6879c1bb1e924ea9f5b911f6",
+    "fullname": "Mệnh Thiên",
+    "email": "dinhthienmenh1505@gmail.com",
+    "phone": "",
+    "sex": "other",
+    "dateOfBirth": "",
+    "nationality": "",
+    "religion": "",
+    "passportCode": "",
+    "passportExpiryDate": "",
+    "scholarPoints": 0
+  }
+}

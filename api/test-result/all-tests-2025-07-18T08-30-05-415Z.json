@@ -1,0 +1,14 @@
+{
+  "health": false,
+  "fullFlow": null,
+  "sessionManagement": false,
+  "errorHandling": false,
+  "concurrentUsers": false,
+  "summary": {
+    "totalTests": 0,
+    "passedTests": 0,
+    "startTime": "2025-07-18T08:30:05.389Z",
+    "endTime": "2025-07-18T08:30:05.415Z"
+  },
+  "error": "connect ECONNREFUSED ::1:3999"
+}

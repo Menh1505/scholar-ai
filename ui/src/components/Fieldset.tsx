@@ -8,7 +8,7 @@ interface FieldsetProps {
 }
 function Fieldset({ title, children, className }: FieldsetProps) {
   return (
-    <fieldset className={cn("border-2 border-black rounded-2xl p-6 min-h-48", className)}>
+    <fieldset className={cn("border-2 border-black rounded-2xl pt-2 pb-2 px-4 min-h-24", className)}>
       <legend className="px-3 text-lg font-semibold text-gray-900 bg-gray-60">{title}</legend>
       <div className="mt-4">{children}</div>
     </fieldset>
