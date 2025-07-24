@@ -7,7 +7,7 @@ const steps = [
   {
     step: "1",
     title: "Chỉ cần chat",
-    example: '"Tôi muốn học ngành Kinh doanh ở Mỹ, ngân sách dưới 20,000 USD/năm."',
+    example: "Tôi muốn học ngành Kinh doanh ở Mỹ, ngân sách dưới 20,000 USD/năm.",
     color: "from-blue-500 to-purple-600",
   },
   {
@@ -111,7 +111,7 @@ export default function HowItWorksSection() {
                 <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                   <span className="text-white text-sm font-bold">You</span>
                 </div>
-                <p className="text-foreground italic">"Tôi muốn học ngành Computer Science, ngân sách 25,000 USD/năm"</p>
+                <p className="text-foreground italic">&quot;Tôi muốn học ngành Computer Science, ngân sách 25,000 USD/năm&quot;</p>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
@@ -119,9 +119,9 @@ export default function HowItWorksSection() {
                 </div>
                 <div className="bg-muted rounded-lg p-4 flex-1">
                   <p className="text-foreground text-sm leading-relaxed">
-                    "Tôi đã tìm thấy 3 trường phù hợp với bạn: University of Texas at Austin, Penn State University, và Virginia Tech. Bạn cần chuẩn bị 7 loại
-                    giấy tờ: TOEFL/IELTS, SAT/ACT, bảng điểm phổ thông, thư giới thiệu, essay cá nhân, chứng minh tài chính, và hộ chiếu. Tôi sẽ tạo timeline
-                    chi tiết cho bạn..."
+                    &quot;Tôi đã tìm thấy 3 trường phù hợp với bạn: University of Texas at Austin, Penn State University, và Virginia Tech. Bạn cần chuẩn bị 7
+                    loại giấy tờ: TOEFL/IELTS, SAT/ACT, bảng điểm phổ thông, thư giới thiệu, essay cá nhân, chứng minh tài chính, và hộ chiếu. Tôi sẽ tạo
+                    timeline chi tiết cho bạn...&quot;
                   </p>
                 </div>
               </div>
