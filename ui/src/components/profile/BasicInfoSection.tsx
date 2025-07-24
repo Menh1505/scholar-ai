@@ -13,7 +13,7 @@ export default function BasicInfoSection({ user, isEditing, onInputChange }: Bas
   return (
     <Fieldset title="Thông tin cơ bản" className="h-fit">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-4">
+        <div className="space-y-2">
           <ProfileInput label="Họ và tên" value={user.fullname} isEditing={isEditing} onChange={(value) => onInputChange("fullname", value)} />
           <ProfileInput label="Email" value={user.email} isEditing={isEditing} onChange={(value) => onInputChange("email", value)} type="email" />
           <ProfileInput label="Số điện thoại" value={user.phone} isEditing={isEditing} onChange={(value) => onInputChange("phone", value)} type="tel" />
@@ -26,7 +26,7 @@ export default function BasicInfoSection({ user, isEditing, onInputChange }: Bas
             type="date"
           />
         </div>
-        <div className="space-y-4">
+        <div className="space-y-2">
           <ProfileInput
             label="Địa chỉ"
             value={user.address}

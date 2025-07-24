@@ -12,11 +12,11 @@ export default function InfoCards({ user }: InfoCardsProps) {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
       <Fieldset title="Hộ chiếu" className="min-h-48"></Fieldset>
 
-      <Fieldset title="Thông tin liên lạc" className="min-h-48"></Fieldset>
+      <Fieldset title="Hôn nhân" className="min-h-48"></Fieldset>
 
       <Fieldset title="Gia đình" className="min-h-48"></Fieldset>
 
-      <Fieldset title="Scholar Points" className="min-h-48"></Fieldset>
+      <Fieldset title="Chi phí" className="min-h-48"></Fieldset>
     </div>
   );
 }
