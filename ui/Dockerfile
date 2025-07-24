@@ -4,38 +4,35 @@ FROM node:18-alpine AS builder
 # Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package.json ./
-
 # Install dependencies
-RUN npm install
+COPY package.json ./
+RUN npm i
 
-# Copy the rest of the project files
+# Copy all source code
 COPY . .
 
-# Build the Next.js app
+# Set production mode explicitly
+ENV NODE_ENV=production
+
+# Build with standalone output
 RUN npm run build
 
-# Stage 2: Production
+# Stage 2: Production runtime
 FROM node:18-alpine AS runner
 
-# Set working directory
+# Set working dir
 WORKDIR /app
 
-# Install production dependencies only
-COPY --from=builder /app/package*.json ./
-RUN npm install --omit=dev
+# Copy standalone output from builder
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
 
-# Copy built app and public files from builder
-COPY --from=builder /app/.next .next
-COPY --from=builder /app/public public
-COPY --from=builder /app/next.config.js ./
-COPY --from=builder /app/tsconfig.json ./
-COPY --from=builder /app/.env ./
-
-# Optional: define NODE_ENV
+# Optional: set environment
 ENV NODE_ENV=production
-EXPOSE 3000
+
+# Expose port (Next.js default)
+EXPOSE 30009
 
 # Start the app
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
