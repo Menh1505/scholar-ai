@@ -7,27 +7,27 @@ function StudyPage() {
     <div className="p-6 max-w-6xl mx-auto">
       {/* Filter Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white border-2 border-black rounded-3xl p-4">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-gray-600">From:</span>
-            <select className="ml-2 bg-gray-100 border-2 border-black rounded px-3 py-1 text-sm">
-              <option>Choose your country</option>
-              <option>Vietnam</option>
-              <option>USA</option>
-              <option>Canada</option>
-            </select>
-          </div>
-        </div>
+        <div className="bg-white border-2 border-black rounded-3xl p-4 lg:col-span-2">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-gray-600">From:</span>
+              <select className="ml-2 bg-gray-100 border-2 border-black rounded px-3 py-1 text-sm">
+                <option>Choose your country</option>
+                <option>Vietnam</option>
+                <option>USA</option>
+                <option>Canada</option>
+              </select>
+            </div>
 
-        <div className="bg-white border-2 border-black rounded-3xl p-4">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-gray-600">To:</span>
-            <select className="ml-2 bg-gray-100 border-2 border-black rounded px-3 py-1 text-sm">
-              <option>Choose your country</option>
-              <option>Canada</option>
-              <option>USA</option>
-              <option>UK</option>
-            </select>
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-gray-600">To:</span>
+              <select className="ml-2 bg-gray-100 border-2 border-black rounded px-3 py-1 text-sm">
+                <option>Choose your country</option>
+                <option>Canada</option>
+                <option>USA</option>
+                <option>UK</option>
+              </select>
+            </div>
           </div>
         </div>
 
