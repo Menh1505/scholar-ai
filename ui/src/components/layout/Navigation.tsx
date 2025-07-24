@@ -46,7 +46,7 @@ export const Navigation = () => {
             <div
               className={cn(
                 "flex items-center gap-4.5 px-2 py-4 rounded-md font-semibold text-sm text-primary transition",
-                isActive && "bg-white shadow-sm hover:opacity-100 text-primary"
+                isActive && "bg-white border-2 border-black rounded-3xl hover:opacity-100 text-primary"
               )}>
               <Icon className="size-5 text-neutral-500" />
               {item.label}
