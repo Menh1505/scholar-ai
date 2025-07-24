@@ -10,7 +10,7 @@ function PointPage() {
       company: "SMURF Company",
       location: "HCM City",
       points: "500 SP",
-      image: "/api/placeholder/200/120",
+      image: "/courses/c-ai.png",
       bgColor: "bg-gradient-to-br from-purple-100 to-cyan-100",
     },
     {
@@ -19,7 +19,7 @@ function PointPage() {
       company: "Tumilab Company",
       location: "HCM City",
       points: "100 SP",
-      image: "/api/placeholder/200/120",
+      image: "/courses/c-finance.png",
       bgColor: "bg-gray-100",
     },
     {
@@ -28,7 +28,7 @@ function PointPage() {
       company: "VBA",
       location: "HCM City",
       points: "200 SP",
-      image: "/api/placeholder/200/120",
+      image: "/courses/c-blockchain.png",
       bgColor: "bg-gradient-to-br from-blue-900 to-cyan-600",
     },
   ];
@@ -40,7 +40,7 @@ function PointPage() {
       state: "Ontario State",
       location: "Toronto City",
       points: "800 SP",
-      image: "/api/placeholder/200/120",
+      image: "/schools/u-toronto.png",
     },
     {
       id: 2,
@@ -48,7 +48,7 @@ function PointPage() {
       state: "Montreal State",
       location: "Quebec City",
       points: "200 SP",
-      image: "/api/placeholder/200/120",
+      image: "/schools/u-mcgill.png",
     },
     {
       id: 3,
@@ -56,7 +56,7 @@ function PointPage() {
       state: "Ottawa State",
       location: "Ontario City",
       points: "100 SP",
-      image: "/api/placeholder/200/120",
+      image: "/schools/u-ottawa.png",
     },
   ];
 

@@ -1,6 +1,8 @@
 "use client";
 import { Sidebar } from "@/components/layout/Sidebar";
-import { useState } from "react";
+import { useUserStore } from "@/stores/useUserStore";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface DashBoardLayoutProps {
   children: React.ReactNode;
@@ -8,6 +10,27 @@ interface DashBoardLayoutProps {
 
 const DashboardLayout = ({ children }: DashBoardLayoutProps) => {
   const [isLoading] = useState<boolean>(false);
+  const router = useRouter();
+  const { user, loading, fetchUser } = useUserStore();
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      await fetchUser();
+    };
+
+    checkLogin();
+  }, [fetchUser]);
+
+  useEffect(() => {
+    if (!loading) {
+      if (user) {
+        router.push("/profile");
+      } else {
+        router.push("/signin");
+      }
+    }
+  }, [user, loading, router]);
+
   // Loading states
   if (isLoading) {
     return (
