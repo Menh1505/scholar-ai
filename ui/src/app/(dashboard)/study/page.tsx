@@ -4,13 +4,13 @@ import Fieldset from "@/components/Fieldset";
 
 function StudyPage() {
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-6 max-w-6xl mx-auto">
       {/* Filter Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white border border-gray-300 rounded-lg p-4">
+        <div className="bg-white border-2 border-black rounded-3xl p-4">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-gray-600">From:</span>
-            <select className="ml-2 bg-gray-100 border border-gray-300 rounded px-3 py-1 text-sm">
+            <select className="ml-2 bg-gray-100 border-2 border-black rounded px-3 py-1 text-sm">
               <option>Choose your country</option>
               <option>Vietnam</option>
               <option>USA</option>
@@ -19,10 +19,10 @@ function StudyPage() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-300 rounded-lg p-4">
+        <div className="bg-white border-2 border-black rounded-3xl p-4">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-gray-600">To:</span>
-            <select className="ml-2 bg-gray-100 border border-gray-300 rounded px-3 py-1 text-sm">
+            <select className="ml-2 bg-gray-100 border-2 border-black rounded px-3 py-1 text-sm">
               <option>Choose your country</option>
               <option>Canada</option>
               <option>USA</option>
@@ -31,10 +31,10 @@ function StudyPage() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-300 rounded-lg p-4">
+        <div className="bg-white border-2 border-black rounded-3xl p-4">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-gray-600">Budget:</span>
-            <select className="ml-2 bg-gray-100 border border-gray-300 rounded px-3 py-1 text-sm">
+            <select className="ml-2 bg-gray-100 border-2 border-black rounded px-3 py-1 text-sm">
               <option>Choose Budget</option>
               <option>$0 - $20,000</option>
               <option>$20,000 - $50,000</option>
@@ -43,10 +43,10 @@ function StudyPage() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-300 rounded-lg p-4">
+        <div className="bg-white border-2 border-black rounded-3xl p-4">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-gray-600">Major:</span>
-            <select className="ml-2 bg-gray-100 border border-gray-300 rounded px-3 py-1 text-sm">
+            <select className="ml-2 bg-gray-100 border-2 border-black rounded px-3 py-1 text-sm">
               <option>Choose major</option>
               <option>Engineering</option>
               <option>Business</option>
@@ -58,9 +58,9 @@ function StudyPage() {
 
       {/* University Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-        <div className="bg-white border border-gray-300 rounded-lg overflow-hidden">
+        <div className="bg-white border-2 border-black rounded-3xl overflow-hidden">
           <div className="relative w-full h-32">
-            <Image src="/api/placeholder/300/150" alt="University of Toronto" fill className="object-cover" />
+            <Image src="/schools/u-toronto.png" alt="University of Toronto" fill className="object-cover" />
           </div>
           <div className="p-4">
             <h3 className="font-semibold text-lg mb-1">University of Toronto</h3>
@@ -72,9 +72,9 @@ function StudyPage() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-300 rounded-lg overflow-hidden">
+        <div className="bg-white border-2 border-black rounded-3xl overflow-hidden">
           <div className="relative w-full h-32">
-            <Image src="/api/placeholder/300/150" alt="McGill University" fill className="object-cover" />
+            <Image src="/schools/u-mcgill.png" alt="McGill University" fill className="object-cover" />
           </div>
           <div className="p-4">
             <h3 className="font-semibold text-lg mb-1">McGill University</h3>
@@ -86,9 +86,9 @@ function StudyPage() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-300 rounded-lg overflow-hidden">
+        <div className="bg-white border-2 border-black rounded-3xl overflow-hidden">
           <div className="relative w-full h-32">
-            <Image src="/api/placeholder/300/150" alt="Carleton University" fill className="object-cover" />
+            <Image src="/schools/u-carleton.png" alt="Carleton University" fill className="object-cover" />
           </div>
           <div className="p-4">
             <h3 className="font-semibold text-lg mb-1">Carleton University</h3>
@@ -100,9 +100,9 @@ function StudyPage() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-300 rounded-lg overflow-hidden">
+        <div className="bg-white border-2 border-black rounded-3xl overflow-hidden">
           <div className="relative w-full h-32">
-            <Image src="/api/placeholder/300/150" alt="University of Ottawa" fill className="object-cover" />
+            <Image src="/schools/u-ottawa.png" alt="University of Ottawa" fill className="object-cover" />
           </div>
           <div className="p-4">
             <h3 className="font-semibold text-lg mb-1">University of Ottawa</h3>
