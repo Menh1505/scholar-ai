@@ -9,6 +9,7 @@ interface UserState {
   clearUser: () => void;
   fetchUser: () => void;
   updateUser: (userData: Partial<Omit<User, "_id">>) => Promise<void>;
+  logOut: () => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -71,6 +72,19 @@ export const useUserStore = create<UserState>((set) => ({
     } catch (error) {
       console.error("Failed to update user:", error);
       set({ loading: false });
+      throw error;
+    }
+  },
+
+  async logOut() {
+    try {
+      await apiClient.post("/auth/logout");
+      // Clear user data from store after successful logout
+      set({ user: null });
+    } catch (error) {
+      console.error("Failed to logout:", error);
+      // Still clear user data locally even if API call fails
+      set({ user: null });
       throw error;
     }
   },

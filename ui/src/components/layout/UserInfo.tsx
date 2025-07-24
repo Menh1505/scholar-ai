@@ -1,17 +1,23 @@
 import React from "react";
 import { Card } from "../ui/card";
 import Image from "next/image";
+import { useUserStore } from "@/stores/useUserStore";
+import { useRouter } from "next/navigation";
 
 function UserInfo() {
+  const { logOut } = useUserStore();
+  const router = useRouter();
+
   async function logout() {
-    // Xóa access_token từ localStorage
-    localStorage.removeItem("access_token");
-
-    // Xóa access_token từ cookie (nếu có)
-    document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-    // Reload lại page
-    window.location.reload();
+    try {
+      await logOut();
+      // Redirect to signin page after successful logout
+      router.push("/signin");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // Even if API fails, redirect to signin page
+      router.push("/signin");
+    }
   }
   return (
     <div className="flex flex-col justify-center">
