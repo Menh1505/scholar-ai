@@ -54,7 +54,7 @@ export default function ProblemsSection() {
           viewport={{ once: true }}
           className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Vấn đề nghiêm trọng của <span className="text-destructive">người du học</span>
+            Vấn đề của <span className="text-destructive">người du học</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Du học không chỉ là chuyện "nộp hồ sơ – nhận thư mời – xách vali lên đường". Nó là một hành trình thay đổi cả cuộc đời – và sai một bước, có thể lỡ
