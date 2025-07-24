@@ -1,10 +1,5 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  output: "standalone",
-  experimental: {
-    // Add any experimental features if needed
-  },
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;
