@@ -75,7 +75,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button asChild size="lg" className="text-lg px-8 py-6 group">
-              <Link href="/agent">
+              <Link href="/profile">
                 Bắt đầu miễn phí
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
