@@ -1,13 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useUserStore } from "@/stores/useUserStore";
-import ProfileHeader from "@/components/profile/ProfileHeader";
 import BasicInfoSection from "@/components/profile/BasicInfoSection";
 import ScholarPointsCard from "@/components/profile/ScholarPointsCard";
 import InfoCards from "@/components/profile/InfoCards";
 import StudyRoadmap from "@/components/profile/StudyRoadmap";
 import LoadingSpinner from "@/components/profile/LoadingSpinner";
 import ErrorMessage from "@/components/profile/ErrorMessage";
+import FloatButton from "@/components/profile/FloatButton";
 
 function ProfilePage() {
   const { user, loading, fetchUser, updateUser } = useUserStore();
@@ -79,12 +79,10 @@ function ProfilePage() {
 
   return (
     <div className="bg-[#DBD9FB] p-4 max-w-6xl mx-auto">
-      <ProfileHeader isEditing={isEditing} onEdit={handleEdit} onSave={handleSave} onCancel={handleCancel} onReset={resetOnboarding} loading={isUpdating} />
-
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Left Column - Basic Information */}
         <div className="lg:col-span-3">
-          <BasicInfoSection user={currentProfile} isEditing={isEditing} onInputChange={handleInputChange} />
+          <BasicInfoSection user={currentProfile} isEditing={isEditing} onInputChange={handleInputChange} onEditToggle={handleEdit} />
         </div>
 
         {/* Right Column - Scholar Point */}
@@ -98,6 +96,9 @@ function ProfilePage() {
 
       {/* Study Roadmap */}
       <StudyRoadmap user={currentProfile} />
+
+      {/* Float Button - chỉ hiện khi đang editing */}
+      {isEditing && <FloatButton onSave={handleSave} onCancel={handleCancel} isLoading={isUpdating} />}
     </div>
   );
 }
