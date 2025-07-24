@@ -102,7 +102,7 @@ export default function CTASection() {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Button asChild size="lg" className="text-xl px-12 py-6 group">
-                  <Link href="/agent">
+                  <Link href="/profile">
                     <Heart className="mr-2 w-6 h-6" />
                     Bắt đầu hành trình du học
                     <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />

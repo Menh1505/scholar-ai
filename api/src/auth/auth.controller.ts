@@ -41,7 +41,7 @@ export class AuthController {
     });
 
     // Redirect to frontend without token in URL
-    const redirectUrl = `${process.env.FRONTEND_URL || 'http://localhost:3001'}`;
+    const redirectUrl = `${process.env.FRONTEND_URL+'/profile' || 'http://localhost:3001'}`;
     res.redirect(redirectUrl);
   }
 

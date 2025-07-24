@@ -102,7 +102,7 @@ export class AgentSession {
 export const AgentSessionSchema = SchemaFactory.createForClass(AgentSession);
 
 // Add indexes for better performance
-AgentSessionSchema.index({ userId: 1 });
+// Note: userId already has unique index from @Prop({ unique: true })
 AgentSessionSchema.index({ phase: 1 });
 AgentSessionSchema.index({ 'messages.timestamp': -1 });
 AgentSessionSchema.index({ updatedAt: -1 });

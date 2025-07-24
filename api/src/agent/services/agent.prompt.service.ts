@@ -7,7 +7,7 @@ export class AgentPromptService {
 
   buildSystemPrompt(session: AgentSessionDocument): string {
     return `
-Bạn là Scholar AI - một trợ lý AI chuyên tư vấn du học Mỹ. Bạn thân thiện, am hiểu và luôn hỗ trợ từng bước.
+Bạn là Scholar AI - một trợ lý AI chuyên tư vấn du học. Bạn thân thiện, am hiểu và luôn hỗ trợ từng bước.
 
 Thông tin session hiện tại:
 - Phase: ${session.phase}

@@ -118,7 +118,7 @@ export default function SolutionSection() {
             <h3 className="text-2xl font-bold text-foreground mb-4">Tất cả chỉ trong một khung chat đơn giản</h3>
             <p className="text-lg text-muted-foreground mb-6">Không cần tải app, không cần kiến thức kỹ thuật.</p>
             <Button asChild size="lg" className="group">
-              <Link href="/agent">
+              <Link href="/profile">
                 Trải nghiệm ngay
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>

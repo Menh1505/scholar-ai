@@ -57,8 +57,8 @@ export default function ProblemsSection() {
             Vấn đề của <span className="text-destructive">người du học</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Du học không chỉ là chuyện "nộp hồ sơ – nhận thư mời – xách vali lên đường". Nó là một hành trình thay đổi cả cuộc đời – và sai một bước, có thể lỡ
-            cả tương lai.
+            Du học không chỉ là chuyện &quot;nộp hồ sơ – nhận thư mời – xách vali lên đường&quot;. Nó là một hành trình thay đổi cả cuộc đời – và sai một bước,
+            có thể lỡ cả tương lai.
           </p>
         </motion.div>
 

@@ -11,14 +11,7 @@ interface BasicInfoSectionProps {
 }
 
 export default function BasicInfoSection({ user, isEditing, onInputChange, onEditToggle }: BasicInfoSectionProps) {
-  const handleCardClick = (e: React.MouseEvent) => {
-    // Không trigger edit nếu đang click vào input hoặc đã đang editing
-    if (!isEditing && e.target === e.currentTarget) {
-      onEditToggle();
-    }
-  };
-
-  const handleWrapperClick = (e: React.MouseEvent) => {
+  const handleWrapperClick = () => {
     // Chỉ trigger edit khi click vào wrapper, không phải children
     if (!isEditing) {
       onEditToggle();

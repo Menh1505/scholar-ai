@@ -58,11 +58,6 @@ function ProfilePage() {
     setIsEditing(true);
   };
 
-  const resetOnboarding = () => {
-    // This could be implemented to reset user data if needed
-    console.log("Reset functionality can be implemented here");
-  };
-
   if (loading) {
     return <LoadingSpinner message="Đang tải thông tin người dùng..." />;
   }
