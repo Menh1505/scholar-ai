@@ -9,14 +9,14 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration
-const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3999';
+const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3999/api';
 const DELAY_BETWEEN_MESSAGES = 2000; // 2 seconds
 const TEST_RESULTS_DIR = path.join(__dirname, 'test-result');
 
 // Real JWT Token from frontend
 const JWT_TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODc5YzFiYjFlOTI0ZWE5ZjViOTExZjYiLCJpYXQiOjE3NTI4MDk5MTUsImV4cCI6MTc1MzQxNDcxNX0.SJi64Egn7jY783Wws1TtepqplfAExL3InPonhRIF5EU';
-const REAL_USER_ID = '6879c1bb1e924ea9f5b911f6'; // From JWT payload
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODgzMGUxZGE0MDdlOTQxZjM1NDI1MzYiLCJpYXQiOjE3NTM0MTkyOTMsImV4cCI6MTc1NDAyNDA5M30.7fi7MgEnN6GGNsFywMJABU9NQ1h_CkD2GiSPGVNCsrs';
+const REAL_USER_ID = '68830e1da407e941f3542536'; // From JWT payload
 
 // API Client with real JWT token
 const apiClient = axios.create({
@@ -112,7 +112,6 @@ async function sendMessage(message, userId = REAL_USER_ID) {
     log(`Sending message: "${message}"`, 'user');
 
     const response = await apiClient.post('/agent/message', {
-      userId,
       message,
     });
 
@@ -131,7 +130,7 @@ async function sendMessage(message, userId = REAL_USER_ID) {
 
 async function getSession(userId = REAL_USER_ID) {
   try {
-    const response = await apiClient.get(`/agent/session/${userId}`);
+    const response = await apiClient.get(`/agent/session`);
     log(`Session retrieved: ${response.data.sessionId}`, 'database');
     return response.data;
   } catch (error) {
@@ -142,7 +141,7 @@ async function getSession(userId = REAL_USER_ID) {
 
 async function getMessageHistory(userId = REAL_USER_ID) {
   try {
-    const response = await apiClient.get(`/agent/session/${userId}/history`);
+    const response = await apiClient.get(`/agent/session/history`);
     log(
       `Message history retrieved: ${response.data.total} messages`,
       'database',
@@ -156,7 +155,7 @@ async function getMessageHistory(userId = REAL_USER_ID) {
 
 async function resetSession(userId = REAL_USER_ID) {
   try {
-    await apiClient.delete(`/agent/session/${userId}`);
+    await apiClient.delete(`/agent/session`);
     log('Session reset successfully', 'success');
   } catch (error) {
     log(`Error resetting session: ${error.message}`, 'error');

@@ -1,0 +1,496 @@
+{
+  "timestamp": "2025-07-25T12:00:03.077Z",
+  "testSuite": "Agent API Integration Test",
+  "userToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODgzMGUxZGE0MDdlOTQxZjM1NDI1MzYiLCJpYXQiOjE3NTM0MTkyOTMsImV4cCI6MTc1NDAyNDA5M30.7fi7MgEnN6GGNsFywMJABU9NQ1h_CkD2GiSPGVNCsrs",
+  "userId": "68830e1da407e941f3542536",
+  "results": {
+    "phase1": {
+      "phase": "collect_info",
+      "response": "Chào bạn! Rất vui được hỗ trợ bạn về việc tư vấn du học Mỹ. Để bắt đầu, bạn có thể cung cấp thông tin về trình độ học vấn hiện tại, ngành học quan tâm, và bất kỳ yêu cầu cụ thể nào khác không? Bằng cách đó, chúng ta sẽ có thể tìm ra các trường phù hợp và bắt đầu quy trình du học cho bạn.",
+      "timestamp": "2025-07-25T12:00:07.735Z"
+    },
+    "phase2": {
+      "phase": "collect_info",
+      "response": "Dựa trên yêu cầu của bạn với GPA 3.8, TOEFL 105, ngân sách 60000$/năm và muốn học Computer Science ở California hoặc New York, đây là một số trường phù hợp mà tôi đã tìm thấy:\n\n### California:\n1. **Stanford University**\n   - Địa điểm: Stanford, CA\n   - Học phí: $56,000/năm\n   - Chương trình: Computer Science, Business, Engineering\n   - Yêu cầu: GPA 3.9, TOEFL 100\n\n### New York:\n1. **Harvard University**\n   - Địa điểm: Cambridge, MA\n   - Học phí: $54,000/năm\n   - Chương trình: Business, Computer Science, Medicine\n   - Yêu cầu: GPA 3.9, TOEFL 100\n\n2. **MIT**\n   - Địa điểm: Cambridge, MA\n   - Học phí: $53,000/năm\n   - Chương trình: Engineering, Computer Science, Physics\n   - Yêu cầu: GPA 3.8, TOEFL 95\n\nBạn có thể xem xét các trường trên và nghiên cứu thêm về thông tin chi tiết cũng như tiêu chí tuyển sinh của từng trường. Nếu cần thêm thông tin hoặc hỗ trợ, đừng ngần ngại để lại câu hỏi!",
+      "timestamp": "2025-07-25T12:00:21.056Z"
+    },
+    "phase3": {
+      "phase": "legal_checklist",
+      "response": "Stanford University là một lựa chọn xuất sắc cho ngành Computer Science. Đây là một trong số 3 trường phù hợp mà tôi đã tìm thấy. Stanford University tọa lạc tại Stanford, California với học phí khoảng $56,000 mỗi năm và yêu cầu về điểm số như sau: GPA 3.9, TOEFL 100, SAT 1490.\n\nNếu bạn quyết định chọn Stanford University, tôi có thể giúp bạn tạo kế hoạch học tập chi tiết dựa trên thông tin về trường và ngành bạn đã chọn. Bạn cần hỗ trợ thêm thông tin nào không?",
+      "selectedSchool": "Stanford University",
+      "selectedMajor": "Computer Science",
+      "timestamp": "2025-07-25T12:00:40.989Z"
+    },
+    "phase4": {
+      "phase": "legal_checklist",
+      "response": "Xin lỗi vì sự cố, mình không thể kiểm tra hoặc tạo danh sách giấy tờ pháp lý cho bạn vào lúc này. Bạn có thể thử lại sau hoặc cung cấp thông tin khác mà bạn cần sự hỗ trợ không?",
+      "timestamp": "2025-07-25T12:00:51.927Z"
+    },
+    "phase5": {
+      "phase": "life_planning",
+      "response": "Xin lỗi vì sự cố kỹ thuật. Để tạo kế hoạch học tập chi tiết, bạn có thể tham khảo thông tin trực tiếp trên trang web của trường hoặc liên hệ với bộ phận tư vấn học vụ/career của trường để được hỗ trợ kế hoạch học tập cụ thể cho ngành Computer Science tại Stanford University. Nếu cần thêm thông tin hoặc hỗ trợ khác, đừng ngần ngại thông báo cho tôi.",
+      "timestamp": "2025-07-25T12:01:08.132Z"
+    },
+    "phase6": {
+      "phase": "life_planning",
+      "response": "Việc làm part-time khi học là một cách tốt để kiếm thêm thu nhập và tích luỹ kinh nghiệm làm việc. Tuy nhiên, trước khi bắt đầu làm việc part-time, bạn cần xem xét một số vấn đề sau:\n\n1. **Luật Lao động tại Mỹ**: Cần nắm rõ quy định về lao động của sinh viên quốc tế tại Mỹ. Thông thường, sinh viên quốc tế được phép làm việc part-time trong thời gian học và full-time trong kỳ nghỉ.\n\n2. **Thời gian và áp lực học tập**: Đảm bảo rằng việc làm part-time không ảnh hưởng đến hiệu suất học tập của bạn. Hãy lên kế hoạch thời gian hợp lý để cân bằng giữa công việc và học tập.\n\n3. **Tìm việc phù hợp**: Tìm kiếm việc làm part-time phù hợp với khả năng và lịch học của bạn. Có thể tham khảo các cơ hội việc làm trên trường hoặc tại các cửa hàng, nhà hàng gần khu vực bạn sống.\n\n4. **Chuẩn bị về văn hóa Mỹ**: Để thích nghi với văn hóa Mỹ, bạn có thể:\n\n   - Đọc và tìm hiểu về văn hóa, phong tục tập quán của người Mỹ.\n   - Học cách giao tiếp hiệu quả và tôn trọng người khác.\n   - Điều chỉnh thái độ và hành vi để phù hợp với môi trường làm việc và học tập tại Mỹ.\n\nNgoài ra, bạn cũng có thể tham gia các hoạt động xã hội, câu lạc bộ sinh viên để mở rộng mạng lưới quan hệ và tìm hiểu thêm về văn hóa Mỹ. Nếu cần thêm thông tin hoặc hỗ trợ, đừng ngần ngại để lại câu hỏi.",
+      "timestamp": "2025-07-25T12:01:41.808Z"
+    },
+    "finalSession": {
+      "sessionId": "688371c4462eb809b1ef94f5",
+      "userId": "68830e1da407e941f3542536",
+      "phase": "life_planning",
+      "selectedSchool": "stanford university",
+      "selectedMajor": "computer science",
+      "userInfo": {},
+      "isCompleted": false,
+      "progressPercentage": 0,
+      "analytics": {
+        "message_sent_count": 1,
+        "totalMessages": 4,
+        "averageResponseTime": 5647
+      },
+      "createdAt": "2025-07-25T12:00:04.194Z",
+      "updatedAt": "2025-07-25T12:01:41.801Z"
+    },
+    "allLegalDocuments": [
+      {
+        "_id": "688371f3462eb809b1ef9584",
+        "title": "I-20 Form",
+        "userId": "68830e1da407e941f3542536",
+        "content": "admission document - I-20 Form",
+        "status": "pending",
+        "createdAt": "2025-07-25T12:00:51.942Z",
+        "updatedAt": "2025-07-25T12:00:51.942Z",
+        "__v": 0
+      },
+      {
+        "_id": "688371f3462eb809b1ef9587",
+        "title": "Passport",
+        "userId": "68830e1da407e941f3542536",
+        "content": "identity document - Passport",
+        "status": "pending",
+        "createdAt": "2025-07-25T12:00:51.950Z",
+        "updatedAt": "2025-07-25T12:00:51.950Z",
+        "__v": 0
+      },
+      {
+        "_id": "688371f3462eb809b1ef958a",
+        "title": "Visa Application (DS-160)",
+        "userId": "68830e1da407e941f3542536",
+        "content": "visa document - Visa Application (DS-160)",
+        "status": "pending",
+        "createdAt": "2025-07-25T12:00:51.959Z",
+        "updatedAt": "2025-07-25T12:00:51.959Z",
+        "__v": 0
+      },
+      {
+        "_id": "688371f3462eb809b1ef958d",
+        "title": "Financial Statement",
+        "userId": "68830e1da407e941f3542536",
+        "content": "financial document - Financial Statement",
+        "status": "pending",
+        "createdAt": "2025-07-25T12:00:51.968Z",
+        "updatedAt": "2025-07-25T12:00:51.968Z",
+        "__v": 0
+      },
+      {
+        "_id": "688371f3462eb809b1ef9590",
+        "title": "Academic Transcripts",
+        "userId": "68830e1da407e941f3542536",
+        "content": "academic document - Academic Transcripts",
+        "status": "pending",
+        "createdAt": "2025-07-25T12:00:51.975Z",
+        "updatedAt": "2025-07-25T12:00:51.975Z",
+        "__v": 0
+      }
+    ],
+    "updatedUser": {
+      "_id": "68830e1da407e941f3542536",
+      "fullname": "Mệnh Thiên",
+      "email": "dinhthienmenh1505@gmail.com",
+      "phone": "",
+      "sex": "other",
+      "dateOfBirth": "",
+      "nationality": "",
+      "religion": "",
+      "passportCode": "",
+      "passportExpiryDate": "",
+      "scholarPoints": 0,
+      "isActive": true,
+      "createdAt": "2025-07-25T04:54:53.495Z",
+      "updatedAt": "2025-07-25T12:01:43.876Z",
+      "__v": 0
+    }
+  },
+  "logs": [
+    {
+      "timestamp": "2025-07-25T12:00:03.078Z",
+      "type": "info",
+      "message": "🚀 Starting Full Conversation Flow Test"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:03.078Z",
+      "type": "info",
+      "message": "\n📍 Phase 0: USER AUTHENTICATION - Kiểm tra thông tin user"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:03.129Z",
+      "type": "database",
+      "message": "User info retrieved: dinhthienmenh1505@gmail.com"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:03.129Z",
+      "type": "success",
+      "message": "User authenticated: dinhthienmenh1505@gmail.com"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:03.154Z",
+      "type": "success",
+      "message": "Session reset successfully"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:04.164Z",
+      "type": "info",
+      "message": "\n📍 Phase 1: INTRO - Giới thiệu"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:04.164Z",
+      "type": "user",
+      "message": "Sending message: \"Xin chào, tôi muốn tư vấn du học Mỹ\""
+    },
+    {
+      "timestamp": "2025-07-25T12:00:07.734Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:07.735Z",
+      "type": "agent",
+      "message": "Agent Response: Chào bạn! Rất vui được hỗ trợ bạn về việc tư vấn du học Mỹ. Để bắt đầu, bạn có thể cung cấp thông tin về trình độ học vấn hiện tại, ngành học quan tâm, và bất kỳ yêu cầu cụ thể nào khác không? Bằng cách đó, chúng ta sẽ có thể tìm ra các trường phù hợp và bắt đầu quy trình du học cho bạn."
+    },
+    {
+      "timestamp": "2025-07-25T12:00:09.742Z",
+      "type": "info",
+      "message": "\n📍 Phase 2: COLLECT_INFO - Thu thập thông tin học tập"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:09.743Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi có GPA 3.8, TOEFL 105, muốn học Computer Science, ngân sách khoảng 60000$/năm, thích California hoặc New York\""
+    },
+    {
+      "timestamp": "2025-07-25T12:00:21.056Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:21.056Z",
+      "type": "agent",
+      "message": "Agent Response: Dựa trên yêu cầu của bạn với GPA 3.8, TOEFL 105, ngân sách 60000$/năm và muốn học Computer Science ở California hoặc New York, đây là một số trường phù hợp mà tôi đã tìm thấy:\n\n### California:\n1. **Stanford University**\n   - Địa điểm: Stanford, CA\n   - Học phí: $56,000/năm\n   - Chương trình: Computer Science, Business, Engineering\n   - Yêu cầu: GPA 3.9, TOEFL 100\n\n### New York:\n1. **Harvard University**\n   - Địa điểm: Cambridge, MA\n   - Học phí: $54,000/năm\n   - Chương trình: Business, Computer Science, Medicine\n   - Yêu cầu: GPA 3.9, TOEFL 100\n\n2. **MIT**\n   - Địa điểm: Cambridge, MA\n   - Học phí: $53,000/năm\n   - Chương trình: Engineering, Computer Science, Physics\n   - Yêu cầu: GPA 3.8, TOEFL 95\n\nBạn có thể xem xét các trường trên và nghiên cứu thêm về thông tin chi tiết cũng như tiêu chí tuyển sinh của từng trường. Nếu cần thêm thông tin hoặc hỗ trợ, đừng ngần ngại để lại câu hỏi!"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:23.057Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi có kinh nghiệm làm việc 2 năm trong lĩnh vực IT, tốt nghiệp đại học ngành Công nghệ thông tin tại Việt Nam\""
+    },
+    {
+      "timestamp": "2025-07-25T12:00:27.251Z",
+      "type": "success",
+      "message": "Response received - Phase: collect_info"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:27.251Z",
+      "type": "agent",
+      "message": "Agent Response: Xin lỗi vì không thể kiểm tra hoặc tạo giấy tờ pháp lý cho bạn vào lúc này. Bạn có thể cung cấp thêm thông tin khác để chúng tôi hỗ trợ bạn được không?"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:29.263Z",
+      "type": "info",
+      "message": "\n📍 Phase 3: SELECT_SCHOOL - Gợi ý trường và ngành học"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:29.264Z",
+      "type": "user",
+      "message": "Sending message: \"Hãy gợi ý cho tôi một số trường đại học phù hợp\""
+    },
+    {
+      "timestamp": "2025-07-25T12:00:35.543Z",
+      "type": "success",
+      "message": "Response received - Phase: select_school"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:35.543Z",
+      "type": "agent",
+      "message": "Agent Response: Dưới đây là một số trường đại học phù hợp cho ngành Computer Science:\n\n1. **Harvard University**\n   - Địa điểm: Cambridge, MA\n   - Xếp hạng: 1\n   - Học phí: $54,000/năm\n   - Chương trình: Business, Computer Science, Medicine\n   - Yêu cầu: GPA 3.9, TOEFL 100, SAT 1500\n\n2. **MIT (Massachusetts Institute of Technology)**\n   - Địa điểm: Cambridge, MA\n   - Xếp hạng: 2\n   - Học phí: $53,000/năm\n   - Chương trình: Engineering, Computer Science, Physics\n   - Yêu cầu: GPA 3.8, TOEFL 95, SAT 1480\n\n3. **Stanford University**\n   - Địa điểm: Stanford, CA\n   - Xếp hạng: 3\n   - Học phí: $56,000/năm\n   - Chương trình: Computer Science, Business, Engineering\n   - Yêu cầu: GPA 3.9, TOEFL 100, SAT 1490\n\nBạn có thể xem xét các trường này để chọn trường phù hợp nhất với nhu cầu và tiêu chí của mình."
+    },
+    {
+      "timestamp": "2025-07-25T12:00:37.557Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi muốn chọn Stanford University, ngành Computer Science\""
+    },
+    {
+      "timestamp": "2025-07-25T12:00:40.988Z",
+      "type": "success",
+      "message": "Response received - Phase: legal_checklist"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:40.989Z",
+      "type": "agent",
+      "message": "Agent Response: Stanford University là một lựa chọn xuất sắc cho ngành Computer Science. Đây là một trong số 3 trường phù hợp mà tôi đã tìm thấy. Stanford University tọa lạc tại Stanford, California với học phí khoảng $56,000 mỗi năm và yêu cầu về điểm số như sau: GPA 3.9, TOEFL 100, SAT 1490.\n\nNếu bạn quyết định chọn Stanford University, tôi có thể giúp bạn tạo kế hoạch học tập chi tiết dựa trên thông tin về trường và ngành bạn đã chọn. Bạn cần hỗ trợ thêm thông tin nào không?"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:42.995Z",
+      "type": "info",
+      "message": "\n📍 Phase 4: LEGAL_CHECKLIST - Tạo danh sách giấy tờ pháp lý"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:42.996Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi cần danh sách giấy tờ cần chuẩn bị để du học\""
+    },
+    {
+      "timestamp": "2025-07-25T12:00:46.187Z",
+      "type": "success",
+      "message": "Response received - Phase: legal_checklist"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:46.187Z",
+      "type": "agent",
+      "message": "Agent Response: Xin lỗi vì sự cố kỹ thuật, tôi không thể kiểm tra hoặc tạo danh sách giấy tờ pháp lý cho bạn vào lúc này. Bạn có thể thử lại sau hoặc có bất kỳ câu hỏi nào khác không?"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:48.187Z",
+      "type": "user",
+      "message": "Sending message: \"Hãy tạo danh sách chi tiết các giấy tờ tôi cần chuẩn bị\""
+    },
+    {
+      "timestamp": "2025-07-25T12:00:51.927Z",
+      "type": "success",
+      "message": "Response received - Phase: legal_checklist"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:51.927Z",
+      "type": "agent",
+      "message": "Agent Response: Xin lỗi vì sự cố, mình không thể kiểm tra hoặc tạo danh sách giấy tờ pháp lý cho bạn vào lúc này. Bạn có thể thử lại sau hoặc cung cấp thông tin khác mà bạn cần sự hỗ trợ không?"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:51.927Z",
+      "type": "info",
+      "message": "\n💾 Checking existing legal documents"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:51.936Z",
+      "type": "info",
+      "message": "Found 0 existing legal documents"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:51.936Z",
+      "type": "info",
+      "message": "Creating 5 missing legal documents"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:51.944Z",
+      "type": "database",
+      "message": "Legal document created: I-20 Form"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:51.954Z",
+      "type": "database",
+      "message": "Legal document created: Passport"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:51.963Z",
+      "type": "database",
+      "message": "Legal document created: Visa Application (DS-160)"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:51.970Z",
+      "type": "database",
+      "message": "Legal document created: Financial Statement"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:51.976Z",
+      "type": "database",
+      "message": "Legal document created: Academic Transcripts"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:53.978Z",
+      "type": "info",
+      "message": "\n📍 Phase 5: PROGRESS_TRACKING - Theo dõi tiến độ chuẩn bị"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:53.978Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi đã hoàn thành I-20 và Passport\""
+    },
+    {
+      "timestamp": "2025-07-25T12:00:56.418Z",
+      "type": "success",
+      "message": "Response received - Phase: progress_tracking"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:56.419Z",
+      "type": "agent",
+      "message": "Agent Response: Xin lỗi vì sự cố kỹ thuật, tôi không thể kiểm tra hoặc tạo giấy tờ pháp lý vào lúc này. Bạn có thể chờ một chút hoặc thử lại sau không?"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:58.425Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi cũng đã nộp đơn xin visa rồi\""
+    },
+    {
+      "timestamp": "2025-07-25T12:00:59.766Z",
+      "type": "success",
+      "message": "Response received - Phase: progress_tracking"
+    },
+    {
+      "timestamp": "2025-07-25T12:00:59.766Z",
+      "type": "agent",
+      "message": "Agent Response: Đã hiểu, bạn đã nộp đơn xin visa. Bạn cần giúp đỡ hoặc thông tin gì khác không?"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:01.771Z",
+      "type": "info",
+      "message": "\n📝 Updating legal documents status"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:01.772Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi đã hoàn thành tất cả giấy tờ, bây giờ tôi cần tư vấn về kế hoạch sinh sống\""
+    },
+    {
+      "timestamp": "2025-07-25T12:01:08.131Z",
+      "type": "success",
+      "message": "Response received - Phase: life_planning"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:08.131Z",
+      "type": "agent",
+      "message": "Agent Response: Xin lỗi vì sự cố kỹ thuật. Để tạo kế hoạch học tập chi tiết, bạn có thể tham khảo thông tin trực tiếp trên trang web của trường hoặc liên hệ với bộ phận tư vấn học vụ/career của trường để được hỗ trợ kế hoạch học tập cụ thể cho ngành Computer Science tại Stanford University. Nếu cần thêm thông tin hoặc hỗ trợ khác, đừng ngần ngại thông báo cho tôi."
+    },
+    {
+      "timestamp": "2025-07-25T12:01:10.140Z",
+      "type": "info",
+      "message": "\n📍 Phase 6: LIFE_PLANNING - Tư vấn kế hoạch sinh sống"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:10.141Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi cần tư vấn về chỗ ở, chi phí sinh hoạt, và cách thích nghi với cuộc sống ở Mỹ\""
+    },
+    {
+      "timestamp": "2025-07-25T12:01:21.682Z",
+      "type": "success",
+      "message": "Response received - Phase: life_planning"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:21.682Z",
+      "type": "agent",
+      "message": "Agent Response: Dường như không có thông tin cụ thể về chỗ ở, chi phí sinh hoạt và cách thích nghi với cuộc sống ở Stanford University. Tuy nhiên, tôi có thể cung cấp một số thông tin tổng quan về việc sống và học tập tại Mỹ.\n\n### Chỗ ở:\n- Sinh viên thường có nhiều lựa chọn chỗ ở, bao gồm ký túc xá trường, căn hộ ngoại trường, homestay, hay chia sẻ nhà với người khác.\n- Giá thuê nhà/phòng thường dao động tùy theo vị trí và tiện ích đi kèm.\n\n### Chi phí sinh hoạt:\n- Chi phí sinh hoạt tại Mỹ có thể phụ thuộc vào vùng lãnh thổ, cụ thể là ở California như Stanford.\n- Bao gồm chi phí ăn uống, đi lại, sách vở, hoạt động giải trí, bảo hiểm y tế, và các chi phí khác.\n\n### Cách thích nghi với cuộc sống ở Mỹ:\n- Hãy tìm hiểu văn hóa địa phương và quy định tại trường để thích nghi tốt hơn.\n- Tham gia các hoạt động cộng đồng, câu lạc bộ, và tổ chức sinh viên để gặp gỡ bạn bè mới.\n- Luôn giữ liên lạc với gia đình và bạn bè ở Việt Nam để hỗ trợ tinh thần.\n\nNếu bạn cần thêm thông tin hoặc có câu hỏi cụ thể hơn, đừng ngần ngại hỏi thêm."
+    },
+    {
+      "timestamp": "2025-07-25T12:01:23.691Z",
+      "type": "user",
+      "message": "Sending message: \"Làm thế nào để tìm được chỗ ở gần trường? Chi phí sinh hoạt hàng tháng khoảng bao nhiêu?\""
+    },
+    {
+      "timestamp": "2025-07-25T12:01:28.360Z",
+      "type": "success",
+      "message": "Response received - Phase: life_planning"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:28.360Z",
+      "type": "agent",
+      "message": "Agent Response: Tìm thấy 3 trường phù hợp với ngành Computer Science:\n1. **Harvard University**\n   - Vị trí: Cambridge, MA\n   - Học phí: $54,000/năm\n2. **MIT (Massachusetts Institute of Technology)**\n   - Vị trí: Cambridge, MA\n   - Học phí: $53,000/năm\n3. **Stanford University**\n   - Vị trí: Stanford, CA\n   - Học phí: $56,000/năm\n\nĐể tìm chỗ ở gần trường, bạn có thể:\n- Tìm ký túc xá sinh viên trường.\n- Thuê phòng trọ hoặc căn hộ gần khu vực trường.\n- Sử dụng các trang web như Airbnb, Craigslist để tìm chỗ ở phù hợp.\n\nVề chi phí sinh hoạt hàng tháng, thông thường bạn cần tính toán chi phí cho chỗ ở, ăn uống, đi lại, sách vở và các hoạt động giải trí. Chi phí này có thể dao động tùy theo vùng địa lý và lối sống cá nhân. Bạn cũng có thể tham khảo trên các diễn đàn trực tuyến để biết thêm thông tin chi tiết về chi phí sinh hoạt tại các khu vực gần trường."
+    },
+    {
+      "timestamp": "2025-07-25T12:01:30.364Z",
+      "type": "user",
+      "message": "Sending message: \"Tôi có thể làm việc part-time khi học không? Cần chuẩn bị gì để thích nghi với văn hóa Mỹ?\""
+    },
+    {
+      "timestamp": "2025-07-25T12:01:41.808Z",
+      "type": "success",
+      "message": "Response received - Phase: life_planning"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:41.808Z",
+      "type": "agent",
+      "message": "Agent Response: Việc làm part-time khi học là một cách tốt để kiếm thêm thu nhập và tích luỹ kinh nghiệm làm việc. Tuy nhiên, trước khi bắt đầu làm việc part-time, bạn cần xem xét một số vấn đề sau:\n\n1. **Luật Lao động tại Mỹ**: Cần nắm rõ quy định về lao động của sinh viên quốc tế tại Mỹ. Thông thường, sinh viên quốc tế được phép làm việc part-time trong thời gian học và full-time trong kỳ nghỉ.\n\n2. **Thời gian và áp lực học tập**: Đảm bảo rằng việc làm part-time không ảnh hưởng đến hiệu suất học tập của bạn. Hãy lên kế hoạch thời gian hợp lý để cân bằng giữa công việc và học tập.\n\n3. **Tìm việc phù hợp**: Tìm kiếm việc làm part-time phù hợp với khả năng và lịch học của bạn. Có thể tham khảo các cơ hội việc làm trên trường hoặc tại các cửa hàng, nhà hàng gần khu vực bạn sống.\n\n4. **Chuẩn bị về văn hóa Mỹ**: Để thích nghi với văn hóa Mỹ, bạn có thể:\n\n   - Đọc và tìm hiểu về văn hóa, phong tục tập quán của người Mỹ.\n   - Học cách giao tiếp hiệu quả và tôn trọng người khác.\n   - Điều chỉnh thái độ và hành vi để phù hợp với môi trường làm việc và học tập tại Mỹ.\n\nNgoài ra, bạn cũng có thể tham gia các hoạt động xã hội, câu lạc bộ sinh viên để mở rộng mạng lưới quan hệ và tìm hiểu thêm về văn hóa Mỹ. Nếu cần thêm thông tin hoặc hỗ trợ, đừng ngần ngại để lại câu hỏi."
+    },
+    {
+      "timestamp": "2025-07-25T12:01:43.820Z",
+      "type": "info",
+      "message": "\n📊 Getting final session summary"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:43.840Z",
+      "type": "database",
+      "message": "Session retrieved: 688371c4462eb809b1ef94f5"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:43.841Z",
+      "type": "info",
+      "message": "\n📋 Getting all legal documents for user"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:43.862Z",
+      "type": "database",
+      "message": "Legal documents retrieved: 5 documents"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:43.863Z",
+      "type": "info",
+      "message": "\n👤 Updating user profile"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:43.894Z",
+      "type": "success",
+      "message": "User profile updated: dinhthienmenh1505@gmail.com"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:43.895Z",
+      "type": "info",
+      "message": "Final Phase: life_planning"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:43.895Z",
+      "type": "info",
+      "message": "Selected School: stanford university"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:43.895Z",
+      "type": "info",
+      "message": "Selected Major: computer science"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:43.895Z",
+      "type": "info",
+      "message": "Progress: 0%"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:43.895Z",
+      "type": "info",
+      "message": "Total Messages: 4"
+    },
+    {
+      "timestamp": "2025-07-25T12:01:43.896Z",
+      "type": "success",
+      "message": "\n✅ Full conversation flow test completed successfully!"
+    }
+  ],
+  "userInfo": {
+    "id": "68830e1da407e941f3542536",
+    "fullname": "Mệnh Thiên",
+    "email": "dinhthienmenh1505@gmail.com",
+    "phone": "",
+    "sex": "other",
+    "dateOfBirth": "",
+    "nationality": "",
+    "religion": "",
+    "passportCode": "",
+    "passportExpiryDate": "",
+    "scholarPoints": 0
+  }
+}

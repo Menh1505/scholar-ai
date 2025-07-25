@@ -1,0 +1,35 @@
+{
+  "timestamp": "2025-07-25T11:57:30.391Z",
+  "testSuite": "Agent API Integration Test",
+  "userToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODc5YzFiYjFlOTI0ZWE5ZjViOTExZjYiLCJpYXQiOjE3NTI4MDk5MTUsImV4cCI6MTc1MzQxNDcxNX0.SJi64Egn7jY783Wws1TtepqplfAExL3InPonhRIF5EU",
+  "userId": "6879c1bb1e924ea9f5b911f6",
+  "results": {},
+  "logs": [
+    {
+      "timestamp": "2025-07-25T11:57:30.392Z",
+      "type": "info",
+      "message": "🚀 Starting Full Conversation Flow Test"
+    },
+    {
+      "timestamp": "2025-07-25T11:57:30.393Z",
+      "type": "info",
+      "message": "\n📍 Phase 0: USER AUTHENTICATION - Kiểm tra thông tin user"
+    },
+    {
+      "timestamp": "2025-07-25T11:57:30.460Z",
+      "type": "error",
+      "message": "Error getting user info: Request failed with status code 401"
+    },
+    {
+      "timestamp": "2025-07-25T11:57:30.471Z",
+      "type": "error",
+      "message": "Error resetting session: Request failed with status code 404"
+    },
+    {
+      "timestamp": "2025-07-25T11:57:30.472Z",
+      "type": "error",
+      "message": "❌ Error in full conversation flow: Request failed with status code 404"
+    }
+  ],
+  "error": "Request failed with status code 404"
+}
