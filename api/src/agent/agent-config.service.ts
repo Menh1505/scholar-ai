@@ -110,6 +110,11 @@ export class AgentConfigService {
         format: 'json',
         destination: 'console',
       },
+      analytics: {
+        enabled: true,
+        trackEvents: ['message_sent', 'phase_changed', 'document_completed'],
+        retentionDays: 90,
+      },
     };
   }
 

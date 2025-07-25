@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
+import { initializeAgentConfig } from './agent/agent.config';
 import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
@@ -8,7 +9,8 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
 
-  // Set global prefix for all routes
+  // Initialize agent config with ConfigService
+  initializeAgentConfig(configService); // Set global prefix for all routes
   app.setGlobalPrefix('api');
 
   // Enable cookie parsing

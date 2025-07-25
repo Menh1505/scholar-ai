@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AgentSession, AgentSessionDocument } from './schema/agent.schema';
-import { AgentConfig, validateAgentConfig } from './agent.config';
+import { validateAgentConfig } from './agent.config';
 import {
   AgentSessionService,
   AgentPhaseService,
