@@ -8,6 +8,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { GoogleAuthGuard } from './guards/google-auth.guard';
@@ -15,7 +16,10 @@ import { Request, Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Get('google')
   @UseGuards(GoogleAuthGuard)
@@ -35,13 +39,13 @@ export class AuthController {
     // Set JWT as httpOnly cookie
     res.cookie('access_token', result.access_token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: this.configService.get<string>('NODE_ENV') === 'production',
       sameSite: 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
     // Redirect to frontend without token in URL
-    const redirectUrl = `${process.env.FRONTEND_URL+'/profile' || 'http://localhost:3001'}`;
+    const redirectUrl = `${this.configService.get<string>('FRONTEND_URL') + '/profile' || 'http://localhost:3001'}`;
     res.redirect(redirectUrl);
   }
 
@@ -59,7 +63,7 @@ export class AuthController {
     // Update cookie with new token
     res.cookie('access_token', result.access_token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: this.configService.get<string>('NODE_ENV') === 'production',
       sameSite: 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
