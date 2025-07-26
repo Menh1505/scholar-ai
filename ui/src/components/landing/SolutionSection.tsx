@@ -47,7 +47,7 @@ const features = [
 
 export default function SolutionSection() {
   return (
-    <section className="py-20 bg-background">
+    <section className="py-10 bg-background">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -55,12 +55,8 @@ export default function SolutionSection() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
-            <Sparkles className="w-4 h-4" />
-            Giải pháp hoàn hảo
-          </div>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">ScholarAI</span> là giải pháp
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text">ScholarAI</span> là giải pháp
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">ScholarAI là trợ lý ảo được xây dựng bằng công nghệ AI hiện đại, giúp bạn:</p>
 
@@ -107,24 +103,6 @@ export default function SolutionSection() {
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center">
-          <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl p-8 max-w-2xl mx-auto border border-primary/20">
-            <h3 className="text-2xl font-bold text-foreground mb-4">Tất cả chỉ trong một khung chat đơn giản</h3>
-            <p className="text-lg text-muted-foreground mb-6">Không cần tải app, không cần kiến thức kỹ thuật.</p>
-            <Button asChild size="lg" className="group">
-              <Link href="/profile">
-                Trải nghiệm ngay
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

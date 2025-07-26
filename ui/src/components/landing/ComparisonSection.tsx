@@ -66,7 +66,7 @@ const targetAudience = [
 
 export default function ComparisonSection() {
   return (
-    <section className="py-20 bg-background">
+    <section className="py-10 bg-background">
       <div className="container mx-auto px-4">
         {/* Target Audience */}
         <motion.div
@@ -100,7 +100,7 @@ export default function ComparisonSection() {
         {/* Comparison Table */}
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
           <h2 className="text-4xl md:text-5xl font-bold text-center text-foreground mb-12">
-            Hành trình du học: <span className="text-muted-foreground">Truyền thống</span> vs. <span className="text-primary">ScholarAI</span>
+            Hành trình du học: Truyền thống vs. <span className="text-primary">ScholarAI</span>
           </h2>
 
           <div className="overflow-x-auto">

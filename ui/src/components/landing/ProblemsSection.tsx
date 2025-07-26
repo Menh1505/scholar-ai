@@ -45,7 +45,7 @@ const problems = [
 
 export default function ProblemsSection() {
   return (
-    <section className="py-20 bg-muted/20">
+    <section className="py-10 bg-muted/20">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

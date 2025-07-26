@@ -50,7 +50,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Scholar AI</span>
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text">Scholar AI</span>
           </motion.h1>
 
           <motion.p

@@ -44,7 +44,7 @@ const steps = [
 
 export default function HowItWorksSection() {
   return (
-    <section className="py-20 bg-muted/20">
+    <section className="py-10 bg-muted/20">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -53,7 +53,7 @@ export default function HowItWorksSection() {
           viewport={{ once: true }}
           className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Cách hoạt động</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">Quy trình đơn giản, hiệu quả, được tối ưu hóa cho người Việt Nam</p>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">Quy trình đơn giản, hiệu quả, được tối ưu hóa</p>
         </motion.div>
 
         <div className="max-w-4xl mx-auto">
