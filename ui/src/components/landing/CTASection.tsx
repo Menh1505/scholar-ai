@@ -1,28 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Shield, Key, Users, Sparkles, ArrowRight, Heart } from "lucide-react";
-import Link from "next/link";
-
-const securityFeatures = [
-  {
-    icon: Users,
-    title: "ID hội thoại riêng biệt",
-    description: "Mỗi người dùng có một ID hội thoại riêng biệt – thông tin không lẫn, không chia sẻ",
-  },
-  {
-    icon: Key,
-    title: "API công khai",
-    description: "Hệ thống hoạt động công khai qua API, có thể mở rộng theo nhu cầu từng người",
-  },
-  {
-    icon: Shield,
-    title: "Không cần đăng ký rườm rà",
-    description: "Chỉ cần bắt đầu chat – không yêu cầu tài khoản phức tạp",
-  },
-];
 
 export default function CTASection() {
   return (

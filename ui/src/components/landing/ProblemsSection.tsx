@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
 import { AlertTriangle, DollarSign, FileX, HelpCircle, MapPin, Clock } from "lucide-react";
 
 const problems = [
@@ -52,7 +51,7 @@ export default function ProblemsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16">
+          className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Vấn đề của <span className="text-destructive">người du học</span>
           </h2>
@@ -62,7 +61,7 @@ export default function ProblemsSection() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
           {problems.map((problem, index) => (
             <motion.div
               key={index}
@@ -70,20 +69,17 @@ export default function ProblemsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}>
-              <Card className="h-full border-l-4 border-l-destructive/60 hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className={`p-3 rounded-lg bg-muted ${problem.color}`}>
-                      <problem.icon className="w-6 h-6" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-foreground mb-2">{problem.title}</h3>
-                      <p className="text-muted-foreground leading-relaxed">{problem.description}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+              className="bg-white/50 shadow-sm hover:shadow-md transition-shadow rounded-lg p-4">
+              <div className="flex items-start gap-3">
+                <div className={`p-2 rounded-md bg-muted/80 ${problem.color} flex-shrink-0`}>
+                  <problem.icon className="w-5 h-5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg font-semibold text-foreground mb-1">{problem.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{problem.description}</p>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -93,10 +89,10 @@ export default function ProblemsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
           viewport={{ once: true }}
-          className="mt-16 text-center">
-          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-destructive mb-4">Hậu quả?</h3>
-            <p className="text-lg text-foreground">
+          className="mt-12 text-center">
+          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4 max-w-2xl mx-auto">
+            <h3 className="text-xl font-bold text-destructive mb-2">Hậu quả?</h3>
+            <p className="text-base text-foreground">
               Không lên kế hoạch bài bản, dễ bỏ lỡ deadline, thiếu giấy tờ, không chuẩn bị tâm lý – và thậm chí vỡ mộng sau khi đã đến nước ngoài.
             </p>
           </div>

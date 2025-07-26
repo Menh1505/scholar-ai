@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
 
 const steps = [
   {
@@ -51,7 +50,7 @@ export default function HowItWorksSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16">
+          className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Cách hoạt động</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">Quy trình đơn giản, hiệu quả, được tối ưu hóa</p>
         </motion.div>
@@ -64,22 +63,20 @@ export default function HowItWorksSection() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className={`flex items-center gap-8 mb-12 ${index % 2 === 1 ? "flex-row-reverse" : ""}`}>
+              className={`flex items-center gap-6 mb-8 ${index % 2 === 1 ? "flex-row-reverse" : ""}`}>
               <div className="flex-1">
-                <Card className="hover:shadow-lg transition-shadow">
-                  <CardContent className="p-8">
-                    <div className="flex items-start gap-6">
-                      <div
-                        className={`w-12 h-12 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center text-white font-bold text-lg flex-shrink-0`}>
-                        {step.step}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-xl font-bold text-foreground mb-3">{step.title}</h3>
-                        <p className="text-muted-foreground leading-relaxed">{step.example}</p>
-                      </div>
+                <div className="bg-white/50 shadow-sm hover:shadow-md transition-shadow rounded-lg p-4">
+                  <div className="flex items-start gap-4">
+                    <div
+                      className={`w-10 h-10 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center text-white font-bold text-sm flex-shrink-0`}>
+                      {step.step}
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-lg font-semibold text-foreground mb-1">{step.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{step.example}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Connector line - only show if not last item */}
@@ -90,7 +87,7 @@ export default function HowItWorksSection() {
                     whileInView={{ scaleY: 1 }}
                     transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
                     viewport={{ once: true }}
-                    className="w-0.5 h-16 bg-gradient-to-b from-primary to-accent"
+                    className="w-0.5 h-12 bg-gradient-to-b from-primary to-accent"
                   />
                 </div>
               )}
@@ -103,22 +100,22 @@ export default function HowItWorksSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
           viewport={{ once: true }}
-          className="text-center mt-16">
-          <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl p-8 max-w-3xl mx-auto border border-primary/20">
-            <h3 className="text-2xl font-bold text-foreground mb-4">Ví dụ thực tế</h3>
-            <div className="bg-card rounded-lg p-6 text-left max-w-2xl mx-auto">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">You</span>
+          className="text-center mt-12">
+          <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-xl p-4 max-w-3xl mx-auto border border-primary/20">
+            <h3 className="text-xl font-bold text-foreground mb-3">Ví dụ thực tế</h3>
+            <div className="bg-card rounded-lg p-4 text-left max-w-2xl mx-auto">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">You</span>
                 </div>
-                <p className="text-foreground italic">&quot;Tôi muốn học ngành Computer Science, ngân sách 25,000 USD/năm&quot;</p>
+                <p className="text-sm text-foreground italic">&quot;Tôi muốn học ngành Computer Science, ngân sách 25,000 USD/năm&quot;</p>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-white text-sm font-bold">AI</span>
+                <div className="w-7 h-7 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-white text-xs font-bold">AI</span>
                 </div>
-                <div className="bg-muted rounded-lg p-4 flex-1">
-                  <p className="text-foreground text-sm leading-relaxed">
+                <div className="bg-muted rounded-lg p-3 flex-1">
+                  <p className="text-foreground text-xs leading-relaxed">
                     &quot;Tôi đã tìm thấy 3 trường phù hợp với bạn: University of Texas at Austin, Penn State University, và Virginia Tech. Bạn cần chuẩn bị 7
                     loại giấy tờ: TOEFL/IELTS, SAT/ACT, bảng điểm phổ thông, thư giới thiệu, essay cá nhân, chứng minh tài chính, và hộ chiếu. Tôi sẽ tạo
                     timeline chi tiết cho bạn...&quot;
