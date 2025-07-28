@@ -65,8 +65,8 @@ export class AgentService {
     try {
       const session = await this.getOrCreateSession(userId);
 
-      // Extract school and major from user message BEFORE processing
-      this.extractionService.extractSchoolAndMajor(message, session);
+      // Extract and update all user information from message
+      this.extractionService.extractAndUpdateUserInfo(message, session);
 
       // Add user message to session
       this.chatService.addUserMessage(session, message);
