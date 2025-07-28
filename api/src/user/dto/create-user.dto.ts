@@ -5,6 +5,7 @@ export class CreateUserDto {
   sex: string;
   dateOfBirth: string;
   nationality: string;
+  address: string;
   religion: string;
   passportCode: string;
   passportExpiryDate: string;

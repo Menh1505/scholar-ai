@@ -37,6 +37,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
           sex: 'other',
           dateOfBirth: '',
           nationality: '',
+          address: '',
           religion: '',
           passportCode: ``,
           passportExpiryDate: '',
