@@ -8,11 +8,11 @@ interface UserState {
   setUser: (user: User | null) => void;
   clearUser: () => void;
   fetchUser: () => void;
-  updateUser: (userData: Partial<Omit<User, "_id">>) => Promise<void>;
+  updateUser: (userData: User) => Promise<void>;
   logOut: () => void;
 }
 
-export const useUserStore = create<UserState>((set) => ({
+export const useUserStore = create<UserState>((set, get) => ({
   user: null,
   loading: false,
   setUser: (user) => set({ user }),
@@ -49,12 +49,18 @@ export const useUserStore = create<UserState>((set) => ({
   async updateUser(userData) {
     set({ loading: true });
     try {
-      const response = await apiClient.put("/user/me", userData);
+      const userId = get().user?._id;
+      if (!userId) {
+        console.log("No user found");
+        return;
+      }
+
+      const response = await apiClient.patch(`/user/${userId}`, userData);
       const updatedUser = response.data;
 
       // Map API response to user state structure
       const user = {
-        _id: updatedUser.id,
+        _id: userId,
         fullname: updatedUser.fullname,
         email: updatedUser.email,
         phone: updatedUser.phone,
