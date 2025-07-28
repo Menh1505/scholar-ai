@@ -36,7 +36,6 @@ export class AgentAnalyticsService {
       averageResponseTime: session.analytics.averageResponseTime || 0,
       toolsUsageCount: session.analytics.toolsUsageCount || {},
       phase: session.phase,
-      isCompleted: session.isCompleted,
     };
   }
 }

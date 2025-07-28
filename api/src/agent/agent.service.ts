@@ -48,10 +48,6 @@ export class AgentService {
     return this.sessionService.resetSession(userId);
   }
 
-  async completeSession(userId: string): Promise<void> {
-    return this.sessionService.completeSession(userId);
-  }
-
   async getSessionStats(userId: string): Promise<any> {
     return this.sessionService.getSessionStats(userId);
   }

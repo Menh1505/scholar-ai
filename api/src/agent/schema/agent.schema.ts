@@ -100,12 +100,6 @@ export class AgentSession {
   })
   messages: ChatMessage[];
 
-  @Prop({ default: false })
-  isCompleted: boolean;
-
-  @Prop()
-  completedAt?: Date;
-
   @Prop({ type: Object, default: {} })
   preferences: {
     language?: string;
@@ -137,14 +131,6 @@ export const AgentSessionSchema = SchemaFactory.createForClass(AgentSession);
 AgentSessionSchema.index({ phase: 1 });
 AgentSessionSchema.index({ 'messages.timestamp': -1 });
 AgentSessionSchema.index({ updatedAt: -1 });
-
-// Add virtual for session duration
-AgentSessionSchema.virtual('sessionDuration').get(function () {
-  if (this.completedAt && (this as any).createdAt) {
-    return this.completedAt.getTime() - (this as any).createdAt.getTime();
-  }
-  return null;
-});
 
 // Add virtual for progress percentage
 AgentSessionSchema.virtual('progressPercentage').get(function () {

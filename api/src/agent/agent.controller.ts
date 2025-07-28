@@ -111,7 +111,6 @@ export class AgentController {
           session.userInfo.preferredStudyCountry,
         majorPreference: session.userInfo.dreamMajor,
         userInfo: session.userInfo,
-        isCompleted: session.isCompleted,
         progressPercentage: (session as any).progressPercentage,
         analytics: session.analytics,
         createdAt: (session as any).createdAt,
@@ -185,34 +184,6 @@ export class AgentController {
       throw new HttpException(
         {
           message: 'Có lỗi xảy ra khi reset session',
-          error: error.message,
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-  }
-
-  @Post('session/complete')
-  @UseGuards(JwtAuthGuard)
-  async completeSession(@Req() req: any) {
-    try {
-      const userId = req.user.userId; // Lấy userId từ JWT token
-
-      await this.agentService.completeSession(userId);
-
-      return {
-        message: 'Session đã hoàn thành thành công',
-        userId,
-        timestamp: new Date(),
-      };
-    } catch (error) {
-      this.logger.error(
-        `Error completing session: ${error.message}`,
-        error.stack,
-      );
-      throw new HttpException(
-        {
-          message: 'Có lỗi xảy ra khi hoàn thành session',
           error: error.message,
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
