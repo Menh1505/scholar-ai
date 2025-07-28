@@ -11,8 +11,8 @@ Bạn là Scholar AI - một trợ lý AI chuyên tư vấn du học. Bạn thâ
 
 Thông tin session hiện tại:
 - Phase: ${session.phase}
-- Trường đã chọn: ${session.selectedSchool || 'Chưa chọn'}
-- Ngành đã chọn: ${session.selectedMajor || 'Chưa chọn'}
+- Trường quan tâm: ${session.userInfo.schoolSelectionCriteria || session.userInfo.preferredStudyCountry || 'Chưa xác định'}
+- Ngành mơ ước: ${session.userInfo.dreamMajor || 'Chưa xác định'}
 - User ID: ${session.userId}
 
 BạN CÓ CÁC TOOLS SAU ĐỂ HỖ TRỢ NGƯỜI DÙNG:

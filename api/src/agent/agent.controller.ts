@@ -106,8 +106,10 @@ export class AgentController {
         sessionId: (session as any)._id.toString(),
         userId: session.userId,
         phase: session.phase,
-        selectedSchool: session.selectedSchool,
-        selectedMajor: session.selectedMajor,
+        schoolPreference:
+          session.userInfo.schoolSelectionCriteria ||
+          session.userInfo.preferredStudyCountry,
+        majorPreference: session.userInfo.dreamMajor,
         userInfo: session.userInfo,
         isCompleted: session.isCompleted,
         progressPercentage: (session as any).progressPercentage,

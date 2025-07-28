@@ -40,22 +40,40 @@ export class AgentExtractionService {
       engineering: /engineering|kỹ thuật/i,
     };
 
-    // Extract school
-    if (!session.selectedSchool) {
+    // Extract school information and update userInfo
+    if (
+      !session.userInfo.preferredStudyCountry &&
+      !session.userInfo.schoolSelectionCriteria
+    ) {
       for (const [schoolName, pattern] of Object.entries(schoolMappings)) {
         if (pattern.test(message)) {
-          session.selectedSchool = schoolName;
-          console.log(`Extracted school: ${schoolName}`);
+          if (!session.userInfo.schoolSelectionCriteria) {
+            session.userInfo.schoolSelectionCriteria = schoolName;
+          }
+          // Determine country based on school
+          if (
+            schoolName.includes('stanford') ||
+            schoolName.includes('harvard') ||
+            schoolName.includes('mit') ||
+            schoolName.includes('berkeley') ||
+            schoolName.includes('ucla') ||
+            schoolName.includes('columbia') ||
+            schoolName.includes('cornell') ||
+            schoolName.includes('california')
+          ) {
+            session.userInfo.preferredStudyCountry = 'Hoa Kỳ';
+          }
+          console.log(`Extracted school preference: ${schoolName}`);
           break;
         }
       }
     }
 
-    // Extract major
-    if (!session.selectedMajor) {
+    // Extract major and update userInfo
+    if (!session.userInfo.dreamMajor) {
       for (const [majorName, pattern] of Object.entries(majorMappings)) {
         if (pattern.test(message)) {
-          session.selectedMajor = majorName;
+          session.userInfo.dreamMajor = majorName;
           console.log(`Extracted major: ${majorName}`);
           break;
         }

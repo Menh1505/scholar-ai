@@ -80,12 +80,6 @@ export class AgentSession {
   @Prop({ enum: Phase, default: Phase.INTRO })
   phase: Phase;
 
-  @Prop()
-  selectedSchool?: string;
-
-  @Prop()
-  selectedMajor?: string;
-
   @Prop({ type: Object, default: {} })
   userInfo: UserInfo;
 
