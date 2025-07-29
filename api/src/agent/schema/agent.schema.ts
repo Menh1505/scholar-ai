@@ -65,11 +65,6 @@ export interface ChatMessage {
   role: 'user' | 'agent' | 'system';
   content: string;
   timestamp: Date;
-  metadata?: {
-    toolsUsed?: string[];
-    phase?: Phase;
-    actionTaken?: string;
-  };
 }
 
 @Schema({ timestamps: true })

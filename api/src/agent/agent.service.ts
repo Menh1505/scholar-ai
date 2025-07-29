@@ -11,6 +11,8 @@ import {
   AgentPromptService,
   AgentChatService,
 } from './services';
+import { UserService } from '../user/user.service';
+import { LegalService } from '../legal/legal.service';
 
 @Injectable()
 export class AgentService {
@@ -23,6 +25,8 @@ export class AgentService {
     private readonly analyticsService: AgentAnalyticsService,
     private readonly promptService: AgentPromptService,
     private readonly chatService: AgentChatService,
+    private readonly userService: UserService,
+    private readonly legalService: LegalService,
   ) {
     // Validate configuration on service initialization
     try {

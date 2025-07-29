@@ -55,17 +55,15 @@ export class AgentController {
         throw new BadRequestException('Message không thể rỗng');
       }
 
-      if (message.length > 1000) {
-        throw new BadRequestException('Message quá dài (tối đa 1000 ký tự)');
-      }
-
       const token = req.headers.authorization || '';
+      console.log('token:', token);
 
       const response = await this.agentService.handlePrompt(
         userId,
         message,
         token,
       );
+
       const session = await this.agentService.getOrCreateSession(userId);
 
       return {
@@ -139,7 +137,7 @@ export class AgentController {
 
       const session = await this.agentService.getOrCreateSession(userId);
 
-      const messages = session.messages.slice(offset, offset + limit).reverse(); // Newest first
+      const messages = session.messages.slice(offset, offset + limit); // Newest first
 
       return {
         messages,
@@ -163,7 +161,7 @@ export class AgentController {
     }
   }
 
-  @Delete('session')
+  /*   @Delete('session')
   @UseGuards(JwtAuthGuard)
   async resetSession(@Req() req: any) {
     try {
@@ -189,7 +187,7 @@ export class AgentController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-  }
+  } */
 
   @Get('health')
   async healthCheck() {

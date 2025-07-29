@@ -12,12 +12,16 @@ import {
   AgentPromptService,
   AgentChatService,
 } from './services';
+import { UserModule } from '../user/user.module';
+import { LegalModule } from '../legal/legal.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: AgentSession.name, schema: AgentSessionSchema },
     ]),
+    UserModule,
+    LegalModule,
   ],
   controllers: [AgentController],
   providers: [
