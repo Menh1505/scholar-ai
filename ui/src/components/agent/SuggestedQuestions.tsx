@@ -1,6 +1,5 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { AgentSession } from "@/types/agent";
 
 const SUGGESTED_QUESTIONS = [
   "Tôi muốn du học tại Nhật Bản, bạn có thể hướng dẫn tôi không?",
@@ -15,10 +14,9 @@ const SUGGESTED_QUESTIONS = [
 
 interface SuggestedQuestionsProps {
   onQuestionSelect: (question: string) => void;
-  currentSession: AgentSession | null;
 }
 
-export const SuggestedQuestions: React.FC<SuggestedQuestionsProps> = ({ onQuestionSelect, currentSession }) => {
+export const SuggestedQuestions: React.FC<SuggestedQuestionsProps> = ({ onQuestionSelect }) => {
   return (
     <div className="w-80 bg-gray-50 border-l border-gray-200 p-4 overflow-y-auto">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Suggested Questions</h3>
@@ -32,19 +30,6 @@ export const SuggestedQuestions: React.FC<SuggestedQuestionsProps> = ({ onQuesti
           </Card>
         ))}
       </div>
-
-      {/* Session Info */}
-      {currentSession && (
-        <div className="mt-6 p-3 bg-white rounded-lg border border-gray-200">
-          <h4 className="font-medium text-gray-900 mb-2">Session Info</h4>
-          <div className="space-y-1 text-xs text-gray-600">
-            <div>Phase: {currentSession.phase.replace("_", " ")}</div>
-            <div>Progress: {currentSession.progressPercentage}%</div>
-            {currentSession.selectedSchool && <div>School: {currentSession.selectedSchool}</div>}
-            {currentSession.selectedMajor && <div>Major: {currentSession.selectedMajor}</div>}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

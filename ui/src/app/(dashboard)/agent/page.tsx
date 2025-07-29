@@ -10,9 +10,9 @@ import toast from "react-hot-toast";
 
 export default function AgentPage() {
   const { user } = useUserStore();
-  const { sendMessage, getUserSession, getMessageHistory, currentSession, messageHistory, loading, error, clearError } = useAgentStore();
+  const { sendMessage, getMessageHistory, messageHistory, loading, error, clearError } = useAgentStore();
 
-  console.log("AgentPage render", { user, currentSession, messageHistory, loading, error });
+  console.log("AgentPage render", { user, messageHistory, loading, error });
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState("");
@@ -21,9 +21,8 @@ export default function AgentPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    getUserSession();
     getMessageHistory();
-  }, [getUserSession, getMessageHistory]);
+  }, [getMessageHistory]);
 
   // Show error toast when error occurs
   useEffect(() => {
@@ -111,7 +110,6 @@ export default function AgentPage() {
   return (
     <div className="h-screen flex">
       <ChatArea
-        currentSession={currentSession}
         messages={messages}
         isTyping={isTyping}
         inputMessage={inputMessage}
@@ -121,7 +119,7 @@ export default function AgentPage() {
         textareaRef={textareaRef}
       />
 
-      <SuggestedQuestions onQuestionSelect={handleSuggestedQuestion} currentSession={currentSession} />
+      <SuggestedQuestions onQuestionSelect={handleSuggestedQuestion}/>
     </div>
   );
 }

@@ -2,10 +2,8 @@ import React from "react";
 import { MessagesArea } from "./MessagesArea";
 import { ChatInput } from "./ChatInput";
 import { Message } from "./MessageBubble";
-import { AgentSession } from "@/types/agent";
 
 interface ChatAreaProps {
-  currentSession: AgentSession | null;
   messages: Message[];
   isTyping: boolean;
   inputMessage: string;
@@ -15,17 +13,7 @@ interface ChatAreaProps {
   textareaRef?: React.RefObject<HTMLTextAreaElement | null>;
 }
 
-export const ChatArea: React.FC<ChatAreaProps> = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  currentSession,
-  messages,
-  isTyping,
-  inputMessage,
-  setInputMessage,
-  onSendMessage,
-  loading,
-  textareaRef,
-}) => {
+export const ChatArea: React.FC<ChatAreaProps> = ({ messages, isTyping, inputMessage, setInputMessage, onSendMessage, loading, textareaRef }) => {
   return (
     <div className="flex-1 flex flex-col">
       <MessagesArea messages={messages} isTyping={isTyping} />
