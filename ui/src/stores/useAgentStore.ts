@@ -19,7 +19,7 @@ interface AgentState {
   clearError: () => void;
 }
 
-export const useAgentStore = create<AgentState>((set, get) => ({
+export const useAgentStore = create<AgentState>((set) => ({
   // Initial state
   currentSession: null,
   messageHistory: null,

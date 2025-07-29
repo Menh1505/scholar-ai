@@ -1,9 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Brain, School, CheckCircle, MessageCircle, Shield, Bell, ArrowRight, Sparkles } from "lucide-react";
-import Link from "next/link";
+import { Brain, School, CheckCircle, MessageCircle, Shield, Bell } from "lucide-react";
 
 const features = [
   {
