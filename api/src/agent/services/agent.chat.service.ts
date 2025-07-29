@@ -9,10 +9,16 @@ import { createAgentTools } from '../agent.tools';
 import { AgentSessionDocument } from '../schema/agent.schema';
 import { AgentPromptService } from './agent.prompt.service';
 import { createToolCallingAgent, AgentExecutor } from 'langchain/agents';
+import { UserService } from '../../user/user.service';
+import { LegalService } from '../../legal/legal.service';
 
 @Injectable()
 export class AgentChatService {
-  constructor(private readonly promptService: AgentPromptService) {}
+  constructor(
+    private readonly promptService: AgentPromptService,
+    private readonly userService: UserService,
+    private readonly legalService: LegalService,
+  ) {}
 
   async processMessage(
     session: AgentSessionDocument,
@@ -20,9 +26,12 @@ export class AgentChatService {
     authToken: string,
   ): Promise<string> {
     try {
-      // Khởi tạo tools với system token
-      const systemToken = AgentConfig.system.token || authToken;
-      const tools = createAgentTools(systemToken);
+      // Khởi tạo tools với services và userId từ session
+      const tools = createAgentTools(
+        this.userService,
+        this.legalService,
+        session.userId,
+      );
 
       // Agent LangChain setup với configuration
       const llm = new ChatOpenAI({
@@ -119,21 +128,11 @@ export class AgentChatService {
     });
   }
 
-  addAgentMessage(
-    session: AgentSessionDocument,
-    content: string,
-    metadata?: any,
-  ): void {
+  addAgentMessage(session: AgentSessionDocument, content: string): void {
     session.messages.push({
       role: 'agent',
       content,
       timestamp: new Date(),
-      metadata: {
-        phase: session.phase,
-        toolsUsed: [],
-        actionTaken: 'response_generated',
-        ...metadata,
-      },
     });
   }
 }

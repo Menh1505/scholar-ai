@@ -5,20 +5,6 @@ export interface AgentMessage {
   timestamp: Date;
 }
 
-export interface AgentSession {
-  sessionId: string;
-  userId: string;
-  phase: AgentPhase;
-  selectedSchool: string | null;
-  selectedMajor: string | null;
-  userInfo: object | null;
-  isCompleted: boolean;
-  progressPercentage: number;
-  analytics: object;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 export interface MessageHistoryItem {
   role: "user" | "agent";
   content: string;

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AgentSession, AgentSessionDocument } from './schema/agent.schema';
-import { AgentConfig, validateAgentConfig } from './agent.config';
+import { validateAgentConfig } from './agent.config';
 import {
   AgentSessionService,
   AgentPhaseService,
@@ -11,6 +11,8 @@ import {
   AgentPromptService,
   AgentChatService,
 } from './services';
+import { UserService } from '../user/user.service';
+import { LegalService } from '../legal/legal.service';
 
 @Injectable()
 export class AgentService {
@@ -23,6 +25,8 @@ export class AgentService {
     private readonly analyticsService: AgentAnalyticsService,
     private readonly promptService: AgentPromptService,
     private readonly chatService: AgentChatService,
+    private readonly userService: UserService,
+    private readonly legalService: LegalService,
   ) {
     // Validate configuration on service initialization
     try {
@@ -48,10 +52,6 @@ export class AgentService {
     return this.sessionService.resetSession(userId);
   }
 
-  async completeSession(userId: string): Promise<void> {
-    return this.sessionService.completeSession(userId);
-  }
-
   async getSessionStats(userId: string): Promise<any> {
     return this.sessionService.getSessionStats(userId);
   }
@@ -69,8 +69,8 @@ export class AgentService {
     try {
       const session = await this.getOrCreateSession(userId);
 
-      // Extract school and major from user message BEFORE processing
-      this.extractionService.extractSchoolAndMajor(message, session);
+      // Extract and update all user information from message
+      this.extractionService.extractAndUpdateUserInfo(message, session);
 
       // Add user message to session
       this.chatService.addUserMessage(session, message);

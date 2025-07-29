@@ -50,6 +50,11 @@ export const UserSchema = new Schema(
       required: false,
       trim: true,
     },
+    address: {
+      type: String,
+      required: false,
+      trim: true,
+    },
     religion: {
       type: String,
       required: false,

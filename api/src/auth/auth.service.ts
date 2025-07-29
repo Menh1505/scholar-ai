@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
 
@@ -7,6 +8,7 @@ export class AuthService {
   constructor(
     private jwtService: JwtService,
     private userService: UserService,
+    private configService: ConfigService,
   ) {}
 
   googleLogin(userId: string) {
@@ -14,7 +16,7 @@ export class AuthService {
       access_token: this.jwtService.sign(
         { userId },
         {
-          secret: process.env.JWT_SECRET,
+          secret: this.configService.get<string>('JWT_SECRET'),
         },
       ),
     };

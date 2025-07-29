@@ -1,31 +1,25 @@
 import { create } from "zustand";
 import apiClient from "@/lib/axios";
-import { AgentMessage, AgentSession, MessageHistory, AgentResponse, HealthCheck, SendMessageRequest, MessageHistoryQuery } from "@/types/agent";
+import { AgentMessage, MessageHistory, HealthCheck, SendMessageRequest, MessageHistoryQuery } from "@/types/agent";
 
 interface AgentState {
   // State
-  currentSession: AgentSession | null;
   messageHistory: MessageHistory | null;
   loading: boolean;
   error: string | null;
 
   // Actions
   sendMessage: (data: SendMessageRequest) => Promise<AgentMessage>;
-  getUserSession: () => Promise<AgentSession>;
   getMessageHistory: (query?: MessageHistoryQuery) => Promise<MessageHistory>;
-  resetSession: () => Promise<AgentResponse>;
-  completeSession: () => Promise<AgentResponse>;
   healthCheck: () => Promise<HealthCheck>;
 
   // State management
-  setCurrentSession: (session: AgentSession | null) => void;
-  setMessageHistory: (history: MessageHistory | null) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   clearError: () => void;
 }
 
-export const useAgentStore = create<AgentState>((set, get) => ({
+export const useAgentStore = create<AgentState>((set) => ({
   // Initial state
   currentSession: null,
   messageHistory: null,
@@ -54,28 +48,6 @@ export const useAgentStore = create<AgentState>((set, get) => ({
     }
   },
 
-  async getUserSession(): Promise<AgentSession> {
-    set({ loading: true, error: null });
-    try {
-      const response = await apiClient.get("/agent/session");
-      const sessionData = response.data;
-
-      // Convert timestamps to Date objects
-      const session: AgentSession = {
-        ...sessionData,
-        createdAt: new Date(sessionData.createdAt),
-        updatedAt: new Date(sessionData.updatedAt),
-      };
-
-      set({ currentSession: session, loading: false });
-      return session;
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || "Failed to fetch session";
-      set({ error: errorMessage, loading: false });
-      throw error;
-    }
-  },
-
   async getMessageHistory(query: MessageHistoryQuery = {}): Promise<MessageHistory> {
     set({ loading: true, error: null });
     try {
@@ -95,71 +67,12 @@ export const useAgentStore = create<AgentState>((set, get) => ({
           timestamp: new Date(msg.timestamp),
         })),
       };
+      console.log("message history: ", history);
 
       set({ messageHistory: history, loading: false });
       return history;
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || "Failed to fetch message history";
-      set({ error: errorMessage, loading: false });
-      throw error;
-    }
-  },
-
-  async resetSession(): Promise<AgentResponse> {
-    set({ loading: true, error: null });
-    try {
-      const response = await apiClient.delete("/agent/session");
-      const responseData = response.data;
-
-      // Convert timestamp to Date object
-      const agentResponse: AgentResponse = {
-        ...responseData,
-        timestamp: new Date(responseData.timestamp),
-      };
-
-      // Clear current session and message history
-      set({
-        currentSession: null,
-        messageHistory: null,
-        loading: false,
-      });
-
-      return agentResponse;
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || "Failed to reset session";
-      set({ error: errorMessage, loading: false });
-      throw error;
-    }
-  },
-
-  async completeSession(): Promise<AgentResponse> {
-    set({ loading: true, error: null });
-    try {
-      const response = await apiClient.post("/agent/session/complete");
-      const responseData = response.data;
-
-      // Convert timestamp to Date object
-      const agentResponse: AgentResponse = {
-        ...responseData,
-        timestamp: new Date(responseData.timestamp),
-      };
-
-      // Update current session to completed if it exists
-      const { currentSession } = get();
-      if (currentSession) {
-        set({
-          currentSession: {
-            ...currentSession,
-            isCompleted: true,
-            progressPercentage: 100,
-          },
-        });
-      }
-
-      set({ loading: false });
-      return agentResponse;
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || "Failed to complete session";
       set({ error: errorMessage, loading: false });
       throw error;
     }
@@ -187,10 +100,6 @@ export const useAgentStore = create<AgentState>((set, get) => ({
   },
 
   // State management methods
-  setCurrentSession: (session: AgentSession | null) => set({ currentSession: session }),
-
-  setMessageHistory: (history: MessageHistory | null) => set({ messageHistory: history }),
-
   setLoading: (loading: boolean) => set({ loading }),
 
   setError: (error: string | null) => set({ error }),

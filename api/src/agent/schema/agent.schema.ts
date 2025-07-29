@@ -13,26 +13,58 @@ export enum Phase {
 }
 
 export interface UserInfo {
-  gpa?: number;
-  toeflScore?: number;
-  ieltsScore?: number;
-  satScore?: number;
-  desiredMajor?: string;
-  budget?: number;
-  preferredRegion?: string;
-  academicBackground?: string;
-  workExperience?: string;
+  // 🧍 Thông tin cá nhân
+  fullName: string | null;
+  email: string | null;
+  phoneNumber: string | null;
+  address: string | null;
+  dateOfBirth: string | null; // ISO format (YYYY-MM-DD)
+  gender: 'Nam' | 'Nữ' | 'Khác' | null;
+  religion: string | null;
+
+  // 🛂 Thông tin hộ chiếu
+  passportNumber: string | null;
+  passportExpiryDate: string | null; // ISO format (YYYY-MM-DD)
+  currentCountry: string | null; // Quốc gia đang sinh sống
+
+  // 📘 Học lực hiện tại
+  currentEducationLevel: 'THPT' | 'Cao đẳng' | 'Đại học' | 'Khác' | null;
+  academicResult: string | null; // Ví dụ: GPA, hoặc mô tả chung
+
+  // 🎓 Nguyện vọng học tập
+  desiredEducationLevel: 'Cao đẳng' | 'Cử nhân' | 'Thạc sĩ' | 'Tiến sĩ' | null;
+  extracurricularsAndExperience: string | null; // Mô tả ngoại khóa, thực tập
+  dreamMajor: string | null;
+  reasonForChoosingMajor: string | null;
+  careerGoal: string | null;
+  preferredStudyCountry: string | null;
+  schoolSelectionCriteria: string | null;
+
+  // 💰 Tài chính
+  estimatedBudget: number | null; // Đơn vị tự quy định: USD/VND
+  fundingSource: 'Tự túc' | 'Gia đình tài trợ' | 'Học bổng' | 'Khác' | null;
+  needsScholarship: boolean | null;
+
+  // 🗣️ Ngôn ngữ & chứng chỉ
+  studyLanguage: string | null; // Ngôn ngữ học chính (VD: Tiếng Anh, Đức...)
+  certificates: {
+    ielts: number | null;
+    toefl: number | null;
+    duolingo: number | null;
+    testDaf: number | null;
+    [key: string]: number | null; // mở rộng được
+  } | null;
+
+  // 📅 Kế hoạch & thời gian
+  studyPlan: string | null; // Lộ trình học, định hướng cá nhân
+  intendedIntakeTime: string | null; // VD: "Fall 2025", "Tháng 1/2026"
+  currentProgress: string | null; // VD: "Đã có hộ chiếu", "Đang chờ điểm IELTS"
 }
 
 export interface ChatMessage {
   role: 'user' | 'agent' | 'system';
   content: string;
   timestamp: Date;
-  metadata?: {
-    toolsUsed?: string[];
-    phase?: Phase;
-    actionTaken?: string;
-  };
 }
 
 @Schema({ timestamps: true })
@@ -42,12 +74,6 @@ export class AgentSession {
 
   @Prop({ enum: Phase, default: Phase.INTRO })
   phase: Phase;
-
-  @Prop()
-  selectedSchool?: string;
-
-  @Prop()
-  selectedMajor?: string;
 
   @Prop({ type: Object, default: {} })
   userInfo: UserInfo;
@@ -68,12 +94,6 @@ export class AgentSession {
     default: [],
   })
   messages: ChatMessage[];
-
-  @Prop({ default: false })
-  isCompleted: boolean;
-
-  @Prop()
-  completedAt?: Date;
 
   @Prop({ type: Object, default: {} })
   preferences: {
@@ -106,14 +126,6 @@ export const AgentSessionSchema = SchemaFactory.createForClass(AgentSession);
 AgentSessionSchema.index({ phase: 1 });
 AgentSessionSchema.index({ 'messages.timestamp': -1 });
 AgentSessionSchema.index({ updatedAt: -1 });
-
-// Add virtual for session duration
-AgentSessionSchema.virtual('sessionDuration').get(function () {
-  if (this.completedAt && (this as any).createdAt) {
-    return this.completedAt.getTime() - (this as any).createdAt.getTime();
-  }
-  return null;
-});
 
 // Add virtual for progress percentage
 AgentSessionSchema.virtual('progressPercentage').get(function () {

@@ -1,9 +1,21 @@
 // agent.config.ts
+import { ConfigService } from '@nestjs/config';
+
+// Static config service instance - will be initialized in main.ts
+let configService: ConfigService;
+
+export function initializeAgentConfig(config: ConfigService) {
+  configService = config;
+}
+
 export const AgentConfig = {
   // OpenAI Configuration
   openai: {
     get apiKey() {
-      return process.env.OPENAI_API_KEY;
+      return (
+        configService?.get<string>('OPENAI_API_KEY') ||
+        process.env.OPENAI_API_KEY
+      );
     },
     model: 'gpt-3.5-turbo',
     temperature: 0.7,
@@ -14,11 +26,18 @@ export const AgentConfig = {
   system: {
     get token() {
       return (
+        configService?.get<string>('AGENT_SYSTEM_TOKEN') ||
         process.env.AGENT_SYSTEM_TOKEN ||
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODc5YzFiYjFlOTI0ZWE5ZjViOTExZjYiLCJpYXQiOjE3NTI4MDk5MTUsImV4cCI6MTc1MzQxNDcxNX0.SJi64Egn7jY783Wws1TtepqplfAExL3InPonhRIF5EU'
       );
     },
-    baseUrl: process.env.API_BASE_URL || 'http://localhost:3999',
+    get baseUrl() {
+      return (
+        configService?.get<string>('API_BASE_URL') ||
+        process.env.API_BASE_URL ||
+        'http://localhost:3999'
+      );
+    },
     timeout: 30000, // 30 seconds
   },
 
@@ -69,8 +88,18 @@ export const AgentConfig = {
   // University Database Configuration
   universities: {
     mockData: true, // Set to false when real API is available
-    apiEndpoint: process.env.UNIVERSITY_API_ENDPOINT,
-    apiKey: process.env.UNIVERSITY_API_KEY,
+    get apiEndpoint() {
+      return (
+        configService?.get<string>('UNIVERSITY_API_ENDPOINT') ||
+        process.env.UNIVERSITY_API_ENDPOINT
+      );
+    },
+    get apiKey() {
+      return (
+        configService?.get<string>('UNIVERSITY_API_KEY') ||
+        process.env.UNIVERSITY_API_KEY
+      );
+    },
     cacheTtl: 3600000, // 1 hour
   },
 
@@ -99,7 +128,13 @@ export const AgentConfig = {
 
   // Logging Configuration
   logging: {
-    level: process.env.LOG_LEVEL || 'info',
+    get level() {
+      return (
+        configService?.get<string>('LOG_LEVEL') ||
+        process.env.LOG_LEVEL ||
+        'info'
+      );
+    },
     enableConsole: true,
     enableFile: false,
     logFilePath: './logs/agent.log',
@@ -119,16 +154,17 @@ export type AgentConfigType = typeof AgentConfig;
 // Validation function for configuration
 export function validateAgentConfig(): void {
   console.log('Validating agent config...');
-  console.log('OPENAI_API_KEY exists:', !!process.env.OPENAI_API_KEY);
+  console.log('OPENAI_API_KEY exists:', !!AgentConfig.openai.apiKey);
   console.log(
     'OPENAI_API_KEY value:',
-    process.env.OPENAI_API_KEY?.substring(0, 20) + '...',
+    AgentConfig.openai.apiKey?.substring(0, 20) + '...',
   );
-  console.log('AgentConfig.openai.apiKey:', !!AgentConfig.openai.apiKey);
 
   const required = ['OPENAI_API_KEY'];
-
-  const missing = required.filter((key) => !process.env[key]);
+  const missing = required.filter((key) => {
+    const value = configService?.get<string>(key) || process.env[key];
+    return !value;
+  });
 
   if (missing.length > 0) {
     throw new Error(

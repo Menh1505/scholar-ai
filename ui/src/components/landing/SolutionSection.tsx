@@ -1,10 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Brain, School, CheckCircle, MessageCircle, Shield, Bell, ArrowRight, Sparkles } from "lucide-react";
-import Link from "next/link";
+import { Brain, School, CheckCircle, MessageCircle, Shield, Bell } from "lucide-react";
 
 const features = [
   {
@@ -47,46 +44,42 @@ const features = [
 
 export default function SolutionSection() {
   return (
-    <section className="py-20 bg-background">
+    <section className="py-10 bg-background">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
-            <Sparkles className="w-4 h-4" />
-            Giải pháp hoàn hảo
-          </div>
+          className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">ScholarAI</span> là giải pháp
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text">ScholarAI</span> là giải pháp
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">ScholarAI là trợ lý ảo được xây dựng bằng công nghệ AI hiện đại, giúp bạn:</p>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-6">ScholarAI là trợ lý ảo được xây dựng bằng công nghệ AI hiện đại, giúp bạn:</p>
 
-          <div className="bg-primary/5 border border-primary/20 rounded-2xl p-8 max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-6 text-left">
+          <div className="bg-primary/5 border border-primary/20 rounded-xl p-4 max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-3 text-left">
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                <p className="text-foreground">Gợi ý trường và ngành học phù hợp dựa trên điểm số, ngân sách và định hướng cá nhân</p>
+                <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-foreground">Gợi ý trường và ngành học phù hợp dựa trên điểm số, ngân sách và định hướng cá nhân</p>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                <p className="text-foreground">Tạo checklist giấy tờ cần thiết theo đúng chuẩn (visa, học bạ, thư giới thiệu, bằng cấp…)</p>
+                <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-foreground">Tạo checklist giấy tờ cần thiết theo đúng chuẩn (visa, học bạ, thư giới thiệu, bằng cấp…)</p>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                <p className="text-foreground">Tự động theo dõi tiến trình, biết chính xác mình đang thiếu gì, cần làm gì tiếp theo</p>
+                <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-foreground">Tự động theo dõi tiến trình, biết chính xác mình đang thiếu gì, cần làm gì tiếp theo</p>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                <p className="text-foreground">Trò chuyện tự nhiên – bạn chỉ cần nói chuyện như với một người bạn hiểu biết về du học</p>
+                <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-foreground">Trò chuyện tự nhiên – bạn chỉ cần nói chuyện như với một người bạn hiểu biết về du học</p>
               </div>
             </div>
           </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-12" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -94,37 +87,20 @@ export default function SolutionSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              whileHover={{ y: -10, transition: { duration: 0.3 } }}>
-              <Card className="h-full hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-card to-muted/30">
-                <CardContent className="p-8 text-center">
-                  <div className={`w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-r ${feature.gradient} flex items-center justify-center shadow-lg`}>
-                    <feature.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-foreground mb-4">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-                </CardContent>
-              </Card>
+              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+              className="bg-white/50 shadow-sm hover:shadow-md transition-shadow rounded-lg p-4">
+              <div className="flex items-start gap-3">
+                <div className={`w-10 h-10 rounded-lg bg-gradient-to-r ${feature.gradient} flex items-center justify-center shadow-sm flex-shrink-0`}>
+                  <feature.icon className="w-5 h-5 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg font-semibold text-foreground mb-1">{feature.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center">
-          <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl p-8 max-w-2xl mx-auto border border-primary/20">
-            <h3 className="text-2xl font-bold text-foreground mb-4">Tất cả chỉ trong một khung chat đơn giản</h3>
-            <p className="text-lg text-muted-foreground mb-6">Không cần tải app, không cần kiến thức kỹ thuật.</p>
-            <Button asChild size="lg" className="group">
-              <Link href="/profile">
-                Trải nghiệm ngay
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

@@ -36,27 +36,12 @@ export class AgentSessionService {
     await this.sessionModel.deleteOne({ userId });
   }
 
-  async completeSession(userId: string): Promise<void> {
-    await this.sessionModel.updateOne(
-      { userId },
-      {
-        $set: {
-          isCompleted: true,
-          completedAt: new Date(),
-          phase: Phase.PROGRESS_TRACKING,
-        },
-      },
-    );
-  }
-
   async getSessionStats(userId: string): Promise<any> {
     const session = await this.getOrCreateSession(userId);
     return {
       totalMessages: session.messages.length,
       currentPhase: session.phase,
       progressPercentage: (session as any).progressPercentage,
-      isCompleted: session.isCompleted,
-      sessionDuration: (session as any).sessionDuration,
     };
   }
 

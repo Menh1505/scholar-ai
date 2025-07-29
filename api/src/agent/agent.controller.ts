@@ -55,17 +55,15 @@ export class AgentController {
         throw new BadRequestException('Message không thể rỗng');
       }
 
-      if (message.length > 1000) {
-        throw new BadRequestException('Message quá dài (tối đa 1000 ký tự)');
-      }
-
       const token = req.headers.authorization || '';
+      console.log('token:', token);
 
       const response = await this.agentService.handlePrompt(
         userId,
         message,
         token,
       );
+
       const session = await this.agentService.getOrCreateSession(userId);
 
       return {
@@ -106,10 +104,11 @@ export class AgentController {
         sessionId: (session as any)._id.toString(),
         userId: session.userId,
         phase: session.phase,
-        selectedSchool: session.selectedSchool,
-        selectedMajor: session.selectedMajor,
+        schoolPreference:
+          session.userInfo.schoolSelectionCriteria ||
+          session.userInfo.preferredStudyCountry,
+        majorPreference: session.userInfo.dreamMajor,
         userInfo: session.userInfo,
-        isCompleted: session.isCompleted,
         progressPercentage: (session as any).progressPercentage,
         analytics: session.analytics,
         createdAt: (session as any).createdAt,
@@ -138,7 +137,7 @@ export class AgentController {
 
       const session = await this.agentService.getOrCreateSession(userId);
 
-      const messages = session.messages.slice(offset, offset + limit).reverse(); // Newest first
+      const messages = session.messages.slice(offset, offset + limit); // Newest first
 
       return {
         messages,
@@ -162,7 +161,7 @@ export class AgentController {
     }
   }
 
-  @Delete('session')
+  /*   @Delete('session')
   @UseGuards(JwtAuthGuard)
   async resetSession(@Req() req: any) {
     try {
@@ -188,35 +187,7 @@ export class AgentController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-  }
-
-  @Post('session/complete')
-  @UseGuards(JwtAuthGuard)
-  async completeSession(@Req() req: any) {
-    try {
-      const userId = req.user.userId; // Lấy userId từ JWT token
-
-      await this.agentService.completeSession(userId);
-
-      return {
-        message: 'Session đã hoàn thành thành công',
-        userId,
-        timestamp: new Date(),
-      };
-    } catch (error) {
-      this.logger.error(
-        `Error completing session: ${error.message}`,
-        error.stack,
-      );
-      throw new HttpException(
-        {
-          message: 'Có lỗi xảy ra khi hoàn thành session',
-          error: error.message,
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-  }
+  } */
 
   @Get('health')
   async healthCheck() {
