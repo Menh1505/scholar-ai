@@ -64,7 +64,6 @@ export class AgentService {
   async handlePrompt(
     userId: string,
     message: string,
-    authToken: string,
   ): Promise<string> {
     try {
       const session = await this.getOrCreateSession(userId);
@@ -79,7 +78,6 @@ export class AgentService {
       const responseContent = await this.chatService.processMessage(
         session,
         message,
-        authToken,
       );
 
       // Add agent response to session

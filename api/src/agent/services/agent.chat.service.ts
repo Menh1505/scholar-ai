@@ -23,7 +23,6 @@ export class AgentChatService {
   async processMessage(
     session: AgentSessionDocument,
     message: string,
-    authToken: string,
   ): Promise<string> {
     try {
       // Khởi tạo tools với services và userId từ session
@@ -84,14 +83,13 @@ export class AgentChatService {
       return responseContent;
     } catch (error) {
       // Fallback to simple chat if agent fails
-      return this.fallbackProcessMessage(session, message, authToken);
+      return this.fallbackProcessMessage(session, message);
     }
   }
 
   private async fallbackProcessMessage(
     session: AgentSessionDocument,
     message: string,
-    authToken: string,
   ): Promise<string> {
     // Simple chat chain as fallback
     const llm = new ChatOpenAI({

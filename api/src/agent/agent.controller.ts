@@ -55,13 +55,9 @@ export class AgentController {
         throw new BadRequestException('Message không thể rỗng');
       }
 
-      const token = req.headers.authorization || '';
-      console.log('token:', token);
-
       const response = await this.agentService.handlePrompt(
         userId,
         message,
-        token,
       );
 
       const session = await this.agentService.getOrCreateSession(userId);
