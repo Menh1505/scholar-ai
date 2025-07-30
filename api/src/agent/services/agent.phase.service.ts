@@ -12,18 +12,6 @@ export class AgentPhaseService {
     const userMessageLower = userMessage.toLowerCase();
 
     switch (session.phase) {
-      case Phase.INTRO:
-        // Chuyển sang collect_info sau khi giới thiệu
-        if (
-          userMessageLower.includes('tôi muốn') ||
-          userMessageLower.includes('học') ||
-          userMessageLower.includes('du học')
-        ) {
-          session.phase = Phase.COLLECT_INFO;
-          this.logger.log(`Phase changed: intro -> collect_info`);
-        }
-        break;
-
       case Phase.COLLECT_INFO:
         // Chuyển sang select_school khi user yêu cầu gợi ý trường
         if (

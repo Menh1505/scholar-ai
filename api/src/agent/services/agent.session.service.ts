@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 import {
   AgentSession,
   AgentSessionDocument,
-  Phase,
 } from '../schema/agent.schema';
 
 @Injectable()
