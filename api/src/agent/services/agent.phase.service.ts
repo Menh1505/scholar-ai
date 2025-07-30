@@ -8,7 +8,6 @@ export class AgentPhaseService {
   async updatePhase(
     session: AgentSessionDocument,
     userMessage: string,
-    agentResponse: string,
   ): Promise<void> {
     const userMessageLower = userMessage.toLowerCase();
 

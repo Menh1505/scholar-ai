@@ -9,8 +9,6 @@ import {
 
 @Injectable()
 export class AgentSessionService {
-  private readonly logger = new Logger(AgentSessionService.name);
-
   constructor(
     @InjectModel(AgentSession.name)
     private sessionModel: Model<AgentSessionDocument>,
@@ -30,22 +28,5 @@ export class AgentSessionService {
     updates: Partial<AgentSession>,
   ): Promise<void> {
     await this.sessionModel.updateOne({ userId }, { $set: updates });
-  }
-
-  async resetSession(userId: string): Promise<void> {
-    await this.sessionModel.deleteOne({ userId });
-  }
-
-  async getSessionStats(userId: string): Promise<any> {
-    const session = await this.getOrCreateSession(userId);
-    return {
-      totalMessages: session.messages.length,
-      currentPhase: session.phase,
-      progressPercentage: (session as any).progressPercentage,
-    };
-  }
-
-  async updateUserInfo(userId: string, userInfo: any): Promise<void> {
-    await this.sessionModel.updateOne({ userId }, { $set: { userInfo } });
   }
 }

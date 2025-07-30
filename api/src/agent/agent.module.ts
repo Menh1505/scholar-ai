@@ -7,8 +7,6 @@ import { AgentSession, AgentSessionSchema } from './schema/agent.schema';
 import {
   AgentSessionService,
   AgentPhaseService,
-  AgentExtractionService,
-  AgentAnalyticsService,
   AgentPromptService,
   AgentChatService,
 } from './services';
@@ -28,8 +26,6 @@ import { LegalModule } from '../legal/legal.module';
     AgentService,
     AgentSessionService,
     AgentPhaseService,
-    AgentExtractionService,
-    AgentAnalyticsService,
     AgentPromptService,
     AgentChatService,
   ],

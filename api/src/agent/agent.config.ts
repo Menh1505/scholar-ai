@@ -49,95 +49,12 @@ export const AgentConfig = {
     contextWindow: 10, // Number of previous messages to include in context
   },
 
-  // Phase Configuration
-  phases: {
-    intro: {
-      systemPrompt:
-        'Bạn là Scholar AI - trợ lý tư vấn du học Mỹ thân thiện và chuyên nghiệp.',
-      maxDuration: 300000, // 5 minutes
-    },
-    collectInfo: {
-      systemPrompt:
-        'Thu thập thông tin chi tiết về học lực, tiếng Anh, ngành học và ngân sách.',
-      requiredFields: ['gpa', 'englishScore', 'desiredMajor', 'budget'],
-      maxDuration: 600000, // 10 minutes
-    },
-    selectSchool: {
-      systemPrompt:
-        'Đưa ra gợi ý trường học phù hợp dựa trên thông tin đã thu thập.',
-      maxSuggestions: 5,
-      maxDuration: 300000, // 5 minutes
-    },
-    legalChecklist: {
-      systemPrompt: 'Tạo danh sách giấy tờ cần thiết cho du học.',
-      requiredDocuments: [
-        'I-20',
-        'Passport',
-        'Visa Application',
-        'Financial Statement',
-      ],
-      maxDuration: 180000, // 3 minutes
-    },
-    progressTracking: {
-      systemPrompt: 'Theo dõi tiến độ chuẩn bị giấy tờ và hỗ trợ hoàn thành.',
-      reminderInterval: 86400000, // 24 hours
-      maxDuration: null, // Unlimited
-    },
-  },
-
-  // University Database Configuration
-  universities: {
-    mockData: true, // Set to false when real API is available
-    get apiEndpoint() {
-      return (
-        configService?.get<string>('UNIVERSITY_API_ENDPOINT') ||
-        process.env.UNIVERSITY_API_ENDPOINT
-      );
-    },
-    get apiKey() {
-      return (
-        configService?.get<string>('UNIVERSITY_API_KEY') ||
-        process.env.UNIVERSITY_API_KEY
-      );
-    },
-    cacheTtl: 3600000, // 1 hour
-  },
-
-  // Legal Documents Configuration
-  legalDocuments: {
-    defaultStatus: 'pending',
-    statusOptions: ['pending', 'in_progress', 'completed', 'expired'],
-    defaultDeadline: 30, // days
-    reminderDays: [7, 3, 1], // Days before deadline to send reminders
-  },
-
-  // Analytics Configuration
-  analytics: {
-    enabled: true,
-    trackEvents: ['message_sent', 'phase_changed', 'document_completed'],
-    retentionDays: 90,
-  },
-
   // Rate Limiting Configuration
   rateLimit: {
     enabled: true,
     windowMs: 60000, // 1 minute
     maxRequests: 60, // 60 requests per minute per user
     skipSuccessfulRequests: false,
-  },
-
-  // Logging Configuration
-  logging: {
-    get level() {
-      return (
-        configService?.get<string>('LOG_LEVEL') ||
-        process.env.LOG_LEVEL ||
-        'info'
-      );
-    },
-    enableConsole: true,
-    enableFile: false,
-    logFilePath: './logs/agent.log',
   },
 
   // Performance Configuration
@@ -155,10 +72,6 @@ export type AgentConfigType = typeof AgentConfig;
 export function validateAgentConfig(): void {
   console.log('Validating agent config...');
   console.log('OPENAI_API_KEY exists:', !!AgentConfig.openai.apiKey);
-  console.log(
-    'OPENAI_API_KEY value:',
-    AgentConfig.openai.apiKey?.substring(0, 20) + '...',
-  );
 
   const required = ['OPENAI_API_KEY'];
   const missing = required.filter((key) => {
@@ -175,24 +88,4 @@ export function validateAgentConfig(): void {
   if (!AgentConfig.openai.apiKey) {
     throw new Error('OpenAI API key is required');
   }
-
-  // AGENT_SYSTEM_TOKEN is optional for now
-  // if (!AgentConfig.system.token) {
-  //   throw new Error('Agent system token is required');
-  // }
-}
-
-// Helper function to get phase configuration
-export function getPhaseConfig(phase: string) {
-  return AgentConfig.phases[phase] || AgentConfig.phases.intro;
-}
-
-// Helper function to get university search configuration
-export function getUniversityConfig() {
-  return AgentConfig.universities;
-}
-
-// Helper function to get legal document configuration
-export function getLegalDocumentConfig() {
-  return AgentConfig.legalDocuments;
 }

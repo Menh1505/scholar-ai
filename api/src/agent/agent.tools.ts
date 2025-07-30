@@ -84,7 +84,7 @@ export function createAgentTools(
       name: 'getLegalDocuments',
       description:
         'Lấy danh sách tất cả giấy tờ pháp lý của người dùng cần phải làm và trạng thái hiện tại',
-      func: async (input: string) => {
+      func: async () => {
         try {
           const documents = await legalService.findByUserId(userId);
 

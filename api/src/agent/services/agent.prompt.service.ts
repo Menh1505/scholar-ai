@@ -3,7 +3,6 @@ import { AgentSessionDocument } from '../schema/agent.schema';
 
 @Injectable()
 export class AgentPromptService {
-  private readonly logger = new Logger(AgentPromptService.name);
 
   buildSystemPrompt(session: AgentSessionDocument): string {
     const collectInfoGuide = this.buildCollectInfoGuide(session);
