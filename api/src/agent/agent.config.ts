@@ -1,8 +1,10 @@
 // agent.config.ts
 import { ConfigService } from '@nestjs/config';
+import { Logger } from '@nestjs/common';
 
 // Static config service instance - will be initialized in main.ts
 let configService: ConfigService;
+let logger = new Logger();
 
 export function initializeAgentConfig(config: ConfigService) {
   configService = config;
@@ -39,8 +41,11 @@ export type AgentConfigType = typeof AgentConfig;
 
 // Validation function for configuration
 export function validateAgentConfig(): void {
-  console.log('Validating agent config...');
-  console.log('OPENAI_API_KEY exists:', !!AgentConfig.openai.apiKey);
+  logger.log('Validating agent config...', 'AgentConfig');
+  logger.log(
+    `OPENAI_API_KEY exists: ${!!AgentConfig.openai.apiKey}`,
+    'AgentConfig',
+  );
 
   const required = ['OPENAI_API_KEY'];
   const missing = required.filter((key) => {
