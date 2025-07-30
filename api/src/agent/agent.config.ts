@@ -24,13 +24,6 @@ export const AgentConfig = {
 
   // Agent System Configuration
   system: {
-    get token() {
-      return (
-        configService?.get<string>('AGENT_SYSTEM_TOKEN') ||
-        process.env.AGENT_SYSTEM_TOKEN ||
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODc5YzFiYjFlOTI0ZWE5ZjViOTExZjYiLCJpYXQiOjE3NTI4MDk5MTUsImV4cCI6MTc1MzQxNDcxNX0.SJi64Egn7jY783Wws1TtepqplfAExL3InPonhRIF5EU'
-      );
-    },
     get baseUrl() {
       return (
         configService?.get<string>('API_BASE_URL') ||
@@ -39,30 +32,6 @@ export const AgentConfig = {
       );
     },
     timeout: 30000, // 30 seconds
-  },
-
-  // Message Configuration
-  message: {
-    maxLength: 1000,
-    minLength: 1,
-    historyLimit: 100,
-    contextWindow: 10, // Number of previous messages to include in context
-  },
-
-  // Rate Limiting Configuration
-  rateLimit: {
-    enabled: true,
-    windowMs: 60000, // 1 minute
-    maxRequests: 60, // 60 requests per minute per user
-    skipSuccessfulRequests: false,
-  },
-
-  // Performance Configuration
-  performance: {
-    enableCaching: true,
-    cacheMaxAge: 300000, // 5 minutes
-    enableCompression: true,
-    timeoutMs: 30000, // 30 seconds
   },
 };
 
