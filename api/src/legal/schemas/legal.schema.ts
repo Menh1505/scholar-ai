@@ -22,10 +22,6 @@ export const LegalSchema = new Schema(
       ref: 'User',
       required: true,
     },
-    content: {
-      type: String,
-      required: true,
-    },
     status: {
       type: String,
       required: true,
