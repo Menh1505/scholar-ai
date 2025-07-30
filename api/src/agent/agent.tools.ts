@@ -2,79 +2,74 @@
 import { DynamicTool } from '@langchain/core/tools';
 import { UserService } from '../user/user.service';
 import { LegalService } from '../legal/legal.service';
-import { CreateLegalDto } from '../legal/dto/create-legal.dto';
-import { UpdateLegalDto } from '../legal/dto/update-legal.dto';
 
 export function createAgentTools(
-  userService: UserService,
   legalService: LegalService,
   userId: string,
 ) {
   return [
     new DynamicTool({
-      name: 'getUserInfo',
-      description:
-        'Lấy thông tin người dùng theo userId để hiểu profile học tập',
+      name: 'createLegalDocuments',
+      description: `
+Tạo nhiều giấy tờ pháp lý cần thiết cho quá trình du học. 
+Input là một chuỗi gồm các tên giấy tờ, cách nhau bởi dấu phẩy (,) hoặc một chuỗi JSON dạng array như: "I-20 Form, Bank Statement, Transcript" hoặc ["I-20 Form", "F-1 Visa Application", Bank Statement", "Transcript"]. Lưu ý: Chỉ nhập tên giấy tờ, không cần thêm thông tin nào khác. Ví dụ đúng: - "Passport, I-20 Form, Bank Statement" - '["Passport", "Visa Application"]'`,
       func: async (input: string) => {
         try {
-          const targetUserId = input.trim() || userId;
-          const user = await userService.findOne(targetUserId);
+          // Normalize input
+          let titles: string[] = [];
 
-          if (!user) {
+          // Case: JSON array string
+          if (input.trim().startsWith('[')) {
+            titles = JSON.parse(input);
+          } else {
+            // Case: comma-separated string
+            titles = input
+              .split(',')
+              .map((t) => t.trim())
+              .filter((t) => t.length > 0);
+          }
+
+          if (!titles.length) {
             return JSON.stringify({
               success: false,
-              error: 'Không tìm thấy người dùng',
+              error: 'Cần ít nhất 1 tên giấy tờ',
             });
           }
 
-          return JSON.stringify({
-            success: true,
-            data: user,
-            message: 'Lấy thông tin người dùng thành công',
-          });
-        } catch (error) {
-          return JSON.stringify({
-            success: false,
-            error: 'Không thể lấy thông tin người dùng',
-            details: error.message,
-          });
-        }
-      },
-    }),
+          const created: any[] = [];
+          const failed: { title: string; error: string }[] = [];
 
-    new DynamicTool({
-      name: 'createLegalDocument',
-      description:
-        'Tạo giấy tờ pháp lý mới cho du học. Input: documentTitle (VD: "I-20 Form")',
-      func: async (input: string) => {
-        try {
-          const documentTitle = input.trim();
-          if (!documentTitle) {
-            return JSON.stringify({
-              success: false,
-              error: 'Tên giấy tờ không được để trống',
-            });
+          for (const title of titles) {
+            try {
+              const legal = await legalService.create({
+                userId,
+                title,
+                status: 'pending',
+              });
+              created.push(legal);
+            } catch (err) {
+              failed.push({ title, error: err.message });
+            }
           }
 
-          const createLegalDto: CreateLegalDto = {
-            userId: userId,
-            title: documentTitle,
-            content: `Giấy tờ ${documentTitle} cần chuẩn bị cho du học Mỹ`,
-            status: 'pending',
-          };
-
-          const legal = await legalService.create(createLegalDto);
-
           return JSON.stringify({
-            success: true,
-            data: legal,
-            message: `Đã tạo giấy tờ ${documentTitle} thành công`,
+            success: failed.length === 0,
+            createdCount: created.length,
+            failedCount: failed.length,
+            created,
+            failed,
+            message:
+              failed.length === 0
+                ? 'Tạo tất cả giấy tờ thành công.'
+                : `Một số giấy tờ không thể tạo: ${failed
+                    .map((f) => f.title)
+                    .join(', ')}`,
           });
-        } catch (error) {
+        } catch (err) {
           return JSON.stringify({
             success: false,
-            error: `Không thể tạo giấy tờ ${input}`,
-            details: error.message,
+            error: 'Đầu vào không hợp lệ hoặc lỗi xử lý',
+            details: err.message,
           });
         }
       },
@@ -82,8 +77,7 @@ export function createAgentTools(
 
     new DynamicTool({
       name: 'getLegalDocuments',
-      description:
-        'Lấy danh sách tất cả giấy tờ pháp lý của người dùng cần phải làm và trạng thái hiện tại',
+      description: `Lấy danh sách giấy tờ pháp lý cần thiết của người dùng. Output là danh sách giấy tờ kèm trạng thái. Ví dụ: "I-20 Form - pending", "F-1 Visa - in_progress", "Transcript - completed".`,
       func: async () => {
         try {
           const documents = await legalService.findByUserId(userId);
@@ -105,38 +99,40 @@ export function createAgentTools(
     }),
 
     new DynamicTool({
-      name: 'updateLegalDocument',
-      description:
-        'Cập nhật giấy tờ pháp lý. Input: documentId|updateData (VD: "64f1a2b3c4d5e6f7g8h9i0j1|{"status": "completed", "content": "Đã hoàn thành"}")',
+      name: 'markLegalDocumentCompleted',
+      description: `Đánh dấu một giấy tờ pháp lý đã hoàn thành. Input: tên giấy tờ (VD: "I-20 Form", "F-1 Visa"). Lưu ý: Chỉ truyền tên giấy tờ, không cần ID. Tool sẽ tìm đúng giấy tờ theo user và cập nhật trạng thái "completed".`,
       func: async (input: string) => {
         try {
-          const [documentId, updateDataStr] = input.split('|');
-          if (!documentId || !updateDataStr) {
+          const documentTitle = input.trim();
+          if (!documentTitle) {
             return JSON.stringify({
               success: false,
-              error: 'Input không hợp lệ. Cần format: documentId|updateData',
+              error: 'Tên giấy tờ không được để trống.',
             });
           }
 
-          let updateData: UpdateLegalDto;
-          try {
-            updateData = JSON.parse(updateDataStr.trim());
-          } catch (parseError) {
-            return JSON.stringify({
-              success: false,
-              error: 'Dữ liệu cập nhật không đúng định dạng JSON',
-            });
-          }
-
-          const updatedDocument = await legalService.update(
-            documentId.trim(),
-            updateData,
+          // Tìm giấy tờ theo title + user
+          const documents = await legalService.findByUserId(userId);
+          const target = documents.find(
+            (doc) => doc.title.toLowerCase() === documentTitle.toLowerCase(),
           );
+
+          if (!target) {
+            return JSON.stringify({
+              success: false,
+              error: `Không tìm thấy giấy tờ với tên "${documentTitle}"`,
+            });
+          }
+
+          // Cập nhật trạng thái
+          const updated = await legalService.update(target._id.toString(), {
+            status: 'completed',
+          });
 
           return JSON.stringify({
             success: true,
-            data: updatedDocument,
-            message: 'Cập nhật giấy tờ thành công',
+            message: `Đã đánh dấu giấy tờ "${documentTitle}" là hoàn thành.`,
+            data: updated,
           });
         } catch (error) {
           return JSON.stringify({
