@@ -52,10 +52,10 @@ export default function ProblemsSection() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Vấn đề của <span className="text-destructive">người du học</span>
+          <h2 className="text-4xl md:text-5xl font-mono font-bold text-foreground mb-6">
+            Vấn đề của <span className="text-destructive font-sans">người du học</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl font-sans text-muted-foreground max-w-3xl mx-auto">
             Du học không chỉ là chuyện &quot;nộp hồ sơ – nhận thư mời – xách vali lên đường&quot;. Nó là một hành trình thay đổi cả cuộc đời – và sai một bước,
             có thể lỡ cả tương lai.
           </p>
@@ -76,8 +76,8 @@ export default function ProblemsSection() {
                   <problem.icon className="w-5 h-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-semibold text-foreground mb-1">{problem.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{problem.description}</p>
+                  <h3 className="text-lg font-mono font-semibold text-foreground mb-1">{problem.title}</h3>
+                  <p className="text-sm font-sans text-muted-foreground leading-relaxed">{problem.description}</p>
                 </div>
               </div>
             </motion.div>
@@ -91,8 +91,8 @@ export default function ProblemsSection() {
           viewport={{ once: true }}
           className="mt-12 text-center">
           <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4 max-w-2xl mx-auto">
-            <h3 className="text-xl font-bold text-destructive mb-2">Hậu quả?</h3>
-            <p className="text-base text-foreground">
+            <h3 className="text-xl font-mono font-bold text-destructive mb-2">Hậu quả?</h3>
+            <p className="text-base font-sans text-foreground">
               Không lên kế hoạch bài bản, dễ bỏ lỡ deadline, thiếu giấy tờ, không chuẩn bị tâm lý – và thậm chí vỡ mộng sau khi đã đến nước ngoài.
             </p>
           </div>

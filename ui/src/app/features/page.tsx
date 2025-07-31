@@ -60,19 +60,19 @@ export default function FeaturesPage() {
     <div className="max-w-4xl mx-auto p-6">
       <div className="mb-6">
         <Link href="/">
-          <Button variant="outline" className="mb-4">
+          <Button variant="outline" className="mb-4 font-mono">
             <FaArrowLeft className="mr-2 w-4 h-4" />
             Quay về trang chủ
           </Button>
         </Link>
-        <h1 className="text-3xl font-bold mb-4">📘 Hướng dẫn sử dụng ScholarAI</h1>
-        <p className="text-muted-foreground mb-6">Khám phá các tính năng chính và cách sử dụng để hỗ trợ hành trình du học của bạn.</p>
+        <h1 className="text-3xl font-mono font-bold mb-4">📘 Hướng dẫn sử dụng ScholarAI</h1>
+        <p className="text-muted-foreground font-sans mb-6">Khám phá các tính năng chính và cách sử dụng để hỗ trợ hành trình du học của bạn.</p>
       </div>
 
-      <Input placeholder="Tìm tính năng..." className="mb-6" value={search} onChange={(e) => setSearch(e.target.value)} />
+      <Input placeholder="Tìm tính năng..." className="mb-6 font-sans" value={search} onChange={(e) => setSearch(e.target.value)} />
 
       <Tabs defaultValue="all">
-        <TabsList className="mb-4">
+        <TabsList className="mb-4 font-mono">
           <TabsTrigger value="all">Tất cả</TabsTrigger>
           {features.map((f) => (
             <TabsTrigger key={f.id} value={f.id}>
@@ -86,15 +86,15 @@ export default function FeaturesPage() {
             {filtered.map((f) => (
               <Card key={f.id}>
                 <CardHeader>
-                  <CardTitle>{f.title}</CardTitle>
+                  <CardTitle className="font-mono">{f.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="mb-3 text-muted-foreground">{f.short}</p>
+                  <p className="mb-3 text-muted-foreground font-sans">{f.short}</p>
                   <Accordion type="single" collapsible>
                     <AccordionItem value="info">
-                      <AccordionTrigger>Chi tiết hướng dẫn</AccordionTrigger>
+                      <AccordionTrigger className="font-mono">Chi tiết hướng dẫn</AccordionTrigger>
                       <AccordionContent>
-                        <ul className="list-disc pl-4 text-sm space-y-1">
+                        <ul className="list-disc pl-4 text-sm space-y-1 font-sans">
                           {f.detail.map((d, i) => (
                             <li key={i}>{d}</li>
                           ))}
@@ -112,11 +112,11 @@ export default function FeaturesPage() {
           <TabsContent key={f.id} value={f.id}>
             <Card>
               <CardHeader>
-                <CardTitle>{f.title}</CardTitle>
+                <CardTitle className="font-mono">{f.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground mb-3">{f.short}</p>
-                <ul className="list-disc pl-4 space-y-1">
+                <p className="text-muted-foreground font-sans mb-3">{f.short}</p>
+                <ul className="list-disc pl-4 space-y-1 font-sans">
                   {f.detail.map((d, i) => (
                     <li key={i}>{d}</li>
                   ))}

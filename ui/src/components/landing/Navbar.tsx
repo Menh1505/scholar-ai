@@ -74,15 +74,15 @@ export function Navbar() {
           <Image src="/icons/full-logo.svg" alt="logo" width={198} height={96} />
         </Link>
         <div className="space-x-10 flex items-center justify-between">
-          <Button variant="default" className="text-xl font-semibold text-black">
+          <Button variant="default" className="text-xl font-sans font-medium text-black">
             <Link href="/">Trang chủ</Link>
           </Button>
-          <Button variant="default" className="text-xl font-semibold text-black">
+          <Button variant="default" className="text-xl font-sans font-medium text-black">
             <Link href="/features">Tính năng</Link>
           </Button>
           <DropdownMenu ref={dropdownRef}>
             <DropdownMenuTrigger
-              className="text-xl font-semibold text-black inline-flex items-center justify-center hover:cursor-pointer"
+              className="text-xl font-mono font-semibold text-black inline-flex items-center justify-center hover:cursor-pointer"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
               Cộng đồng
               <FaChevronDown className="ml-2 w-4 h-4" />
