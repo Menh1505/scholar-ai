@@ -33,7 +33,7 @@ const solutions = [
 
 export default function SolutionsSimple() {
   return (
-    <section className="py-16 bg-background">
+    <section className="py-16 bg-background/60 backdrop-blur-sm relative z-10">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -53,7 +53,7 @@ export default function SolutionsSimple() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-              className="bg-white shadow-sm hover:shadow-md transition-all duration-300 rounded-lg p-6 border border-muted/20">
+              className="bg-white/70 backdrop-blur-sm shadow-sm hover:shadow-md transition-all duration-300 rounded-lg p-6 border border-muted/20 hover:bg-white/80">
               <div className="flex flex-col items-center text-center gap-4">
                 <div className={`p-4 rounded-full bg-muted/80 ${solution.color}`}>
                   <solution.icon className="w-8 h-8" />

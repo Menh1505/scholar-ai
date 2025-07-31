@@ -26,7 +26,7 @@ const targetAudience = [
 
 export default function TargetAudience() {
   return (
-    <section className="py-16 bg-background">
+    <section className="py-16 bg-background/60 backdrop-blur-sm relative z-10">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -46,7 +46,7 @@ export default function TargetAudience() {
               transition={{ duration: 0.6, delay: index * 0.2 }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-              className="bg-white shadow-lg rounded-xl p-8 border border-muted/20 text-center">
+              className="bg-white/80 backdrop-blur-sm shadow-lg rounded-xl p-8 border border-muted/20 text-center hover:bg-white/90 transition-all duration-300">
               <div className="mb-6">
                 <div className="text-6xl mb-4">{audience.emoji}</div>
                 <div className={`inline-flex p-4 rounded-full bg-muted/80 ${audience.color}`}>

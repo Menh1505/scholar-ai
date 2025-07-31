@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function FinalCTA() {
   return (
-    <section className="py-20 bg-gradient-to-br from-primary/5 via-background to-accent/5">
+    <section className="py-20 bg-gradient-to-br from-primary/5 via-background/60 to-accent/5 backdrop-blur-sm relative z-10">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

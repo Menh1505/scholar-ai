@@ -28,7 +28,7 @@ const problems = [
 
 export default function ProblemsSimple() {
   return (
-    <section className="py-16 bg-muted/20">
+    <section className="py-16 bg-muted/40 backdrop-blur-sm relative z-10">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -47,7 +47,7 @@ export default function ProblemsSimple() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="bg-white/50 shadow-sm rounded-lg p-6">
+              className="bg-white/60 backdrop-blur-sm shadow-sm rounded-lg p-6 hover:bg-white/70 transition-all duration-300">
               <div className="flex items-center gap-4">
                 <div className={`p-3 rounded-full bg-muted/80 ${problem.color}`}>
                   <problem.icon className="w-6 h-6" />

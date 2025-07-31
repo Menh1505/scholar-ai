@@ -40,7 +40,7 @@ const features = [
 
 export default function FeaturesSimple() {
   return (
-    <section className="py-16 bg-muted/10">
+    <section className="py-16 bg-muted/30 backdrop-blur-sm relative z-10">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -59,7 +59,7 @@ export default function FeaturesSimple() {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="bg-white shadow-sm rounded-lg p-6 border border-muted/20 hover:shadow-md transition-shadow">
+              className="bg-white/70 backdrop-blur-sm shadow-sm rounded-lg p-6 border border-muted/20 hover:shadow-md hover:bg-white/80 transition-all duration-300">
               <div className="flex items-center gap-4">
                 <div className="text-3xl">{feature.emoji}</div>
                 <div className={`p-3 rounded-full bg-muted/80 ${feature.color}`}>

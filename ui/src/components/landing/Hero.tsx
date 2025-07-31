@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background/80 via-background/60 to-muted/20 z-10">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
