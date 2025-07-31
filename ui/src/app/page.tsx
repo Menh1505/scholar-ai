@@ -1,4 +1,4 @@
-import { Hero, ProblemsSection, SolutionSection, HowItWorksSection, ComparisonSection, CTASection } from "@/components/landing";
+import { Hero, ProblemsSimple, SolutionsSimple, FeaturesSimple, TargetAudience, FinalCTA } from "@/components/landing";
 import { Navbar } from "@/components/landing/Navbar";
 
 export default function HomePage() {
@@ -6,11 +6,11 @@ export default function HomePage() {
     <main className="flex flex-col w-full overflow-x-hidden">
       <Navbar />
       <Hero />
-      <ProblemsSection />
-      <SolutionSection />
-      <HowItWorksSection />
-      <ComparisonSection />
-      <CTASection />
+      <ProblemsSimple />
+      <SolutionsSimple />
+      <FeaturesSimple />
+      <TargetAudience />
+      <FinalCTA />
     </main>
   );
 }

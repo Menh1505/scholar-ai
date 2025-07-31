@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Brain } from "lucide-react";
 import Link from "next/link";
 
 export default function Hero() {
@@ -40,8 +40,8 @@ export default function Hero() {
         <div className="text-center max-w-4xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="mb-6">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-mono font-medium mb-8">
-              <Sparkles className="w-4 h-4" />
-              Công nghệ AI hiện đại
+              <Brain className="w-4 h-4" />
+              🧠 ScholarAI – Trợ lý AI cho hành trình du học
             </div>
           </motion.div>
 
@@ -49,40 +49,33 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-sans font-bold text-foreground mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text font-mono">Scholar AI</span>
+            className="text-4xl md:text-6xl font-sans font-bold text-foreground mb-6 leading-tight">
+            Giúp bạn <span className="bg-gradient-to-r from-primary to-accent bg-clip-text font-mono">chọn trường, chuẩn bị giấy tờ</span>, tính chi phí và quản
+            lý kế hoạch du học
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl font-sans text-muted-foreground mb-4 max-w-3xl mx-auto">
-            Trợ lý AI giúp bạn <span className="text-primary font-mono font-semibold">DU HỌC</span> dễ dàng, đúng chuẩn, không sai sót
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg font-sans text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Không còn lo lắng, không mất hàng chục triệu đồng, không đánh đổi cơ hội chỉ vì thiếu một tờ giấy.
+            className="text-xl md:text-2xl font-sans text-muted-foreground mb-8 max-w-3xl mx-auto">
+            – chỉ trong một nền tảng.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button asChild size="lg" className="text-lg font-mono font-semibold px-8 py-6 group">
               <Link href="/profile">
-                Bắt đầu miễn phí
+                👉 Bắt đầu ngay
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
 
             <Button asChild variant="outline" size="lg" className="text-lg font-sans px-8 py-6">
-              <Link href="/signin">Đăng nhập</Link>
+              <Link href="/agent">Dùng thử miễn phí</Link>
             </Button>
           </motion.div>
 
@@ -91,24 +84,10 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
             className="mt-12 text-sm font-mono text-muted-foreground">
-            ✨ Miễn phí trong giai đoạn thử nghiệm • Không cần thẻ tín dụng
+            🎁 Dùng thử miễn phí – Không cần thẻ thanh toán
           </motion.div>
         </div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-muted-foreground/60 rounded-full mt-2" />
-        </motion.div>
-      </motion.div>
     </section>
   );
 }
