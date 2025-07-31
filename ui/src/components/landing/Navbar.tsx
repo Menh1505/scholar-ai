@@ -78,7 +78,7 @@ export function Navbar() {
             <Link href="/">Trang chủ</Link>
           </Button>
           <Button variant="default" className="text-xl font-semibold text-black">
-            <Link href="/">Tính năng</Link>
+            <Link href="/features">Tính năng</Link>
           </Button>
           <DropdownMenu ref={dropdownRef}>
             <DropdownMenuTrigger
