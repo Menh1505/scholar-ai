@@ -75,7 +75,7 @@ export function Navbar() {
         </Link>
         <div className="space-x-10 flex items-center justify-between">
           <Button variant="default" className="text-xl font-sans font-medium text-black">
-            <Link href="/">Trang chủ</Link>
+            <Link href="/agent">Agent</Link>
           </Button>
           <Button variant="default" className="text-xl font-sans font-medium text-black">
             <Link href="/features">Tính năng</Link>
