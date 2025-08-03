@@ -8,6 +8,7 @@ import { AgentConfig } from '../agent.config';
 import { createAgentTools } from '../agent.tools';
 import { AgentSessionDocument } from '../schema/agent.schema';
 import { AgentPromptService } from './agent.prompt.service';
+import { AgentSessionService } from './agent.session.service';
 import { createToolCallingAgent, AgentExecutor } from 'langchain/agents';
 import { LegalService } from '../../legal/legal.service';
 
@@ -16,6 +17,7 @@ export class AgentChatService {
   constructor(
     private readonly promptService: AgentPromptService,
     private readonly legalService: LegalService,
+    private readonly sessionService: AgentSessionService,
     // private readonly logger: Logger,
   ) {}
 
@@ -60,7 +62,7 @@ export class AgentChatService {
   }
 
   private buildTools(userId: string) {
-    return createAgentTools(this.legalService, userId);
+    return createAgentTools(this.legalService, userId, this.sessionService);
   }
 
   private createLLM(): ChatOpenAI {

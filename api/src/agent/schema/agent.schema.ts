@@ -30,15 +30,6 @@ export interface UserInfo {
   currentEducationLevel: 'THPT' | 'Cao đẳng' | 'Đại học' | 'Khác' | null;
   academicResult: string | null; // Ví dụ: GPA, hoặc mô tả chung
 
-  // 🎓 Nguyện vọng học tập
-  desiredEducationLevel: 'Cao đẳng' | 'Cử nhân' | 'Thạc sĩ' | 'Tiến sĩ' | null;
-  extracurricularsAndExperience: string | null; // Mô tả ngoại khóa, thực tập
-  dreamMajor: string | null;
-  reasonForChoosingMajor: string | null;
-  careerGoal: string | null;
-  preferredStudyCountry: string | null;
-  schoolSelectionCriteria: string | null;
-
   // 💰 Tài chính
   estimatedBudget: number | null; // Đơn vị tự quy định: USD/VND
   fundingSource: 'Tự túc' | 'Gia đình tài trợ' | 'Học bổng' | 'Khác' | null;
@@ -60,6 +51,17 @@ export interface UserInfo {
   currentProgress: string | null; // VD: "Đã có hộ chiếu", "Đang chờ điểm IELTS"
 }
 
+export interface Aspirations {
+// 🎓 Nguyện vọng học tập
+  desiredEducationLevel: 'Cao đẳng' | 'Cử nhân' | 'Thạc sĩ' | 'Tiến sĩ' | null;
+  extracurricularsAndExperience: string | null; // Mô tả ngoại khóa, thực tập
+  dreamMajor: string | null;
+  reasonForChoosingMajor: string | null;
+  careerGoal: string | null;
+  preferredStudyCountry: string | null;
+  schoolSelectionCriteria: string | null;
+}
+
 export interface ChatMessage {
   role: 'user' | 'agent' | 'system';
   content: string;
@@ -76,6 +78,9 @@ export class AgentSession {
 
   @Prop({ type: Object, default: {} })
   userInfo: UserInfo;
+
+  @Prop({type: Object, default:{}})
+  aspirations: Aspirations;
 
   messages: ChatMessage[];
 }
