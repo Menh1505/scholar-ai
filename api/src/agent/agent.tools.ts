@@ -2,10 +2,12 @@
 import { DynamicTool } from '@langchain/core/tools';
 import { UserService } from '../user/user.service';
 import { LegalService } from '../legal/legal.service';
+import { AgentSessionService } from './services/agent.session.service';
 
 export function createAgentTools(
   legalService: LegalService,
   userId: string,
+  sessionService: AgentSessionService,
 ) {
   return [
     new DynamicTool({
@@ -138,6 +140,257 @@ Input là một chuỗi gồm các tên giấy tờ, cách nhau bởi dấu ph�
           return JSON.stringify({
             success: false,
             error: 'Không thể cập nhật giấy tờ',
+            details: error.message,
+          });
+        }
+      },
+    }),
+
+    new DynamicTool({
+      name: 'updateUserInfo',
+      description: `
+Cập nhật thông tin cá nhân của người dùng trong phiên tư vấn. Tool này cho phép cập nhật một hoặc nhiều trường thông tin user cùng lúc.
+
+Input: Chuỗi JSON chứa các trường cần cập nhật. Các trường có thể bao gồm:
+
+ THÔNG TIN CÁ NHÂN:
+- fullName: Họ và tên đầy đủ (string)
+- email: Địa chỉ email (string) 
+- phoneNumber: Số điện thoại (string)
+- address: Địa chỉ hiện tại (string)
+- dateOfBirth: Ngày sinh theo định dạng YYYY-MM-DD (string)
+- gender: Giới tính - "Nam", "Nữ", hoặc "Khác" (string)
+- religion: Tôn giáo (string)
+
+ THÔNG TIN HỘ CHIẾU:
+- passportNumber: Số hộ chiếu (string)
+- passportExpiryDate: Ngày hết hạn hộ chiếu YYYY-MM-DD (string)
+- currentCountry: Quốc gia đang sinh sống (string)
+
+ HỌC LỰC HIỆN TẠI:
+- currentEducationLevel: Trình độ học vấn - "THPT", "Cao đẳng", "Đại học", hoặc "Khác" (string)
+- academicResult: Kết quả học tập (GPA, điểm số...) (string)
+
+ TÀI CHÍNH:
+- estimatedBudget: Ngân sách dự kiến (number)
+- fundingSource: Nguồn tài trợ - "Tự túc", "Gia đình tài trợ", "Học bổng", hoặc "Khác" (string)
+- needsScholarship: Có cần học bổng không (boolean)
+
+ NGÔN NGỮ & CHỨNG CHỈ:
+- studyLanguage: Ngôn ngữ học chính (string)
+- certificates: Object chứa điểm các chứng chỉ ngôn ngữ:
+  - ielts: Điểm IELTS (number)
+  - toefl: Điểm TOEFL (number) 
+  - duolingo: Điểm Duolingo (number)
+  - testDaf: Điểm TestDaF (number)
+
+ KẾ HOẠCH & THỜI GIAN:
+- studyPlan: Lộ trình học, định hướng cá nhân (string)
+- intendedIntakeTime: Thời gian dự kiến nhập học (string)
+- currentProgress: Tiến độ hiện tại (string)
+
+
+Ví dụ sử dụng:
+- Cập nhật tên: '{"fullName": "Nguyễn Văn An"}'
+- Cập nhật nhiều trường: '{"fullName": "Nguyễn Văn An", "email": "an@email.com", "estimatedBudget": 50000}'
+- Cập nhật chứng chỉ: '{"certificates": {"ielts": 7.5, "toefl": 100}}'
+
+Lưu ý: Chỉ truyền các trường cần cập nhật, không cần truyền tất cả.
+`,
+      func: async (input: string) => {
+        try {
+          const updateData = JSON.parse(input);
+
+          if (!updateData || typeof updateData !== 'object') {
+            return JSON.stringify({
+              success: false,
+              error: 'Dữ liệu cập nhật phải là một object JSON hợp lệ',
+            });
+          }
+
+          // Lấy session hiện tại
+          const session = await sessionService.getOrCreateSession(userId);
+
+          // Chuẩn bị dữ liệu cập nhật
+          const sessionUpdates: any = {};
+
+          // Danh sách các trường thuộc userInfo
+          const userInfoFields = [
+            'fullName',
+            'email',
+            'phoneNumber',
+            'address',
+            'dateOfBirth',
+            'gender',
+            'religion',
+            'passportNumber',
+            'passportExpiryDate',
+            'currentCountry',
+            'currentEducationLevel',
+            'academicResult',
+            'estimatedBudget',
+            'fundingSource',
+            'needsScholarship',
+            'studyLanguage',
+            'certificates',
+            'studyPlan',
+            'intendedIntakeTime',
+            'currentProgress',
+          ];
+
+          // Cập nhật userInfo
+          const userInfoUpdates: any = {};
+          let hasUserInfoUpdates = false;
+
+          for (const field of userInfoFields) {
+            if (updateData.hasOwnProperty(field)) {
+              userInfoUpdates[field] = updateData[field];
+              hasUserInfoUpdates = true;
+            }
+          }
+
+          if (hasUserInfoUpdates) {
+            sessionUpdates.userInfo = {
+              ...session.userInfo,
+              ...userInfoUpdates,
+            };
+          }
+
+          // Thực hiện cập nhật
+          if (Object.keys(sessionUpdates).length > 0) {
+            await sessionService.updateSession(userId, sessionUpdates);
+
+            return JSON.stringify({
+              success: true,
+              message: 'Cập nhật thông tin người dùng thành công',
+              updatedFields: Object.keys(updateData),
+              updatedData: updateData,
+            });
+          } else {
+            return JSON.stringify({
+              success: false,
+              error:
+                'Không có trường nào được cập nhật. Vui lòng kiểm tra lại tên trường.',
+            });
+          }
+        } catch (error) {
+          if (error instanceof SyntaxError) {
+            return JSON.stringify({
+              success: false,
+              error:
+                'Định dạng JSON không hợp lệ. Vui lòng kiểm tra lại cú pháp.',
+              details: error.message,
+            });
+          }
+
+          return JSON.stringify({
+            success: false,
+            error: 'Không thể cập nhật thông tin người dùng',
+            details: error.message,
+          });
+        }
+      },
+    }),
+
+    new DynamicTool({
+      name: 'updateUserAspirations',
+      description: `
+Cập nhật nguyện vọng học tập của người dùng trong phiên tư vấn. Tool này cho phép cập nhật một hoặc nhiều trường nguyện vọng cùng lúc.
+
+Input: Chuỗi JSON chứa các trường nguyện vọng cần cập nhật. Các trường có thể bao gồm:
+
+ NGUYỆN VỌNG HỌC TẬP:
+- desiredEducationLevel: Trình độ mong muốn - "Cao đẳng", "Cử nhân", "Thạc sĩ", "Tiến sĩ" (string)
+- extracurricularsAndExperience: Hoạt động ngoại khóa và kinh nghiệm (string)
+- dreamMajor: Ngành học mong muốn (string)
+- reasonForChoosingMajor: Lý do chọn ngành này (string)
+- careerGoal: Mục tiêu nghề nghiệp trong tương lai (string)
+- preferredStudyCountry: Quốc gia muốn du học (string)
+- schoolSelectionCriteria: Tiêu chí lựa chọn trường học (string)
+
+Ví dụ sử dụng:
+- Cập nhật ngành học: '{"dreamMajor": "Khoa học máy tính"}'
+- Cập nhật nhiều trường: '{"dreamMajor": "Khoa học máy tính", "preferredStudyCountry": "Úc", "careerGoal": "Trở thành AI Engineer"}'
+- Cập nhật trình độ: '{"desiredEducationLevel": "Thạc sĩ", "reasonForChoosingMajor": "Muốn nghiên cứu sâu về AI"}'
+
+Lưu ý: Chỉ truyền các trường cần cập nhật, không cần truyền tất cả.
+`,
+      func: async (input: string) => {
+        try {
+          const updateData = JSON.parse(input);
+
+          if (!updateData || typeof updateData !== 'object') {
+            return JSON.stringify({
+              success: false,
+              error: 'Dữ liệu cập nhật phải là một object JSON hợp lệ',
+            });
+          }
+
+          // Lấy session hiện tại
+          const session = await sessionService.getOrCreateSession(userId);
+
+          // Chuẩn bị dữ liệu cập nhật
+          const sessionUpdates: any = {};
+
+          // Danh sách các trường thuộc aspirations
+          const aspirationsFields = [
+            'desiredEducationLevel',
+            'extracurricularsAndExperience',
+            'dreamMajor',
+            'reasonForChoosingMajor',
+            'careerGoal',
+            'preferredStudyCountry',
+            'schoolSelectionCriteria',
+          ];
+
+          // Cập nhật aspirations
+          const aspirationsUpdates: any = {};
+          let hasAspirationsUpdates = false;
+
+          for (const field of aspirationsFields) {
+            if (updateData.hasOwnProperty(field)) {
+              aspirationsUpdates[field] = updateData[field];
+              hasAspirationsUpdates = true;
+            }
+          }
+
+          if (hasAspirationsUpdates) {
+            sessionUpdates.aspirations = {
+              ...session.aspirations,
+              ...aspirationsUpdates,
+            };
+          }
+
+          // Thực hiện cập nhật
+          if (Object.keys(sessionUpdates).length > 0) {
+            await sessionService.updateSession(userId, sessionUpdates);
+
+            return JSON.stringify({
+              success: true,
+              message: 'Cập nhật nguyện vọng học tập thành công',
+              updatedFields: Object.keys(updateData),
+              updatedData: updateData,
+            });
+          } else {
+            return JSON.stringify({
+              success: false,
+              error:
+                'Không có trường nào được cập nhật. Vui lòng kiểm tra lại tên trường.',
+            });
+          }
+        } catch (error) {
+          if (error instanceof SyntaxError) {
+            return JSON.stringify({
+              success: false,
+              error:
+                'Định dạng JSON không hợp lệ. Vui lòng kiểm tra lại cú pháp.',
+              details: error.message,
+            });
+          }
+
+          return JSON.stringify({
+            success: false,
+            error: 'Không thể cập nhật nguyện vọng học tập',
             details: error.message,
           });
         }
