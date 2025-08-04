@@ -78,29 +78,6 @@ Input là một chuỗi gồm các tên giấy tờ, cách nhau bởi dấu ph�
     }),
 
     new DynamicTool({
-      name: 'getLegalDocuments',
-      description: `Lấy danh sách giấy tờ pháp lý cần thiết của người dùng. Output là danh sách giấy tờ kèm trạng thái. Ví dụ: "I-20 Form - pending", "F-1 Visa - in_progress", "Transcript - completed".`,
-      func: async () => {
-        try {
-          const documents = await legalService.findByUserId(userId);
-
-          return JSON.stringify({
-            success: true,
-            data: documents,
-            total: documents.length,
-            message: 'Lấy danh sách giấy tờ thành công',
-          });
-        } catch (error) {
-          return JSON.stringify({
-            success: false,
-            error: 'Không thể lấy danh sách giấy tờ',
-            details: error.message,
-          });
-        }
-      },
-    }),
-
-    new DynamicTool({
       name: 'markLegalDocumentCompleted',
       description: `Đánh dấu một giấy tờ pháp lý đã hoàn thành. Input: tên giấy tờ (VD: "I-20 Form", "F-1 Visa"). Lưu ý: Chỉ truyền tên giấy tờ, không cần ID. Tool sẽ tìm đúng giấy tờ theo user và cập nhật trạng thái "completed".`,
       func: async (input: string) => {
