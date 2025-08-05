@@ -3,6 +3,7 @@ import { DynamicTool } from '@langchain/core/tools';
 import { UserService } from '../user/user.service';
 import { LegalService } from '../legal/legal.service';
 import { AgentSessionService } from './services/agent.session.service';
+import { Phase } from './schema/agent.schema';
 
 export function createAgentTools(
   legalService: LegalService,
@@ -368,6 +369,99 @@ Lưu ý: Chỉ truyền các trường cần cập nhật, không cần truyền
           return JSON.stringify({
             success: false,
             error: 'Không thể cập nhật nguyện vọng học tập',
+            details: error.message,
+          });
+        }
+      },
+    }),
+
+    new DynamicTool({
+      name: 'updateSessionPhase',
+      description: `
+Cập nhật giai đoạn (phase) hiện tại của phiên tư vấn du học. Tool này được sử dụng để chuyển đổi giữa các giai đoạn khác nhau trong quá trình tư vấn.
+
+Input: Tên giai đoạn cần chuyển đến (string). Các giai đoạn hợp lệ bao gồm:
+
+ CÁC GIAI ĐOẠN TƯ VẤN:
+- "collect_info": Thu thập thông tin cá nhân và nguyện vọng từ user
+- "select_school": Gợi ý và lựa chọn trường học, ngành học phù hợp
+- "legal_checklist": Tạo và quản lý danh sách giấy tờ pháp lý cần thiết
+- "progress_tracking": Theo dõi tiến độ chuẩn bị giấy tờ và hồ sơ
+- "life_planning": Tư vấn về kế hoạch sinh sống, chỗ ở, chi phí
+
+ HƯỚNG DẪN SỬ DỤNG:
+- Sử dụng tool này để chuyển phase khi user có nhu cầu rõ ràng về một giai đoạn cụ thể
+- Chỉ chuyển phase khi thực sự cần thiết, không nên thay đổi liên tục
+- Phase sẽ ảnh hưởng đến cách agent phản hồi và hướng dẫn user
+
+ VÍ DỤ SỬ DỤNG:
+- Chuyển sang thu thập thông tin: "collect_info"
+- Chuyển sang gợi ý trường học: "select_school" 
+- Chuyển sang checklist giấy tờ: "legal_checklist"
+- Chuyển sang theo dõi tiến độ: "progress_tracking"
+- Chuyển sang tư vấn sinh sống: "life_planning"
+
+ LƯU Ý: Chỉ truyền tên phase, không cần thêm thông tin khác.
+`,
+      func: async (input: string) => {
+        try {
+          const newPhase = input.trim().toLowerCase();
+
+          // Danh sách các phase hợp lệ
+          const validPhases = [
+            Phase.COLLECT_INFO,
+            Phase.SELECT_SCHOOL,
+            Phase.LEGAL_CHECKLIST,
+            Phase.PROGRESS_TRACKING,
+            Phase.LIFE_PLANNING,
+          ];
+
+          // Tìm phase enum tương ứng
+          const phaseMap = {
+            collect_info: Phase.COLLECT_INFO,
+            select_school: Phase.SELECT_SCHOOL,
+            legal_checklist: Phase.LEGAL_CHECKLIST,
+            progress_tracking: Phase.PROGRESS_TRACKING,
+            life_planning: Phase.LIFE_PLANNING,
+          };
+
+          const targetPhase = phaseMap[newPhase];
+          if (!targetPhase) {
+            return JSON.stringify({
+              success: false,
+              error: `Phase không hợp lệ. Các phase hợp lệ: ${Object.keys(phaseMap).join(', ')}`,
+              validPhases: Object.keys(phaseMap),
+            });
+          }
+
+          // Lấy session hiện tại
+          const session = await sessionService.getOrCreateSession(userId);
+          const currentPhase = session.phase;
+
+          // Cập nhật phase
+          await sessionService.updateSession(userId, { phase: targetPhase });
+
+          // Tạo thông báo mô tả sự thay đổi
+          const phaseDescriptions = {
+            collect_info: 'Thu thập thông tin cá nhân và nguyện vọng',
+            select_school: 'Gợi ý và lựa chọn trường học phù hợp',
+            legal_checklist: 'Tạo và quản lý danh sách giấy tờ pháp lý',
+            progress_tracking: 'Theo dõi tiến độ chuẩn bị hồ sơ',
+            life_planning: 'Tư vấn kế hoạch sinh sống và thích nghi',
+          };
+
+          return JSON.stringify({
+            success: true,
+            message: `Đã chuyển giai đoạn tư vấn thành công`,
+            previousPhase: currentPhase,
+            currentPhase: newPhase,
+            phaseDescription: phaseDescriptions[newPhase],
+            timestamp: new Date().toISOString(),
+          });
+        } catch (error) {
+          return JSON.stringify({
+            success: false,
+            error: 'Không thể cập nhật giai đoạn phiên tư vấn',
             details: error.message,
           });
         }
