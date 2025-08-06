@@ -43,7 +43,7 @@ export class AgentChatService {
   ): Promise<AgentExecutor> {
     const tools = this.buildTools(session.userId);
     const llm = this.createLLM();
-    const prompt = this.buildPromptTemplate(session);
+    const prompt = await this.buildPromptTemplate(session);
 
     const agent = await createToolCallingAgent({
       llm,
@@ -75,10 +75,10 @@ export class AgentChatService {
     });
   }
 
-  private buildPromptTemplate(
+  private async buildPromptTemplate(
     session: AgentSessionDocument,
-  ): ChatPromptTemplate {
-    const systemPrompt = this.promptService.buildSystemPrompt(session);
+  ): Promise<ChatPromptTemplate> {
+    const systemPrompt = await this.promptService.buildSystemPrompt(session);
 
     return ChatPromptTemplate.fromMessages([
       ['system', systemPrompt],
@@ -110,7 +110,7 @@ export class AgentChatService {
     message: string,
   ): Promise<string> {
     const llm = this.createLLM();
-    const systemPrompt = this.promptService.buildSystemPrompt(session);
+    const systemPrompt = await this.promptService.buildSystemPrompt(session);
 
     const prompt = ChatPromptTemplate.fromMessages([
       ['system', systemPrompt],

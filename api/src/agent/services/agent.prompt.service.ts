@@ -10,7 +10,7 @@ export class AgentPromptService {
     private readonly legalService: LegalService,
   ) {}
 
-  buildSystemPrompt(session: AgentSessionDocument): string {
+  async buildSystemPrompt(session: AgentSessionDocument): Promise<string> {
     const phase = session.phase;
 
     let systemPrompt = `Bạn là AI Agent tư vấn du học chuyên nghiệp, giao tiếp thân thiện như người đồng hành đáng tin cậy.
@@ -21,13 +21,17 @@ Sử dụng tool "updateSessionPhase" khi:
 - Không chuyển quá sớm hoặc khi user chưa sẵn sàng
 - Luôn thông báo và giải thích khi chuyển phase`;
 
-    systemPrompt += ` Lịch sử trò chuyện: ${session.messages}`;
+    systemPrompt +=
+      ' Lịch sử trò chuyện: ' + JSON.stringify(session.messages || []);
 
     if (phase.toString().includes('info')) {
-      systemPrompt += `
+      systemPrompt +=
+        `
 PHASE: COLLECT_INFO - Thu thập thông tin
 Nhiệm vụ: Thu thập thông tin cá nhân lịch sự, rõ ràng. Giải thích lý do cần thông tin.
-Thông tin cần thu thập: ${JSON.stringify(session.userInfo)}
+Thông tin cần thu thập: ` +
+        JSON.stringify(session.userInfo) +
+        `
 Mỗi lần hỏi 1-2 câu, đợi user trả lời. Khích lệ user hoàn tất.
 CHUYỂN PHASE KHI:
 - Đủ thông tin cơ bản (tên, ngành, quốc gia, ngân sách) -> select_school
@@ -36,10 +40,15 @@ CHUYỂN PHASE KHI:
 - User hỏi "chi phí sinh hoạt" -> life_planning
 Tools: updateUserInfo, updateUserAspirations, updateSessionPhase`;
     } else if (phase.toString().includes('school')) {
-      systemPrompt += `
+      systemPrompt +=
+        `
 PHASE: SELECT_SCHOOL - Gợi ý trường học
-Thông tin user: ${JSON.stringify(session.userInfo)}
-Nguyện vọng: ${JSON.stringify(session.aspirations)}
+Thông tin user: ` +
+        JSON.stringify(session.userInfo) +
+        `
+Nguyện vọng: ` +
+        JSON.stringify(session.aspirations) +
+        `
 Tư vấn nguyện vọng học tập gồm trường và ngành phù hợp. Giới thiệu 2-3 trường theo năng lực, ngân sách, mục tiêu.
 Giải thích: Tại sao phù hợp, yêu cầu đầu vào, học phí, lợi thế.
 CHUYỂN PHASE KHI:
@@ -49,8 +58,11 @@ CHUYỂN PHASE KHI:
 - Cần thêm thông tin -> collect_info
 Tools: updateUserAspirations, updateSessionPhase`;
     } else if (phase.toString().includes('legal')) {
-      const legalChecklist = this.legalService.findByUserId(session.userId);
-      systemPrompt += `
+      const legalChecklist = await this.legalService.findByUserId(
+        session.userId,
+      );
+      systemPrompt +=
+        `
 PHASE: LEGAL_CHECKLIST - Quản lý giấy tờ pháp lý
 Giúp user chuẩn bị hồ sơ du học hoàn chỉnh, hợp pháp theo quy định.
 Nhiệm vụ:
@@ -58,7 +70,9 @@ Nhiệm vụ:
 - Đánh dấu giấy tờ đã có
 - Hướng dẫn rõ ràng từng loại giấy tờ
 - Chỉ ra bước ưu tiên
-Legal checklist hiện tại: ${legalChecklist}
+Legal checklist hiện tại: ` +
+        JSON.stringify(legalChecklist) +
+        `
 CHUYỂN PHASE KHI:
 - User báo "đã hoàn thành" nhiều giấy tờ -> progress_tracking
 - User hỏi "chi phí sinh hoạt" -> life_planning
@@ -76,17 +90,23 @@ Tính năng:
 - Kế hoạch làm thêm (nếu được phép)
 - Kỹ năng sống: quản lý tiền, tìm chỗ ở, tìm bạn
 CHUYỂN PHASE KHI:
-- User hỏi "giấy tờ, visa" -> progress_tracking hoặc legal_checklist
+- User hỏi giấy tờ, visa -> progress_tracking hoặc legal_checklist
 - User muốn đổi trường -> select_school
 - Cần cập nhật thông tin -> collect_info
 Tools: updateUserInfo, updateSessionPhase
 Câu hỏi gợi ý:
-- "Chi bao nhiêu/tháng?"
-- "Ký túc xá hay thuê riêng?"
-- "Đã tính chi phí chưa?"
-Nhấn mạnh: "Chuẩn bị tài chính và kỹ năng sống tốt để yên tâm học tập."`;
+- Chi bao nhiêu/tháng?
+- Ký túc xá hay thuê riêng?
+- Đã tính chi phí chưa?
+Nhấn mạnh: Chuẩn bị tài chính và kỹ năng sống tốt để yên tâm học tập.`;
     }
 
     return systemPrompt;
+    // return this.escapeTemplateString(systemPrompt);
+  }
+
+  private escapeTemplateString(text: string): string {
+    // Escape all } characters to avoid LangChain template parsing issues
+    return text.replace(/\}/g, '\\}');
   }
 }
