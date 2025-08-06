@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import { AgentSession } from './schema/agent.schema';
 import { validateAgentConfig } from './agent.config';
 import {
@@ -11,7 +10,6 @@ import {
 @Injectable()
 export class AgentService {
   constructor(
-    @InjectModel(AgentSession.name)
     private readonly sessionService: AgentSessionService,
     private readonly phaseService: AgentPhaseService,
     private readonly chatService: AgentChatService,
@@ -32,12 +30,9 @@ export class AgentService {
   }
 
   // Main chat handler
-  async handlePrompt(
-    userId: string,
-    message: string,
-  ): Promise<string> {
+  async handlePrompt(userId: string, message: string): Promise<string> {
     try {
-      const session = await this.sessionService.getOrCreateSession(userId);;
+      const session = await this.sessionService.getOrCreateSession(userId);
 
       // TODO: Extract and update all user information from message
 
