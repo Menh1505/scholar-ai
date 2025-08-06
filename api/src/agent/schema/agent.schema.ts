@@ -52,7 +52,7 @@ export interface UserInfo {
 }
 
 export interface Aspirations {
-// 🎓 Nguyện vọng học tập
+  // 🎓 Nguyện vọng học tập
   desiredEducationLevel: 'Cao đẳng' | 'Cử nhân' | 'Thạc sĩ' | 'Tiến sĩ' | null;
   extracurricularsAndExperience: string | null; // Mô tả ngoại khóa, thực tập
   dreamMajor: string | null;
@@ -63,7 +63,7 @@ export interface Aspirations {
 }
 
 export interface ChatMessage {
-  role: 'user' | 'agent' | 'system';
+  role: 'user' | 'agent';
   content: string;
   timestamp: Date;
 }
@@ -79,9 +79,10 @@ export class AgentSession {
   @Prop({ type: Object, default: {} })
   userInfo: UserInfo;
 
-  @Prop({type: Object, default:{}})
+  @Prop({ type: Object, default: {} })
   aspirations: Aspirations;
 
+  @Prop({ type: [Object], default: [] })
   messages: ChatMessage[];
 }
 
