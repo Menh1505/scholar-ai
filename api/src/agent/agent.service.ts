@@ -35,7 +35,7 @@ export class AgentService {
       const session = await this.sessionService.getOrCreateSession(userId);
 
       // TODO: Extract and update all user information from message
-
+      
       // Add user message to session
       this.chatService.addUserMessage(session, message);
 
