@@ -13,9 +13,7 @@ export function createAgentTools(
   return [
     new DynamicTool({
       name: 'createLegalDocuments',
-      description: `
-Tạo nhiều giấy tờ pháp lý cần thiết cho quá trình du học. 
-Input là một chuỗi gồm các tên giấy tờ, cách nhau bởi dấu phẩy (,) hoặc một chuỗi JSON dạng array như: "I-20 Form, Bank Statement, Transcript" hoặc ["I-20 Form", "F-1 Visa Application", Bank Statement", "Transcript"]. Lưu ý: Chỉ nhập tên giấy tờ, không cần thêm thông tin nào khác. Ví dụ đúng: - "Passport, I-20 Form, Bank Statement" - '["Passport", "Visa Application"]'`,
+      description: `Tạo nhiều giấy tờ pháp lý du học. Input: tên giấy tờ cách nhau bởi dấu phẩy hoặc JSON array. VD: "I-20 Form, Bank Statement" hoặc ["Passport", "Visa"]`,
       func: async (input: string) => {
         try {
           // Normalize input
@@ -80,7 +78,7 @@ Input là một chuỗi gồm các tên giấy tờ, cách nhau bởi dấu ph�
 
     new DynamicTool({
       name: 'markLegalDocumentCompleted',
-      description: `Đánh dấu một giấy tờ pháp lý đã hoàn thành. Input: tên giấy tờ (VD: "I-20 Form", "F-1 Visa"). Lưu ý: Chỉ truyền tên giấy tờ, không cần ID. Tool sẽ tìm đúng giấy tờ theo user và cập nhật trạng thái "completed".`,
+      description: `Đánh dấu giấy tờ pháp lý hoàn thành. Input: tên giấy tờ (VD: "I-20 Form"). Chỉ truyền tên, tool sẽ tìm và cập nhật status thành "completed".`,
       func: async (input: string) => {
         try {
           const documentTitle = input.trim();
@@ -126,55 +124,10 @@ Input là một chuỗi gồm các tên giấy tờ, cách nhau bởi dấu ph�
 
     new DynamicTool({
       name: 'updateUserInfo',
-      description: `
-Cập nhật thông tin cá nhân của người dùng trong phiên tư vấn. Tool này cho phép cập nhật một hoặc nhiều trường thông tin user cùng lúc.
+      description: `Cập nhật thông tin cá nhân. Input: JSON object với các trường cần cập nhật.
+Các trường: fullName, email, phoneNumber, address, dateOfBirth (YYYY-MM-DD), gender, religion, passportNumber, passportExpiryDate, currentCountry, currentEducationLevel, academicResult, estimatedBudget, fundingSource, needsScholarship, studyLanguage, certificates {ielts, toefl, duolingo, testDaf}, studyPlan, intendedIntakeTime, currentProgress.
+VD: '{"fullName": "Nguyễn Văn An", "estimatedBudget": 50000}'`,
 
-Input: Chuỗi JSON chứa các trường cần cập nhật. Các trường có thể bao gồm:
-
- THÔNG TIN CÁ NHÂN:
-- fullName: Họ và tên đầy đủ (string)
-- email: Địa chỉ email (string) 
-- phoneNumber: Số điện thoại (string)
-- address: Địa chỉ hiện tại (string)
-- dateOfBirth: Ngày sinh theo định dạng YYYY-MM-DD (string)
-- gender: Giới tính - "Nam", "Nữ", hoặc "Khác" (string)
-- religion: Tôn giáo (string)
-
- THÔNG TIN HỘ CHIẾU:
-- passportNumber: Số hộ chiếu (string)
-- passportExpiryDate: Ngày hết hạn hộ chiếu YYYY-MM-DD (string)
-- currentCountry: Quốc gia đang sinh sống (string)
-
- HỌC LỰC HIỆN TẠI:
-- currentEducationLevel: Trình độ học vấn - "THPT", "Cao đẳng", "Đại học", hoặc "Khác" (string)
-- academicResult: Kết quả học tập (GPA, điểm số...) (string)
-
- TÀI CHÍNH:
-- estimatedBudget: Ngân sách dự kiến (number)
-- fundingSource: Nguồn tài trợ - "Tự túc", "Gia đình tài trợ", "Học bổng", hoặc "Khác" (string)
-- needsScholarship: Có cần học bổng không (boolean)
-
- NGÔN NGỮ & CHỨNG CHỈ:
-- studyLanguage: Ngôn ngữ học chính (string)
-- certificates: Object chứa điểm các chứng chỉ ngôn ngữ:
-  - ielts: Điểm IELTS (number)
-  - toefl: Điểm TOEFL (number) 
-  - duolingo: Điểm Duolingo (number)
-  - testDaf: Điểm TestDaF (number)
-
- KẾ HOẠCH & THỜI GIAN:
-- studyPlan: Lộ trình học, định hướng cá nhân (string)
-- intendedIntakeTime: Thời gian dự kiến nhập học (string)
-- currentProgress: Tiến độ hiện tại (string)
-
-
-Ví dụ sử dụng:
-- Cập nhật tên: '{"fullName": "Nguyễn Văn An"}'
-- Cập nhật nhiều trường: '{"fullName": "Nguyễn Văn An", "email": "an@email.com", "estimatedBudget": 50000}'
-- Cập nhật chứng chỉ: '{"certificates": {"ielts": 7.5, "toefl": 100}}'
-
-Lưu ý: Chỉ truyền các trường cần cập nhật, không cần truyền tất cả.
-`,
       func: async (input: string) => {
         try {
           const updateData = JSON.parse(input);
@@ -272,27 +225,9 @@ Lưu ý: Chỉ truyền các trường cần cập nhật, không cần truyền
 
     new DynamicTool({
       name: 'updateUserAspirations',
-      description: `
-Cập nhật nguyện vọng học tập của người dùng trong phiên tư vấn. Tool này cho phép cập nhật một hoặc nhiều trường nguyện vọng cùng lúc.
-
-Input: Chuỗi JSON chứa các trường nguyện vọng cần cập nhật. Các trường có thể bao gồm:
-
- NGUYỆN VỌNG HỌC TẬP:
-- desiredEducationLevel: Trình độ mong muốn - "Cao đẳng", "Cử nhân", "Thạc sĩ", "Tiến sĩ" (string)
-- extracurricularsAndExperience: Hoạt động ngoại khóa và kinh nghiệm (string)
-- dreamMajor: Ngành học mong muốn (string)
-- reasonForChoosingMajor: Lý do chọn ngành này (string)
-- careerGoal: Mục tiêu nghề nghiệp trong tương lai (string)
-- preferredStudyCountry: Quốc gia muốn du học (string)
-- schoolSelectionCriteria: Tiêu chí lựa chọn trường học (string)
-
-Ví dụ sử dụng:
-- Cập nhật ngành học: '{"dreamMajor": "Khoa học máy tính"}'
-- Cập nhật nhiều trường: '{"dreamMajor": "Khoa học máy tính", "preferredStudyCountry": "Úc", "careerGoal": "Trở thành AI Engineer"}'
-- Cập nhật trình độ: '{"desiredEducationLevel": "Thạc sĩ", "reasonForChoosingMajor": "Muốn nghiên cứu sâu về AI"}'
-
-Lưu ý: Chỉ truyền các trường cần cập nhật, không cần truyền tất cả.
-`,
+      description: `Cập nhật nguyện vọng học tập. Input: JSON object với các trường nguyện vọng.
+Các trường: desiredEducationLevel, extracurricularsAndExperience, dreamMajor, reasonForChoosingMajor, careerGoal, preferredStudyCountry, schoolSelectionCriteria.
+VD: '{"dreamMajor": "Khoa học máy tính", "preferredStudyCountry": "Úc"}'`,
       func: async (input: string) => {
         try {
           const updateData = JSON.parse(input);
@@ -377,32 +312,9 @@ Lưu ý: Chỉ truyền các trường cần cập nhật, không cần truyền
 
     new DynamicTool({
       name: 'updateSessionPhase',
-      description: `
-Cập nhật giai đoạn (phase) hiện tại của phiên tư vấn du học. Tool này được sử dụng để chuyển đổi giữa các giai đoạn khác nhau trong quá trình tư vấn.
-
-Input: Tên giai đoạn cần chuyển đến (string). Các giai đoạn hợp lệ bao gồm:
-
- CÁC GIAI ĐOẠN TƯ VẤN:
-- "collect_info": Thu thập thông tin cá nhân và nguyện vọng từ user
-- "select_school": Gợi ý và lựa chọn trường học, ngành học phù hợp
-- "legal_checklist": Tạo và quản lý danh sách giấy tờ pháp lý cần thiết
-- "progress_tracking": Theo dõi tiến độ chuẩn bị giấy tờ và hồ sơ
-- "life_planning": Tư vấn về kế hoạch sinh sống, chỗ ở, chi phí
-
- HƯỚNG DẪN SỬ DỤNG:
-- Sử dụng tool này để chuyển phase khi user có nhu cầu rõ ràng về một giai đoạn cụ thể
-- Chỉ chuyển phase khi thực sự cần thiết, không nên thay đổi liên tục
-- Phase sẽ ảnh hưởng đến cách agent phản hồi và hướng dẫn user
-
- VÍ DỤ SỬ DỤNG:
-- Chuyển sang thu thập thông tin: "collect_info"
-- Chuyển sang gợi ý trường học: "select_school" 
-- Chuyển sang checklist giấy tờ: "legal_checklist"
-- Chuyển sang theo dõi tiến độ: "progress_tracking"
-- Chuyển sang tư vấn sinh sống: "life_planning"
-
- LƯU Ý: Chỉ truyền tên phase, không cần thêm thông tin khác.
-`,
+      description: `Cập nhật giai đoạn tư vấn. Input: tên phase.
+Các phase hợp lệ: "collect_info" (thu thập thông tin), "select_school" (gợi ý trường), "legal_checklist" (giấy tờ pháp lý), "progress_tracking" (theo dõi tiến độ), "life_planning" (tư vấn sinh sống).
+VD: "select_school"`,
       func: async (input: string) => {
         try {
           const newPhase = input.trim().toLowerCase();
