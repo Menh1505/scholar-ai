@@ -19,8 +19,7 @@ async function bootstrap() {
   // Enable CORS with credentials
   app.enableCors({
     origin:
-      configService.get<string>('FRONTEND_URL') ||
-      'https://scholar-ai.smurf.vn',
+      configService.get<string>('FRONTEND_URL') || 'https://scholarai.io.vn',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
