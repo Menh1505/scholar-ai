@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Nunito_Sans, Nunito } from "next/font/google";
+import { Montserrat, Montserrat_Alternates } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
-const nunitoSans = Nunito_Sans({
-  variable: "--font-nunito-sans",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
 });
 
-const nunitoMono = Nunito({
-  variable: "--font-nunito-mono",
+const montserratAlternates = Montserrat_Alternates({
+  variable: "--font-montserrat-alternates",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -25,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${nunitoSans.variable} ${nunitoMono.variable} antialiased`}>
+      <body className={`${montserrat.variable} ${montserratAlternates.variable} antialiased`}>
         <Toaster position="top-center" reverseOrder={true} />
         {children}
       </body>

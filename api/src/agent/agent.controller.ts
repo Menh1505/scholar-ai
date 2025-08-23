@@ -4,8 +4,6 @@ import {
   Post,
   Body,
   Req,
-  Delete,
-  Param,
   Get,
   BadRequestException,
   HttpException,
@@ -15,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { AgentService } from './agent.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AgentSessionService } from './services/agent.session.service';
 
 interface MessageRequest {
   message: string;
@@ -22,8 +21,6 @@ interface MessageRequest {
 
 interface MessageResponse {
   response: string;
-  phase: string;
-  sessionId: string;
   timestamp: Date;
 }
 
@@ -31,7 +28,10 @@ interface MessageResponse {
 export class AgentController {
   private readonly logger = new Logger(AgentController.name);
 
-  constructor(private readonly agentService: AgentService) {}
+  constructor(
+    private readonly agentService: AgentService,
+    private readonly sessionService: AgentSessionService,
+  ) {}
 
   @Post('message')
   @UseGuards(JwtAuthGuard)
@@ -43,33 +43,18 @@ export class AgentController {
       const { message } = body;
       const userId = req.user.userId; // Lấy userId từ JWT token
 
-      if (!message) {
-        throw new BadRequestException('message là bắt buộc');
+      if (
+        !message ||
+        typeof message !== 'string' ||
+        message.trim().length === 0
+      ) {
+        throw new BadRequestException('Invalid Message');
       }
 
-      if (typeof message !== 'string') {
-        throw new BadRequestException('message phải là string');
-      }
-
-      if (message.trim().length === 0) {
-        throw new BadRequestException('Message không thể rỗng');
-      }
-
-      const token = req.headers.authorization || '';
-      console.log('token:', token);
-
-      const response = await this.agentService.handlePrompt(
-        userId,
-        message,
-        token,
-      );
-
-      const session = await this.agentService.getOrCreateSession(userId);
+      const response = await this.agentService.handlePrompt(userId, message);
 
       return {
         response,
-        phase: session.phase,
-        sessionId: (session as any)._id.toString(),
         timestamp: new Date(),
       };
     } catch (error) {
@@ -78,47 +63,9 @@ export class AgentController {
         error.stack,
       );
 
-      if (error instanceof BadRequestException) {
-        throw error;
-      }
-
       throw new HttpException(
         {
           message: 'Có lỗi xảy ra khi xử lý tin nhắn',
-          error: error.message,
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-  }
-
-  @Get('session')
-  @UseGuards(JwtAuthGuard)
-  async getSession(@Req() req: any) {
-    try {
-      const userId = req.user.userId; // Lấy userId từ JWT token
-
-      const session = await this.agentService.getOrCreateSession(userId);
-
-      return {
-        sessionId: (session as any)._id.toString(),
-        userId: session.userId,
-        phase: session.phase,
-        schoolPreference:
-          session.userInfo.schoolSelectionCriteria ||
-          session.userInfo.preferredStudyCountry,
-        majorPreference: session.userInfo.dreamMajor,
-        userInfo: session.userInfo,
-        progressPercentage: (session as any).progressPercentage,
-        analytics: session.analytics,
-        createdAt: (session as any).createdAt,
-        updatedAt: (session as any).updatedAt,
-      };
-    } catch (error) {
-      this.logger.error(`Error getting session: ${error.message}`, error.stack);
-      throw new HttpException(
-        {
-          message: 'Có lỗi xảy ra khi lấy thông tin session',
           error: error.message,
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -135,7 +82,7 @@ export class AgentController {
       const limit = parseInt(req.query.limit) || 50;
       const offset = parseInt(req.query.offset) || 0;
 
-      const session = await this.agentService.getOrCreateSession(userId);
+      const session = await this.sessionService.getOrCreateSession(userId);
 
       const messages = session.messages.slice(offset, offset + limit); // Newest first
 
@@ -160,34 +107,6 @@ export class AgentController {
       );
     }
   }
-
-  /*   @Delete('session')
-  @UseGuards(JwtAuthGuard)
-  async resetSession(@Req() req: any) {
-    try {
-      const userId = req.user.userId; // Lấy userId từ JWT token
-
-      await this.agentService.resetSession(userId);
-
-      return {
-        message: 'Session đã được reset thành công',
-        userId,
-        timestamp: new Date(),
-      };
-    } catch (error) {
-      this.logger.error(
-        `Error resetting session: ${error.message}`,
-        error.stack,
-      );
-      throw new HttpException(
-        {
-          message: 'Có lỗi xảy ra khi reset session',
-          error: error.message,
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-  } */
 
   @Get('health')
   async healthCheck() {

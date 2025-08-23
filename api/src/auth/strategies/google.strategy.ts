@@ -43,7 +43,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
           passportExpiryDate: '',
           scholarPoints: 0,
         };
-
         user = await this.userService.create(createUserDto);
       }
 

@@ -1,14 +1,17 @@
-import { Hero, ProblemsSection, SolutionSection, HowItWorksSection, ComparisonSection, CTASection } from "@/components/landing";
+import { Hero, InteractiveBackground, ProblemsSimple, SolutionsSimple, FeaturesSimple, TargetAudience, FinalCTA } from "@/components/landing";
+import { Navbar } from "@/components/landing/Navbar";
 
 export default function HomePage() {
   return (
-    <main className="flex flex-col w-full overflow-x-hidden">
+    <main className="flex flex-col w-full overflow-x-hidden relative">
+      <InteractiveBackground />
+      <Navbar />
       <Hero />
-      <ProblemsSection />
-      <SolutionSection />
-      <HowItWorksSection />
-      <ComparisonSection />
-      <CTASection />
+      <ProblemsSimple />
+      <SolutionsSimple />
+      <FeaturesSimple />
+      <TargetAudience />
+      <FinalCTA />
     </main>
   );
 }

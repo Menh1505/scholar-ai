@@ -63,7 +63,6 @@ export const UserSchema = new Schema(
     passportCode: {
       type: String,
       required: false,
-      unique: true,
       trim: true,
     },
     passportExpiryDate: {
