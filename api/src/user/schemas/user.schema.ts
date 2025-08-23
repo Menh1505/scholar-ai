@@ -13,6 +13,17 @@ export interface UserDocument extends Document {
   passportExpiryDate: string;
   scholarPoints: number;
   isActive: boolean;
+  wallet?: {
+    address: string;
+    encryptedPrivateKey: string;
+    publicKey: string;
+    networkInfo: {
+      chainId: number;
+      currency: string;
+      networkName: string;
+    };
+    createdAt: Date;
+  };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -78,6 +89,38 @@ export const UserSchema = new Schema(
     isActive: {
       type: Boolean,
       default: true,
+    },
+    wallet: {
+      address: {
+        type: String,
+        required: false,
+      },
+      encryptedPrivateKey: {
+        type: String,
+        required: false,
+      },
+      publicKey: {
+        type: String,
+        required: false,
+      },
+      networkInfo: {
+        chainId: {
+          type: Number,
+          required: false,
+        },
+        currency: {
+          type: String,
+          required: false,
+        },
+        networkName: {
+          type: String,
+          required: false,
+        },
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
     },
   },
   {

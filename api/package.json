@@ -31,6 +31,9 @@
     "quick:start": "node quick-start.js"
   },
   "dependencies": {
+    "@cosmjs/crypto": "^0.36.0",
+    "@cosmjs/proto-signing": "^0.36.0",
+    "@cosmjs/stargate": "^0.36.0",
     "@langchain/core": "^0.3.64",
     "@langchain/openai": "^0.6.1",
     "@nestjs/common": "^11.0.1",
@@ -43,10 +46,12 @@
     "@nestjs/platform-express": "^11.0.1",
     "@types/cookie-parser": "^1.4.9",
     "axios": "^1.10.0",
+    "bech32": "^2.0.0",
     "class-validator": "^0.14.2",
     "colors": "^1.4.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.0",
+    "ethers": "^6.15.0",
     "langchain": "^0.3.30",
     "mongoose": "^8.16.3",
     "openai": "^5.10.1",

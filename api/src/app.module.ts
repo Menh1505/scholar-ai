@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { HealthModule } from './health/health.module';
 import { UserModule } from './user/user.module';
 import { AgentModule } from './agent/agent.module';
+import { WalletModule } from './wallet/wallet.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,6 +29,7 @@ import { AgentModule } from './agent/agent.module';
     AuthModule,
     HealthModule,
     UserModule,
+    WalletModule,
     AgentModule,
   ],
   controllers: [AppController],
